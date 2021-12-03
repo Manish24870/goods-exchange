@@ -3,7 +3,12 @@ const mongoose = require("mongoose");
 const chalk = require("chalk");
 require("dotenv").config();
 
+const authRouter = require("./routes/authRoutes");
+
 const app = express();
+
+// Middlewares
+app.use(express.json());
 
 //Connect to MongoDB database
 mongoose
@@ -17,6 +22,9 @@ mongoose
         console.log("ERROR CONNECTING DATABASE");
         console.log(err);
     });
+
+//Mount Routes
+app.use("/api/auth", authRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

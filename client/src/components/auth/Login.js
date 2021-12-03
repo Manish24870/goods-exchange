@@ -21,7 +21,7 @@ const Login = () => {
                         Login
                     </Typography>
                 </Box>
-                <Box component="form" noValidate mt={4}>
+                <Box component="form" autoComplete="off" noValidate mt={4}>
                     <Grid container justifyContent="center" spacing={3}>
                         <Grid item xs={12}>
                             <TextField fullWidth name="username" label="Username or Email" />
