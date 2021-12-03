@@ -4,8 +4,17 @@
     "description": "App to exchange goods between people",
     "main": "server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "client": "npm start --prefix client",
+        "server": "nodemon server.js",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "author": "Manish Acharya",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "chalk": "^4.1.2",
+        "concurrently": "^6.4.0",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "mongoose": "^6.0.14"
+    }
 }

@@ -44,7 +44,9 @@ const Navbar = () => {
                         <Button
                             component={Link}
                             to="/auth/register"
-                            sx={{ textTransform: "none", fontFamily: "inherit" }}
+                            sx={{
+                                textTransform: "none",
+                            }}
                             color="inherit"
                         >
                             Register
@@ -54,7 +56,6 @@ const Navbar = () => {
                             to="/auth/login"
                             sx={{
                                 textTransform: "none",
-                                fontFamily: "inherit",
                                 marginLeft: "2rem",
                             }}
                             color="inherit"

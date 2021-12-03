@@ -18,7 +18,7 @@ const Login = () => {
             <Container maxWidth="xs">
                 <Box mt={5} textAlign="center">
                     <Typography component="h1" variant="h4" sx={{ fontWeight: 500 }}>
-                        Register
+                        Login
                     </Typography>
                 </Box>
                 <Box component="form" noValidate mt={4}>
