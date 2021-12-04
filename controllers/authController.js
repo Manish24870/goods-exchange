@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/userModel");
 const inputValidator = require("../validation/inputValidator");
+const ApiError = require("../utils/apiError");
 
 // Function to send a new auth token response
 const sendAuthToken = (user, res) => {
@@ -19,10 +20,9 @@ const sendAuthToken = (user, res) => {
     });
 };
 
-// Route = /api/auth./register
+// Route = /api/auth/register
 // Function to register a new user
-exports.register = async (req, res, next) => {
-    console.log(req.body);
+exports.registerUser = async (req, res, next) => {
     const { errors, isValid } = inputValidator(req.body, "register-user");
 
     if (!isValid) {
@@ -49,4 +49,36 @@ exports.register = async (req, res, next) => {
     }
 };
 
-exports.login = () => {};
+// Route = /api/auth/login
+// Function to login a user
+exports.loginUser = async (req, res, next) => {
+    const { errors, isValid } = inputValidator(req.body);
+    if (!isValid) {
+        return res.status(400).json({
+            status: "fail",
+            data: {
+                errors,
+            },
+        });
+    }
+
+    // Check for user in database
+    try {
+        const foundUser = await User.findOne({
+            $or: [{ username: req.body.usernameOrEmail }, { email: req.body.usernameOrEmail }],
+        }).select("+password");
+
+        // Check if the username or email and password match
+        if (
+            !foundUser ||
+            !(await foundUser.comparePassword(req.body.password, foundUser.password))
+        ) {
+            return next(new ApiError("The given credentials are invalid", 401));
+        }
+
+        foundUser.password = undefined;
+        sendAuthToken(foundUser, res);
+    } catch (err) {
+        next(err);
+    }
+};
