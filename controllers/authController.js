@@ -27,7 +27,7 @@ exports.register = async (req, res, next) => {
             message: "success",
         });
     } catch (err) {
-        console.log(err);
+        next(err);
     }
 };
 
