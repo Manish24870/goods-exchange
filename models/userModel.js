@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+        minlength: 4,
     },
     email: {
         type: String,
@@ -16,6 +17,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 5,
+    },
+    role: {
+        type: String,
+        enum: ["admin", "user"],
+        default: "user",
     },
     createdAt: {
         type: Date,

@@ -11,10 +11,13 @@
     "author": "Manish Acharya",
     "license": "ISC",
     "dependencies": {
+        "bcryptjs": "^2.4.3",
         "chalk": "^4.1.2",
         "concurrently": "^6.4.0",
         "dotenv": "^10.0.0",
         "express": "^4.17.1",
-        "mongoose": "^6.0.14"
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.0.14",
+        "validator": "^13.7.0"
     }
 }
