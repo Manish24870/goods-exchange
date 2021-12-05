@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
     Box,
     Container,
@@ -10,7 +12,10 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const Register = () => {
+import { registerUser } from "../../actions/authActions";
+
+const Register = (props) => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -24,6 +29,7 @@ const Register = () => {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
+        props.registerUser(formData, navigate);
     };
 
     return (
@@ -105,4 +111,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default connect(null, { registerUser })(Register);

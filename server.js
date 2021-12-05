@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
+const cors = require("cors");
 require("dotenv").config();
 
 const authRouter = require("./routes/authRoutes");
@@ -9,6 +10,7 @@ const globalErrorHandler = require("./controllers/errorController");
 const app = express();
 
 // Middlewares
+app.use(cors());
 app.use(express.json());
 
 //Connect to MongoDB database
