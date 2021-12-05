@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     Container,
@@ -11,6 +11,21 @@ import {
 import { Link } from "react-router-dom";
 
 const Register = () => {
+    const [formData, setFormData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        passwordConfirm: "",
+    });
+
+    const onFormValueChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <Box>
             <Container maxWidth="xs">
@@ -19,16 +34,35 @@ const Register = () => {
                         Register
                     </Typography>
                 </Box>
-                <Box component="form" autoComplete="off" noValidate mt={4}>
+                <Box component="form" autoComplete="off" noValidate mt={4} onSubmit={onFormSubmit}>
                     <Grid container justifyContent="center" spacing={3}>
                         <Grid item xs={12}>
-                            <TextField fullWidth name="username" label="Username" />
+                            <TextField
+                                fullWidth
+                                name="username"
+                                label="Username"
+                                value={formData.username}
+                                onChange={onFormValueChange}
+                            />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField fullWidth name="email" label="Email" />
+                            <TextField
+                                fullWidth
+                                name="email"
+                                label="Email"
+                                value={formData.email}
+                                onChange={onFormValueChange}
+                            />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField fullWidth type="password" name="password" label="Password" />
+                            <TextField
+                                fullWidth
+                                type="password"
+                                name="password"
+                                label="Password"
+                                value={formData.password}
+                                onChange={onFormValueChange}
+                            />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -36,6 +70,8 @@ const Register = () => {
                                 type="password"
                                 name="passwordConfirm"
                                 label="Confirm Password"
+                                value={formData.passwordConfirm}
+                                onChange={onFormValueChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
