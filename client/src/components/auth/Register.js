@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import isEmpty from "../../utils/isEmpty";
 import { registerUser, clearErrors } from "../../actions/authActions";
 
+// REGISTER COMPONENT
 const Register = (props) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -27,7 +28,9 @@ const Register = (props) => {
 
     // Hook for getting error message
     useEffect(() => {
+        setErrorMessages({});
         if (!isEmpty(props.error)) {
+            console.log("BBB");
             setErrorMessages(props.error.data.errors);
         }
     }, [props.error]);
@@ -37,7 +40,7 @@ const Register = (props) => {
         return () => {
             props.clearErrors();
         };
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onFormValueChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

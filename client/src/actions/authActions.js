@@ -8,8 +8,20 @@ import { SET_CURRENT_USER, SET_ERRORS, CLEAR_ERRORS } from "./types";
 export const registerUser = (userData, navigate) => async (dispatch) => {
     try {
         const response = await axiosInstance.post("/api/auth/register", userData);
-        const token = response.data.data.token;
-        authenticateUser(token, dispatch, navigate);
+        authenticateUser(response, dispatch, navigate);
+    } catch (err) {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data,
+        });
+    }
+};
+
+// Action for logging in a user
+export const loginUser = (userData, navigate) => async (dispatch) => {
+    try {
+        const response = await axiosInstance.post("/api/auth/login", userData);
+        authenticateUser(response, dispatch, navigate);
     } catch (err) {
         dispatch({
             type: SET_ERRORS,
@@ -34,7 +46,8 @@ export const setCurrentUser = (decoded) => {
 };
 
 //Function to set logged in users state
-const authenticateUser = (token, dispatch, navigate) => {
+const authenticateUser = (response, dispatch, navigate) => {
+    const token = response.data.data.token;
     localStorage.setItem("jwt", token);
     setAuthToken(token);
 
