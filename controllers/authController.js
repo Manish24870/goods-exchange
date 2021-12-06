@@ -26,7 +26,6 @@ exports.registerUser = async (req, res, next) => {
     const { errors, isValid } = inputValidator(req.body, "register-user");
 
     if (!isValid) {
-        console.log("AA");
         return res.status(400).json({
             status: "fail",
             data: {

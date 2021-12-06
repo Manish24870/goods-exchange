@@ -11,10 +11,16 @@ const theme = createTheme({
             main: "#FF5F5F",
             contrastText: "#fff",
         },
+        error: {
+            main: "#FF5F5F",
+        },
     },
     typography: {
         fontFamily: "Sora",
         fontSize: 14,
+        caption: {
+            fontSize: "0.83rem",
+        },
     },
     components: {
         MuiContainer: {

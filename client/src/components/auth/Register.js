@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,7 +12,8 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { registerUser } from "../../actions/authActions";
+import isEmpty from "../../utils/isEmpty";
+import { registerUser, clearErrors } from "../../actions/authActions";
 
 const Register = (props) => {
     const navigate = useNavigate();
@@ -22,6 +23,21 @@ const Register = (props) => {
         password: "",
         passwordConfirm: "",
     });
+    const [errorMessages, setErrorMessages] = useState({});
+
+    // Hook for getting error message
+    useEffect(() => {
+        if (!isEmpty(props.error)) {
+            setErrorMessages(props.error.data.errors);
+        }
+    }, [props.error]);
+
+    // Hook for removing errors when component unmounts
+    useEffect(() => {
+        return () => {
+            props.clearErrors();
+        };
+    }, []);
 
     const onFormValueChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,6 +65,8 @@ const Register = (props) => {
                                 label="Username"
                                 value={formData.username}
                                 onChange={onFormValueChange}
+                                error={errorMessages.username ? true : false}
+                                helperText={errorMessages.username ? errorMessages.username : null}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -58,6 +76,8 @@ const Register = (props) => {
                                 label="Email"
                                 value={formData.email}
                                 onChange={onFormValueChange}
+                                error={errorMessages.email ? true : false}
+                                helperText={errorMessages.email ? errorMessages.email : null}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -68,6 +88,8 @@ const Register = (props) => {
                                 label="Password"
                                 value={formData.password}
                                 onChange={onFormValueChange}
+                                error={errorMessages.password ? true : false}
+                                helperText={errorMessages.password ? errorMessages.password : null}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -78,6 +100,12 @@ const Register = (props) => {
                                 label="Confirm Password"
                                 value={formData.passwordConfirm}
                                 onChange={onFormValueChange}
+                                error={errorMessages.passwordConfirm ? true : false}
+                                helperText={
+                                    errorMessages.passwordConfirm
+                                        ? errorMessages.passwordConfirm
+                                        : null
+                                }
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -111,4 +139,10 @@ const Register = (props) => {
     );
 };
 
-export default connect(null, { registerUser })(Register);
+const mapStateToProps = (state) => {
+    return {
+        error: state.error,
+    };
+};
+
+export default connect(mapStateToProps, { registerUser, clearErrors })(Register);

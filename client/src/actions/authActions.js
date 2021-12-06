@@ -2,7 +2,7 @@ import jwt_decode from "jwt-decode";
 
 import axiosInstance from "../utils/axios/axiosInstance";
 import setAuthToken from "../utils/auth/setAuthToken";
-import { SET_CURRENT_USER } from "./types";
+import { SET_CURRENT_USER, SET_ERRORS, CLEAR_ERRORS } from "./types";
 
 // Action for registering a user
 export const registerUser = (userData, navigate) => async (dispatch) => {
@@ -11,8 +11,18 @@ export const registerUser = (userData, navigate) => async (dispatch) => {
         const token = response.data.data.token;
         authenticateUser(token, dispatch, navigate);
     } catch (err) {
-        console.log(err.response.data);
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data,
+        });
     }
+};
+
+// Clear errors wwhile component unmounts
+export const clearErrors = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_ERRORS,
+    });
 };
 
 // Disaptch function to set user data in store
