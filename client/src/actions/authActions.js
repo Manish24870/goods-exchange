@@ -2,6 +2,7 @@ import jwt_decode from "jwt-decode";
 
 import axiosInstance from "../utils/axios/axiosInstance";
 import setAuthToken from "../utils/auth/setAuthToken";
+import createToast from "../utils/toast/createToast";
 import { SET_CURRENT_USER, SET_ERRORS, CLEAR_ERRORS } from "./types";
 
 // Action for registering a user
@@ -10,10 +11,7 @@ export const registerUser = (userData, navigate) => async (dispatch) => {
         const response = await axiosInstance.post("/api/auth/register", userData);
         authenticateUser(response, dispatch, navigate);
     } catch (err) {
-        dispatch({
-            type: SET_ERRORS,
-            payload: err.response.data,
-        });
+        dispatch(setErrors(err.response.data));
     }
 };
 
@@ -23,18 +21,27 @@ export const loginUser = (userData, navigate) => async (dispatch) => {
         const response = await axiosInstance.post("/api/auth/login", userData);
         authenticateUser(response, dispatch, navigate);
     } catch (err) {
-        dispatch({
-            type: SET_ERRORS,
-            payload: err.response.data,
-        });
+        // Show toast message
+        const errorData = err.response.data.data;
+        createToast(errorData.errors.message, err.response.data.errorType);
+        dispatch(setErrors(err.response.data));
     }
 };
 
-// Clear errors wwhile component unmounts
-export const clearErrors = () => (dispatch) => {
-    dispatch({
-        type: CLEAR_ERRORS,
-    });
+//Function to set logged in users state
+const authenticateUser = (response, dispatch, navigate) => {
+    // Save token in localstorage
+    const token = response.data.data.token;
+    localStorage.setItem("jwt", token);
+
+    // Set the token in axios header
+    setAuthToken(token);
+
+    // Set the decoded data in redux store
+    const decoded = jwt_decode(token);
+    dispatch(setCurrentUser(decoded));
+    createToast("Login Successful", "success");
+    navigate("/", { replace: true });
 };
 
 // Disaptch function to set user data in store
@@ -45,13 +52,18 @@ export const setCurrentUser = (decoded) => {
     };
 };
 
-//Function to set logged in users state
-const authenticateUser = (response, dispatch, navigate) => {
-    const token = response.data.data.token;
-    localStorage.setItem("jwt", token);
-    setAuthToken(token);
+// Functions to dispatch error actions
+// Set the errors
+export const setErrors = (payload) => (dispatch) => {
+    dispatch({
+        type: SET_ERRORS,
+        payload,
+    });
+};
 
-    const decoded = jwt_decode(token);
-    dispatch(setCurrentUser(decoded));
-    navigate("/", { replace: true });
+// Clear errors while component unmounts
+export const clearErrors = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_ERRORS,
+    });
 };

@@ -14,6 +14,9 @@ const theme = createTheme({
         error: {
             main: "#FF5F5F",
         },
+        success: {
+            main: "#E3A6F6",
+        },
     },
     typography: {
         fontFamily: "Sora",

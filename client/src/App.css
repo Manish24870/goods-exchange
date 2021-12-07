@@ -12,6 +12,18 @@ body {
     -moz-osx-font-smoothing: antialiased;
 }
 
-.MuiModal-hidden-114 {
+/* .MuiModal-hidden-114 {
     visibility: hidden;
+} */
+
+/* REACT TOASTIFY */
+:root {
+    --toastify-color-success: #e3a6f6;
+    --toastify-color-error: #ff5f5f;
+    --toastify-font-family: Sora;
+    --toastify-toast-background: #cea3dd;
+    --toastify-color-light: #fbf5fd;
+    --toastify-color-dark: #faf1f1;
+
+    --toastify-text-color-light: #5a5a5a;
 }

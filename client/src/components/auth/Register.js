@@ -30,7 +30,6 @@ const Register = (props) => {
     useEffect(() => {
         setErrorMessages({});
         if (!isEmpty(props.error)) {
-            console.log("BBB");
             setErrorMessages(props.error.data.errors);
         }
     }, [props.error]);
@@ -50,6 +49,10 @@ const Register = (props) => {
         e.preventDefault();
         props.registerUser(formData, navigate);
     };
+
+    // const successfulLogin = () => {
+    //     toast("Login Success");
+    // };
 
     return (
         <Box>

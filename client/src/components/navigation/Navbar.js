@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import {
     AppBar,
     Button,
@@ -12,13 +13,12 @@ import {
     Tooltip,
     IconButton,
     Avatar,
-    ListItemIcon,
 } from "@mui/material";
 import { AccountCircleOutlined, SettingsOutlined, ExitToAppOutlined } from "@mui/icons-material";
 
 import { ReactComponent as LogoIcon } from "../../utils/icon/icon.svg";
 
-const Navbar = () => {
+const Navbar = (props) => {
     const [myAccountMenu, setMyAccountMenu] = useState(null);
     const open = Boolean(myAccountMenu);
 
@@ -41,62 +41,76 @@ const Navbar = () => {
                     </Box>
 
                     <Box>
-                        <Button
-                            component={Link}
-                            to="/auth/register"
-                            sx={{
-                                textTransform: "none",
-                            }}
-                            color="inherit"
-                        >
-                            Register
-                        </Button>
-                        <Button
-                            component={Link}
-                            to="/auth/login"
-                            sx={{
-                                textTransform: "none",
-                                marginLeft: "2rem",
-                            }}
-                            color="inherit"
-                        >
-                            Login
-                        </Button>
-
-                        {/* <Tooltip title="My account">
-                            <IconButton onClick={handleMyAccountClick} size="small">
-                                <Avatar sx={{ bgcolor: "#FF5F5F", height: "35px", width: "35px" }}>
-                                    M
-                                </Avatar>
-                            </IconButton>
-                        </Tooltip> */}
+                        {!props.auth.isAuthenticated ? (
+                            <React.Fragment>
+                                <Button
+                                    component={Link}
+                                    to="/auth/register"
+                                    sx={{
+                                        textTransform: "none",
+                                    }}
+                                    color="inherit"
+                                >
+                                    Register
+                                </Button>
+                                <Button
+                                    component={Link}
+                                    to="/auth/login"
+                                    sx={{
+                                        textTransform: "none",
+                                        marginLeft: "2rem",
+                                    }}
+                                    color="inherit"
+                                >
+                                    Login
+                                </Button>
+                            </React.Fragment>
+                        ) : (
+                            <Tooltip title="My account">
+                                <IconButton onClick={handleMyAccountClick} size="small">
+                                    <Avatar
+                                        sx={{ bgcolor: "#FF5F5F", height: "35px", width: "35px" }}
+                                    >
+                                        M
+                                    </Avatar>
+                                </IconButton>
+                            </Tooltip>
+                        )}
                     </Box>
 
-                    {/* <Menu
-                        anchorEl={myAccountMenu}
-                        open={open}
-                        onClick={handleMyAccountClose}
-                        onClose={handleMyAccountClose}
-                        transformOrigin={{ horizontal: "right", vertical: "top" }}
-                        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                    >
-                        <MenuItem>
-                            <AccountCircleOutlined fontSize="small" sx={{ mr: 1 }} />
-                            My Profile
-                        </MenuItem>
-                        <MenuItem>
-                            <SettingsOutlined fontSize="small" sx={{ mr: 1 }} />
-                            Settings
-                        </MenuItem>
-                        <MenuItem>
-                            <ExitToAppOutlined fontSize="small" sx={{ mr: 1 }} />
-                            Logout
-                        </MenuItem>
-                    </Menu> */}
+                    {props.auth.isAuthenticated ? (
+                        <Menu
+                            anchorEl={myAccountMenu}
+                            open={open}
+                            onClick={handleMyAccountClose}
+                            onClose={handleMyAccountClose}
+                            transformOrigin={{ horizontal: "right", vertical: "top" }}
+                            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                        >
+                            <MenuItem>
+                                <AccountCircleOutlined fontSize="small" sx={{ mr: 1 }} />
+                                My Profile
+                            </MenuItem>
+                            <MenuItem>
+                                <SettingsOutlined fontSize="small" sx={{ mr: 1 }} />
+                                Settings
+                            </MenuItem>
+                            <MenuItem>
+                                <ExitToAppOutlined fontSize="small" sx={{ mr: 1 }} />
+                                Logout
+                            </MenuItem>
+                        </Menu>
+                    ) : null}
                 </Toolbar>
             </Container>
         </AppBar>
     );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth,
+    };
+};
+
+export default connect(mapStateToProps)(Navbar);

@@ -3,6 +3,7 @@ const globalErrorHandler = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || "error";
     err.message = err.message || "Some error occured";
+    err.errorType = err.errorType || "generic-error";
 
     // Duplicate data error
     if (err.code === 11000) {
@@ -15,6 +16,7 @@ const globalErrorHandler = (err, req, res, next) => {
     // Default error response
     res.status(err.statusCode).json({
         status: err.status,
+        errorType: err.errorType,
         data: {
             errors: {
                 message: err.message,
@@ -27,6 +29,7 @@ const globalErrorHandler = (err, req, res, next) => {
 const sendError = (err, customErr, res) => {
     res.status(err.statusCode).json({
         status: err.status,
+        errorType: err.errorType,
         data: {
             errors: customErr,
         },

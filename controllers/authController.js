@@ -28,6 +28,7 @@ exports.registerUser = async (req, res, next) => {
     if (!isValid) {
         return res.status(400).json({
             status: "fail",
+            errorType: "invalid-input",
             data: {
                 errors,
             },
@@ -56,6 +57,7 @@ exports.loginUser = async (req, res, next) => {
     if (!isValid) {
         return res.status(400).json({
             status: "fail",
+            errorType: "invalid-input",
             data: {
                 errors,
             },
@@ -73,7 +75,9 @@ exports.loginUser = async (req, res, next) => {
             !foundUser ||
             !(await foundUser.comparePassword(req.body.password, foundUser.password))
         ) {
-            return next(new ApiError("The given credentials are invalid", 401));
+            return next(
+                new ApiError("The given credentials are invalid", "invalid-login-error", 401)
+            );
         }
 
         foundUser.password = undefined;
