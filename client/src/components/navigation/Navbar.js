@@ -17,6 +17,7 @@ import {
 import { AccountCircleOutlined, SettingsOutlined, ExitToAppOutlined } from "@mui/icons-material";
 
 import { ReactComponent as LogoIcon } from "../../utils/icon/icon.svg";
+import { logoutUser } from "../../actions/authActions";
 
 const Navbar = (props) => {
     const [myAccountMenu, setMyAccountMenu] = useState(null);
@@ -95,7 +96,7 @@ const Navbar = (props) => {
                                 <SettingsOutlined fontSize="small" sx={{ mr: 1 }} />
                                 Settings
                             </MenuItem>
-                            <MenuItem>
+                            <MenuItem onClick={props.logoutUser}>
                                 <ExitToAppOutlined fontSize="small" sx={{ mr: 1 }} />
                                 Logout
                             </MenuItem>
@@ -113,4 +114,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { logoutUser })(Navbar);

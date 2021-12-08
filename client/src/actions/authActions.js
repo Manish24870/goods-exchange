@@ -28,6 +28,14 @@ export const loginUser = (userData, navigate) => async (dispatch) => {
     }
 };
 
+// Action for logging user out
+export const logoutUser = () => (dispatch) => {
+    localStorage.removeItem("jwt");
+    setAuthToken(false);
+    dispatch(setCurrentUser({}));
+    createToast("Logged out successfully", "success");
+};
+
 //Function to set logged in users state
 const authenticateUser = (response, dispatch, navigate) => {
     // Save token in localstorage
