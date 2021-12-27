@@ -50,10 +50,6 @@ const Register = (props) => {
         props.registerUser(formData, navigate);
     };
 
-    // const successfulLogin = () => {
-    //     toast("Login Success");
-    // };
-
     return (
         <Box mt={11}>
             <Container maxWidth="xs">

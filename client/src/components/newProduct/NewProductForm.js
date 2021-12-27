@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import {
     Box,
     Grid,
@@ -10,15 +11,56 @@ import {
     Button,
 } from "@mui/material";
 
-const NewProductForm = () => {
+import isEmpty from "../../utils/isEmpty";
+import { createNewProduct } from "../../actions/productActions";
+
+const NewProductForm = (props) => {
+    const [formData, setFormData] = useState({
+        productName: "",
+        productType: "",
+        condition: "",
+        usedFor: "",
+        usedForType: "months",
+        warranty: "",
+        expiresIn: "",
+        expiresInType: "days",
+        additionals: "",
+        exchangeWith: "",
+        description: "",
+    });
+
+    const onFormValueChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
+        // props.registerUser(formData, navigate);
+    };
+
     return (
-        <Box mt={2} component="form" noValidate autoComplete="off">
+        <Box mt={2} component="form" noValidate autoComplete="off" onSubmit={onFormSubmit}>
             <Grid container spacing={2} sx={{ display: "flex", flexDirection: "column" }}>
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
-                    <TextField fullWidth label="Product name" variant="standard" />
+                    <TextField
+                        fullWidth
+                        label="Product name"
+                        variant="standard"
+                        name="productName"
+                        value={formData.productName}
+                        onChange={onFormValueChange}
+                    />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
-                    <TextField fullWidth label="Product type" variant="standard" />
+                    <TextField
+                        fullWidth
+                        label="Product type"
+                        variant="standard"
+                        name="productType"
+                        value={formData.productType}
+                        onChange={onFormValueChange}
+                    />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
                     <Grid container sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -29,6 +71,9 @@ const NewProductForm = () => {
                                     labelId="condition-select-label"
                                     defaultValue=""
                                     label="Condition"
+                                    name="condition"
+                                    value={formData.condition}
+                                    onChange={onFormValueChange}
                                 >
                                     <MenuItem value="brand-new">Brand New</MenuItem>
                                     <MenuItem value="lightly-used">Lightly Used</MenuItem>
@@ -38,17 +83,23 @@ const NewProductForm = () => {
                         </Grid>
                         <Grid item xs={7} sx={{ display: "flex", justifyContent: "flex-end" }}>
                             <TextField
-                                sx={{ width: "30%", marginRight: 2 }}
+                                sx={{ width: "35%", marginRight: 2 }}
                                 label="Used For"
                                 variant="standard"
+                                name="usedFor"
+                                value={formData.usedFor}
+                                onChange={onFormValueChange}
                             />
 
-                            <FormControl sx={{ width: "40%" }} variant="standard">
+                            <FormControl sx={{ width: "36%" }} variant="standard">
                                 <InputLabel id="used-select-label">Length</InputLabel>
                                 <Select
                                     defaultValue="months"
                                     labelId="used-select-label"
                                     label="Used For"
+                                    name="usedForType"
+                                    value={formData.usedForType}
+                                    onChange={onFormValueChange}
                                 >
                                     <MenuItem value="months">Months</MenuItem>
                                     <MenuItem value="years">Years</MenuItem>
@@ -66,6 +117,9 @@ const NewProductForm = () => {
                                     labelId="warranty-select-label"
                                     defaultValue=""
                                     label="Warranty"
+                                    name="warranty"
+                                    value={formData.warranty}
+                                    onChange={onFormValueChange}
                                 >
                                     <MenuItem value="yes">Yes</MenuItem>
                                     <MenuItem value="no">No</MenuItem>
@@ -74,20 +128,26 @@ const NewProductForm = () => {
                         </Grid>
                         <Grid item xs={7} sx={{ display: "flex", justifyContent: "flex-end" }}>
                             <TextField
-                                sx={{ width: "30%", marginRight: 2 }}
+                                sx={{ width: "35%", marginRight: 2 }}
                                 label="Expires In"
                                 variant="standard"
+                                name="expiresIn"
+                                value={formData.expiresIn}
+                                onChange={onFormValueChange}
                             />
 
-                            <FormControl sx={{ width: "40%" }} variant="standard">
-                                <InputLabel id="used-select-label">Length</InputLabel>
+                            <FormControl sx={{ width: "36%" }} variant="standard">
+                                <InputLabel id="expires-select-label">Length</InputLabel>
                                 <Select
                                     defaultValue="months"
-                                    labelId="used-select-label"
-                                    label="Used For"
+                                    labelId="expires-select-label"
+                                    label="Expires In"
+                                    name="expiresInType"
+                                    value={formData.expiresInType}
+                                    onChange={onFormValueChange}
                                 >
+                                    <MenuItem value="days">Days</MenuItem>
                                     <MenuItem value="months">Months</MenuItem>
-                                    <MenuItem value="years">Years</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -95,13 +155,24 @@ const NewProductForm = () => {
                 </Grid>
 
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
-                    <TextField fullWidth label="Additionals" variant="standard" />
+                    <TextField
+                        fullWidth
+                        label="Additionals"
+                        variant="standard"
+                        name="additionals"
+                        value={formData.additionals}
+                        onChange={onFormValueChange}
+                    />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
-                    <TextField fullWidth label="Exchange With" variant="standard" />
-                </Grid>
-                <Grid item xs={10} sx={{ marginBottom: 2 }}>
-                    <TextField fullWidth label="Phone Number" variant="standard" />
+                    <TextField
+                        fullWidth
+                        label="Exchange With"
+                        variant="standard"
+                        name="exchangeWith"
+                        value={formData.exchangeWith}
+                        onChange={onFormValueChange}
+                    />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
                     <TextField
@@ -110,10 +181,13 @@ const NewProductForm = () => {
                         rows={3}
                         label="Description"
                         variant="standard"
+                        name="description"
+                        value={formData.description}
+                        onChange={onFormValueChange}
                     />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 6 }}>
-                    <Button variant="contained" size="large">
+                    <Button type="submit" variant="contained" size="large">
                         Create
                     </Button>
                 </Grid>
@@ -122,4 +196,10 @@ const NewProductForm = () => {
     );
 };
 
-export default NewProductForm;
+const mapStateToProps = (state) => {
+    return {
+        error: state.error,
+    };
+};
+
+export default connect(mapStateToProps, {})(NewProductForm);
