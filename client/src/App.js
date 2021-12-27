@@ -15,8 +15,8 @@ const App = () => {
         <Provider store={store}>
             <BrowserRouter>
                 <ToastContainer
-                    autoClose={4000}
-                    closeOnClick={false}
+                    autoClose={2500}
+                    closeOnClick={true}
                     limit={1}
                     style={{ marginTop: 75 }}
                 />

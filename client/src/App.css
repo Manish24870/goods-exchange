@@ -18,12 +18,17 @@ body {
 
 /* REACT TOASTIFY */
 :root {
-    --toastify-color-success: #e3a6f6;
-    --toastify-color-error: #ff5f5f;
+    /* --toastify-color-success: #e3a6f6; */
+    /* --toastify-color-success: #3bf143; */
+    --toastify-color-success: #35bd84;
+    /* --toastify-color-error: #ff5f5f; */
+    --toastify-color-error: #fe4d8d;
+    /* --toastify-color-error: #df7687; */
     --toastify-font-family: Sora;
     --toastify-toast-background: #cea3dd;
-    --toastify-color-light: #fbf5fd;
-    --toastify-color-dark: #faf1f1;
+    /* --toastify-color-light: #fbf5fd; */
+    /* --toastify-color-light: #edf8f3;
+    --toastify-color-dark: #fdeff2; */
 
     --toastify-text-color-light: #5a5a5a;
 }

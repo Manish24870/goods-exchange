@@ -32,13 +32,37 @@ const Navbar = (props) => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Container>
                 <Toolbar disableGutters>
                     <Box sx={{ flexGrow: 1 }}>
-                        <Button color="inherit" component={Link} to="/">
+                        <Button color="inherit" component={Link} to="/products">
                             <SvgIcon component={LogoIcon} viewBox="0 0 32 32" fontSize="large" />
                         </Button>
+                        <React.Fragment>
+                            <Button
+                                component={Link}
+                                to="/products"
+                                sx={{
+                                    textTransform: "none",
+                                    marginRight: "2rem",
+                                    marginLeft: 6,
+                                }}
+                                color="inherit"
+                            >
+                                Products
+                            </Button>
+                            <Button
+                                component={Link}
+                                to="/products/new"
+                                sx={{
+                                    textTransform: "none",
+                                }}
+                                color="inherit"
+                            >
+                                Add Product
+                            </Button>
+                        </React.Fragment>
                     </Box>
 
                     <Box>
@@ -88,7 +112,7 @@ const Navbar = (props) => {
                             transformOrigin={{ horizontal: "right", vertical: "top" }}
                             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                         >
-                            <MenuItem>
+                            <MenuItem component={Link} to="/profile">
                                 <AccountCircleOutlined fontSize="small" sx={{ mr: 1 }} />
                                 My Profile
                             </MenuItem>

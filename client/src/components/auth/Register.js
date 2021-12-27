@@ -55,9 +55,9 @@ const Register = (props) => {
     // };
 
     return (
-        <Box>
+        <Box mt={11}>
             <Container maxWidth="xs">
-                <Box mt={5} textAlign="center">
+                <Box textAlign="center">
                     <Typography component="h1" variant="h4" sx={{ fontWeight: 500 }}>
                         Register
                     </Typography>
