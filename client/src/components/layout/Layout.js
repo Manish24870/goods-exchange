@@ -6,6 +6,7 @@ import HomePage from "../homepage/Home";
 import Register from "../auth/Register";
 import Login from "../auth/Login";
 import Navbar from "../navigation/Navbar";
+import NewProduct from "../newProduct/NewProduct";
 import setAuthToken from "../../utils/auth/setAuthToken";
 import { setCurrentUser } from "../../actions/authActions";
 import store from "../../store";
@@ -26,6 +27,7 @@ const Layout = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/auth/register" element={<Register />} />
                 <Route path="/auth/login" element={<Login />} />
+                <Route path="/products/new" element={<NewProduct />} />
             </Routes>
         </div>
     );
