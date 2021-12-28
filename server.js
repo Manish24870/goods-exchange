@@ -5,6 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRouter = require("./routes/authRoutes");
+const productRouter = require("./routes/productRoutes");
 const globalErrorHandler = require("./controllers/errorController");
 
 const app = express();
@@ -28,6 +29,7 @@ mongoose
 
 // Mount Routes
 app.use("/api/auth", authRouter);
+app.use("/api/products", productRouter);
 
 // Global error handler
 app.use(globalErrorHandler);

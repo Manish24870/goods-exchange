@@ -36,7 +36,7 @@ const NewProductForm = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
-        // props.registerUser(formData, navigate);
+        props.createNewProduct(formData);
     };
 
     return (
@@ -202,4 +202,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {})(NewProductForm);
+export default connect(mapStateToProps, { createNewProduct })(NewProductForm);
