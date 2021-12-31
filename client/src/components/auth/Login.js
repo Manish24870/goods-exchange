@@ -15,7 +15,8 @@ import {
 import { Link } from "react-router-dom";
 
 import isEmpty from "../../utils/isEmpty";
-import { loginUser, clearErrors } from "../../actions/authActions";
+import { loginUser } from "../../actions/authActions";
+import { clearErrors } from "../../actions/errorActions";
 
 // LOGIN COMPONENT
 const Login = (props) => {

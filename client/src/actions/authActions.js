@@ -3,7 +3,8 @@ import jwt_decode from "jwt-decode";
 import axiosInstance from "../utils/axios/axiosInstance";
 import setAuthToken from "../utils/auth/setAuthToken";
 import createToast from "../utils/toast/createToast";
-import { SET_CURRENT_USER, SET_ERRORS, CLEAR_ERRORS } from "./types";
+import { setErrors } from "./errorActions";
+import { SET_CURRENT_USER } from "./types";
 
 // Action for registering a user
 export const registerUser = (userData, navigate) => async (dispatch) => {
@@ -58,20 +59,4 @@ export const setCurrentUser = (decoded) => {
         type: SET_CURRENT_USER,
         payload: decoded,
     };
-};
-
-// Functions to dispatch error actions
-// Set the errors
-export const setErrors = (payload) => (dispatch) => {
-    dispatch({
-        type: SET_ERRORS,
-        payload,
-    });
-};
-
-// Clear errors while component unmounts
-export const clearErrors = () => (dispatch) => {
-    dispatch({
-        type: CLEAR_ERRORS,
-    });
 };

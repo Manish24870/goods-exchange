@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
     Box,
     Grid,
@@ -13,11 +14,13 @@ import {
 
 import isEmpty from "../../utils/isEmpty";
 import { createNewProduct } from "../../actions/productActions";
+import { clearErrors } from "../../actions/errorActions";
 
 const NewProductForm = (props) => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         productName: "",
-        productType: "",
+        productKind: "",
         condition: "",
         usedFor: "",
         usedForType: "months",
@@ -29,14 +32,30 @@ const NewProductForm = (props) => {
         description: "",
     });
 
+    const [errorMessages, setErrorMessages] = useState({});
+
+    //Hook for getting error message
+    useEffect(() => {
+        setErrorMessages({});
+        if (!isEmpty(props.error)) {
+            setErrorMessages(props.error.data.errors);
+        }
+    }, [props.error]);
+
+    //Hook for removing errors when component unmounts
+    useEffect(() => {
+        return () => {
+            props.clearErrors();
+        };
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
     const onFormValueChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
-        props.createNewProduct(formData);
+        props.createNewProduct(formData, navigate);
     };
 
     return (
@@ -50,16 +69,20 @@ const NewProductForm = (props) => {
                         name="productName"
                         value={formData.productName}
                         onChange={onFormValueChange}
+                        error={errorMessages.productName ? true : false}
+                        helperText={errorMessages.productName ? errorMessages.productName : null}
                     />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
                     <TextField
                         fullWidth
-                        label="Product type"
+                        label="Product kind"
                         variant="standard"
-                        name="productType"
-                        value={formData.productType}
+                        name="productKind"
+                        value={formData.productKind}
                         onChange={onFormValueChange}
+                        error={errorMessages.productKind ? true : false}
+                        helperText={errorMessages.productKind ? errorMessages.productKind : null}
                     />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
@@ -74,6 +97,7 @@ const NewProductForm = (props) => {
                                     name="condition"
                                     value={formData.condition}
                                     onChange={onFormValueChange}
+                                    error={errorMessages.condition ? true : false}
                                 >
                                     <MenuItem value="brand-new">Brand New</MenuItem>
                                     <MenuItem value="lightly-used">Lightly Used</MenuItem>
@@ -89,6 +113,8 @@ const NewProductForm = (props) => {
                                 name="usedFor"
                                 value={formData.usedFor}
                                 onChange={onFormValueChange}
+                                error={errorMessages.usedFor ? true : false}
+                                helperText={errorMessages.usedFor ? errorMessages.usedFor : null}
                             />
 
                             <FormControl sx={{ width: "36%" }} variant="standard">
@@ -120,6 +146,7 @@ const NewProductForm = (props) => {
                                     name="warranty"
                                     value={formData.warranty}
                                     onChange={onFormValueChange}
+                                    error={errorMessages.warranty ? true : false}
                                 >
                                     <MenuItem value="yes">Yes</MenuItem>
                                     <MenuItem value="no">No</MenuItem>
@@ -134,6 +161,10 @@ const NewProductForm = (props) => {
                                 name="expiresIn"
                                 value={formData.expiresIn}
                                 onChange={onFormValueChange}
+                                error={errorMessages.expiresIn ? true : false}
+                                helperText={
+                                    errorMessages.expiresIn ? errorMessages.expiresIn : null
+                                }
                             />
 
                             <FormControl sx={{ width: "36%" }} variant="standard">
@@ -172,6 +203,8 @@ const NewProductForm = (props) => {
                         name="exchangeWith"
                         value={formData.exchangeWith}
                         onChange={onFormValueChange}
+                        error={errorMessages.exchangeWith ? true : false}
+                        helperText={errorMessages.exchangeWith ? errorMessages.exchangeWith : null}
                     />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 2 }}>
@@ -184,6 +217,8 @@ const NewProductForm = (props) => {
                         name="description"
                         value={formData.description}
                         onChange={onFormValueChange}
+                        error={errorMessages.description ? true : false}
+                        helperText={errorMessages.description ? errorMessages.description : null}
                     />
                 </Grid>
                 <Grid item xs={10} sx={{ marginBottom: 6 }}>
@@ -202,4 +237,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { createNewProduct })(NewProductForm);
+export default connect(mapStateToProps, { createNewProduct, clearErrors })(NewProductForm);

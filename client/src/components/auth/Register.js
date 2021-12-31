@@ -13,7 +13,8 @@ import {
 import { Link } from "react-router-dom";
 
 import isEmpty from "../../utils/isEmpty";
-import { registerUser, clearErrors } from "../../actions/authActions";
+import { registerUser } from "../../actions/authActions";
+import { clearErrors } from "../../actions/errorActions";
 
 // REGISTER COMPONENT
 const Register = (props) => {

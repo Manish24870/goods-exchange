@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema({
             type: Boolean,
             required: true,
         },
-        timeRemaining: {
+        expiresIn: {
             type: Date,
             required: true,
         },
