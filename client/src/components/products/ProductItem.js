@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import { Box, Card, Button, CardMedia, CardContent, Avatar, Typography } from "@mui/material";
 import { ArrowForwardIos } from "@mui/icons-material";
 
@@ -10,30 +11,32 @@ const ProductItem = (props) => {
                 <CardMedia
                     component="img"
                     height="200"
-                    image={"product.productImages[0].url"}
-                    alt="Product1"
+                    image={"https://picsum.photos/300/300"}
+                    alt={props.product.name}
                 />
 
                 <CardContent>
                     <Box>
-                        <Typography variant="h6">{"product.name"}</Typography>
+                        <Typography variant="h6">{props.product.name}</Typography>
                     </Box>
                     <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
                         <Avatar
-                            alt={"product.name"}
+                            alt={props.product.owner.name}
                             src={"product.posterDetails.photo"}
                             sx={{ bgcolor: "#2196f3" }}
                         />
                         <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
-                            <Typography variant="p">{"product.posterDetails.name"}</Typography>
+                            <Typography variant="p">{props.product.owner.username}</Typography>
                             <Typography variant="p" sx={{ opacity: "90%", fontSize: "0.81em" }}>
-                                {"product.postedDate.toUTCString().slice(0, 26)"}
+                                {moment(props.product.postedAt).format("MMM Do YYYY, h:mm a")}
                             </Typography>
                         </Box>
                     </Box>
-                    <Box mt={3}>
-                        <Typography variant="p" sx={{ fontSize: "0.9em" }}>
-                            {"product.description.slice(0, 122) + ' ...'"}
+                    <Box mt={3} sx={{ minHeight: "60px" }}>
+                        <Typography variant="p" sx={{ fontSize: "0.9em", height: "60px" }}>
+                            {props.product.description.length > 101
+                                ? props.product.description.slice(0, 102) + " ..."
+                                : props.product.description}
                         </Typography>
                     </Box>
                     <Box mt={3} sx={{ display: "flex", justifyContent: "end" }}>
@@ -48,7 +51,7 @@ const ProductItem = (props) => {
                         </Button>
                         <Button
                             component={Link}
-                            to={`/products/${"product.id"}`}
+                            to={`/products/${props.product._id}`}
                             size="large"
                             variant="outlined"
                             sx={{ textTransform: "none" }}
