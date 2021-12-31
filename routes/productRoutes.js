@@ -6,6 +6,7 @@ const authController = require("../controllers/authController");
 const router = express.Router();
 
 router.get("/", productController.getProducts);
+router.get("/:id", productController.getProduct);
 router.post("/create", authController.protect, productController.createNewProduct);
 
 module.exports = router;

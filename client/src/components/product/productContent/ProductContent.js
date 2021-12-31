@@ -8,10 +8,10 @@ const ProductContent = (props) => {
     return (
         <Grid container mt={4} sx={{ justifyContent: "space-between" }}>
             <Grid item xs={6}>
-                <ProductDescription productId={"props.productId"} />
+                <ProductDescription product={props.product} />
             </Grid>
             <Grid item xs={5}>
-                <ProductInfo productId={"props.productId"} />
+                <ProductInfo details={props.product.details} />
             </Grid>
         </Grid>
     );

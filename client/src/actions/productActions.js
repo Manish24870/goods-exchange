@@ -1,7 +1,7 @@
 import axiosInstance from "../utils/axios/axiosInstance";
 import { setErrors } from "./errorActions";
 import createToast from "../utils/toast/createToast";
-import { CREATE_NEW_PRODUCT, GET_PRODUCTS } from "./types";
+import { CREATE_NEW_PRODUCT, GET_PRODUCTS, GET_PRODUCT } from "./types";
 
 // Function to create a new product
 export const createNewProduct = (productData, navigate) => async (dispatch) => {
@@ -12,7 +12,7 @@ export const createNewProduct = (productData, navigate) => async (dispatch) => {
             payload: response.data.data.newProduct,
         });
         createToast("New product created", "success");
-        navigate("/products");
+        navigate("/products", { replace: true });
     } catch (err) {
         dispatch(setErrors(err.response.data));
     }
@@ -32,3 +32,14 @@ export const getProducts = () => async (dispatch) => {
 };
 
 // Function to get a single product
+export const getProduct = (id) => async (dispatch) => {
+    try {
+        const response = await axiosInstance.get(`/api/products/${id}`);
+        dispatch({
+            type: GET_PRODUCT,
+            payload: response.data.data.product,
+        });
+    } catch (err) {
+        console.log(err.response);
+    }
+};

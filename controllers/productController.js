@@ -8,7 +8,6 @@ const ApiError = require("../utils/apiError");
 exports.createNewProduct = async (req, res, next) => {
     console.log(req.body);
     const { errors, isValid } = inputValidator(req.body, "create-new-product");
-    console.log(errors);
 
     if (!isValid) {
         return res.status(400).json({
@@ -26,17 +25,18 @@ exports.createNewProduct = async (req, res, next) => {
     });
 
     let expiresIn = Number(req.body.expiresIn);
-    if (req.body.expiresInType === "days") {
+    if (req.body.expiresInType === "Days") {
+        console.log(Date.now());
         expiresIn = Date.now() + expiresIn * 24 * 60 * 60 * 1000;
-    } else if (req.body.expiresInType === "months") {
+    } else if (req.body.expiresInType === "Months") {
         expiresIn = Date.now() + expiresIn * 30 * 24 * 60 * 60 * 1000;
     }
 
-    if (req.body.additionals) {
-        const additionals = req.body.additionals.split(",").map((el) => {
-            return el.trim();
-        });
-    }
+    const additionals = req.body.additionals
+        ? req.body.additionals.split(",").map((el) => {
+              return el.trim();
+          })
+        : "None";
 
     const exchangeWith = req.body.exchangeWith.split(",").map((el) => {
         return el.trim();
@@ -50,9 +50,9 @@ exports.createNewProduct = async (req, res, next) => {
             kind: productKind,
             condition: req.body.condition,
             usedFor: `${req.body.usedFor} ${req.body.usedForType}`,
-            warranty: "yes" ? true : false,
+            warranty: req.body.warranty,
             expiresIn,
-            additionals: req.body.additionals ? additionals : "None",
+            additionals,
             exchangeWith,
         },
     });
@@ -77,14 +77,38 @@ exports.createNewProduct = async (req, res, next) => {
 // Authentication = false
 exports.getProducts = async (req, res, next) => {
     try {
-        const products = await Product.find().sort({
-            postedAt: -1,
-        });
+        const products = await Product.find()
+            .sort({
+                postedAt: -1,
+            })
+            .populate("owner");
         res.status(200).json({
             status: "success",
             data: {
                 message: "Products fetched successfully",
                 products,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Route = /api/products/:id
+// Function to get a single product
+// Authentication = false
+exports.getProduct = async (req, res, next) => {
+    try {
+        const product = await Product.findById(req.params.id).populate("owner");
+        if (!product) {
+            return next(new ApiError("This product doesn't exist.", "not-found-error", 404));
+        }
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                message: "Product fetched successfully",
+                product,
             },
         });
     } catch (err) {

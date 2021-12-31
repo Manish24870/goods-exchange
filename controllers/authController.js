@@ -101,7 +101,6 @@ exports.protect = async (req, res, next) => {
         return next(new ApiError("You are not logged in", "unauthorized-error", 401));
     }
 
-    console.log(token);
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
     const currentUser = await User.findById(decoded.id);

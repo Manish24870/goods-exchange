@@ -39,7 +39,7 @@ const ExchangerDetailsItem = (props) => {
                                 to="#"
                                 onClick={props.onClick}
                             >
-                                {"product.posterDetails.contact"}
+                                {props.value}
                             </Link>
                         </Typography>
                     </Box>

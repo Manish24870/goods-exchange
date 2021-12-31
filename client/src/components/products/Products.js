@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Box, Container, Stack, Pagination } from "@mui/material";
 import { connect } from "react-redux";
 
+import isEmpty from "../../utils/isEmpty";
 import ProductList from "./ProductList";
 import { getProducts } from "../../actions/productActions";
 
@@ -12,7 +13,7 @@ const Products = (props) => {
 
     let productContent;
 
-    if (!props.products) {
+    if (isEmpty(props.products)) {
         productContent = (
             <Box mt={11} mb={8}>
                 <Container maxWidth="lg">

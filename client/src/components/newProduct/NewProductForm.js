@@ -23,14 +23,15 @@ const NewProductForm = (props) => {
         productKind: "",
         condition: "",
         usedFor: "",
-        usedForType: "months",
+        usedForType: "Months",
         warranty: "",
         expiresIn: "",
-        expiresInType: "days",
+        expiresInType: "Days",
         additionals: "",
         exchangeWith: "",
         description: "",
     });
+    console.log(formData.additionals);
 
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -99,9 +100,9 @@ const NewProductForm = (props) => {
                                     onChange={onFormValueChange}
                                     error={errorMessages.condition ? true : false}
                                 >
-                                    <MenuItem value="brand-new">Brand New</MenuItem>
-                                    <MenuItem value="lightly-used">Lightly Used</MenuItem>
-                                    <MenuItem value="heavily-used">Heavily Used</MenuItem>
+                                    <MenuItem value="Brand New">Brand New</MenuItem>
+                                    <MenuItem value="Lightly Used">Lightly Used</MenuItem>
+                                    <MenuItem value="Heavily Used">Heavily Used</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -120,15 +121,15 @@ const NewProductForm = (props) => {
                             <FormControl sx={{ width: "36%" }} variant="standard">
                                 <InputLabel id="used-select-label">Length</InputLabel>
                                 <Select
-                                    defaultValue="months"
+                                    defaultValue="Months"
                                     labelId="used-select-label"
                                     label="Used For"
                                     name="usedForType"
                                     value={formData.usedForType}
                                     onChange={onFormValueChange}
                                 >
-                                    <MenuItem value="months">Months</MenuItem>
-                                    <MenuItem value="years">Years</MenuItem>
+                                    <MenuItem value="Months">Months</MenuItem>
+                                    <MenuItem value="Years">Years</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -148,8 +149,8 @@ const NewProductForm = (props) => {
                                     onChange={onFormValueChange}
                                     error={errorMessages.warranty ? true : false}
                                 >
-                                    <MenuItem value="yes">Yes</MenuItem>
-                                    <MenuItem value="no">No</MenuItem>
+                                    <MenuItem value="Yes">Yes</MenuItem>
+                                    <MenuItem value="No">No</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -170,15 +171,15 @@ const NewProductForm = (props) => {
                             <FormControl sx={{ width: "36%" }} variant="standard">
                                 <InputLabel id="expires-select-label">Length</InputLabel>
                                 <Select
-                                    defaultValue="months"
+                                    defaultValue="Months"
                                     labelId="expires-select-label"
                                     label="Expires In"
                                     name="expiresInType"
                                     value={formData.expiresInType}
                                     onChange={onFormValueChange}
                                 >
-                                    <MenuItem value="days">Days</MenuItem>
-                                    <MenuItem value="months">Months</MenuItem>
+                                    <MenuItem value="Days">Days</MenuItem>
+                                    <MenuItem value="Months">Months</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>

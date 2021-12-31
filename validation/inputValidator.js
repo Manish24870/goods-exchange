@@ -29,13 +29,12 @@ const inputValidator = (data, type) => {
 
     // New product form validation
     if (type === "create-new-product") {
-        delete data.additionals;
         errors = newProductValidator(data);
     }
 
     // Check for empty string
     for (const key in data) {
-        if (validator.isEmpty(String(data[key]))) {
+        if (validator.isEmpty(String(data[key])) && key !== "additionals") {
             let keyText = key.replace(/([a-z])([A-Z])/g, "$1 $2");
             keyText = keyText.charAt(0).toUpperCase() + keyText.slice(1);
             errors[key] = `${keyText} is required`;

@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema({
             required: true,
         },
         warranty: {
-            type: Boolean,
+            type: String,
             required: true,
         },
         expiresIn: {
