@@ -2,6 +2,9 @@ const Product = require("../models/productModel");
 const inputValidator = require("../validation/inputValidator");
 const ApiError = require("../utils/apiError");
 
+// Route = /api/products/create
+// Function to create a new product
+// Authentication = true
 exports.createNewProduct = async (req, res, next) => {
     console.log(req.body);
     const { errors, isValid } = inputValidator(req.body, "create-new-product");
@@ -62,6 +65,26 @@ exports.createNewProduct = async (req, res, next) => {
             data: {
                 message: "New product created successfully",
                 newProduct,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Route = /api/products
+// Function to get all the products
+// Authentication = false
+exports.getProducts = async (req, res, next) => {
+    try {
+        const products = await Product.find().sort({
+            postedAt: -1,
+        });
+        res.status(200).json({
+            status: "success",
+            data: {
+                message: "Products fetched successfully",
+                products,
             },
         });
     } catch (err) {

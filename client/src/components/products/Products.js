@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Container, Stack, Pagination } from "@mui/material";
+import { connect } from "react-redux";
 
 import ProductList from "./ProductList";
+import { getProducts } from "../../actions/productActions";
 
-const Products = () => {
+const Products = (props) => {
+    useEffect(() => {
+        props.getProducts();
+    }, []);
+
     return (
         <Box mt={11} mb={8}>
             <Container maxWidth="lg">
@@ -16,4 +22,4 @@ const Products = () => {
     );
 };
 
-export default Products;
+export default connect(null, { getProducts })(Products);

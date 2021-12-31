@@ -23,6 +23,7 @@ const sendAuthToken = (user, res) => {
 
 // Route = /api/auth/register
 // Function to register a new user
+// Authentication = false
 exports.registerUser = async (req, res, next) => {
     const { errors, isValid } = inputValidator(req.body, "register-user");
 
@@ -53,6 +54,7 @@ exports.registerUser = async (req, res, next) => {
 
 // Route = /api/auth/login
 // Function to login a user
+// Authentication = false
 exports.loginUser = async (req, res, next) => {
     const { errors, isValid } = inputValidator(req.body);
     if (!isValid) {

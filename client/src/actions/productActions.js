@@ -3,6 +3,7 @@ import { setErrors } from "./errorActions";
 import createToast from "../utils/toast/createToast";
 import { CREATE_NEW_PRODUCT } from "./types";
 
+// Function to create a new product
 export const createNewProduct = (productData, navigate) => async (dispatch) => {
     try {
         const response = await axiosInstance.post("/api/products/create", productData);
@@ -14,5 +15,15 @@ export const createNewProduct = (productData, navigate) => async (dispatch) => {
         navigate("/products");
     } catch (err) {
         dispatch(setErrors(err.response.data));
+    }
+};
+
+// Function to get all products from DB
+export const getProducts = () => async (dispatch) => {
+    try {
+        const response = await axiosInstance.get("/api/products");
+        console.log(response);
+    } catch (err) {
+        console.log(err);
     }
 };
