@@ -1,7 +1,8 @@
+import _ from "lodash";
 import { CREATE_NEW_PRODUCT, GET_PRODUCTS } from "../actions/types";
 
 const initialState = {
-    products: [],
+    products: {},
 };
 
 const productReducer = (state = initialState, action) => {
@@ -9,7 +10,10 @@ const productReducer = (state = initialState, action) => {
         case CREATE_NEW_PRODUCT:
             return { ...state, products: [action.payload, ...state.products] };
         case GET_PRODUCTS:
-            return { ...state, products: action.payload };
+            return {
+                ...state,
+                products: { ..._.mapKeys(action.payload, "_id") },
+            };
         default:
             return state;
     }

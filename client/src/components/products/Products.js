@@ -38,7 +38,7 @@ const Products = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        products: state.product.products,
+        products: Object.values(state.product.products),
     };
 };
 

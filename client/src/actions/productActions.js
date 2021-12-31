@@ -22,7 +22,6 @@ export const createNewProduct = (productData, navigate) => async (dispatch) => {
 export const getProducts = () => async (dispatch) => {
     try {
         const response = await axiosInstance.get("/api/products");
-        console.log("DONE");
         dispatch({
             type: GET_PRODUCTS,
             payload: response.data.data.products,
@@ -31,3 +30,5 @@ export const getProducts = () => async (dispatch) => {
         console.log(err);
     }
 };
+
+// Function to get a single product
