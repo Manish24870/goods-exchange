@@ -8,7 +8,7 @@ import { clearErrors } from "../../../actions/errorActions";
 
 const ProductDiscussionForm = (props) => {
     const [formData, setFormData] = useState({
-        text: "",
+        question: "",
     });
 
     const [errorMessages, setErrorMessages] = useState({});
@@ -44,14 +44,14 @@ const ProductDiscussionForm = (props) => {
                 <Grid container>
                     <Grid item xs={10}>
                         <TextField
-                            name="text"
-                            value={formData.text}
+                            name="question"
+                            value={formData.question}
                             onChange={onFormDataChange}
                             fullWidth
                             label="Your Question"
                             variant="standard"
-                            error={errorMessages.text ? true : false}
-                            helperText={errorMessages.text ? errorMessages.text : null}
+                            error={errorMessages.question ? true : false}
+                            helperText={errorMessages.question ? errorMessages.question : null}
                         />
                     </Grid>
                     <Grid item xs={12} mt={2}>

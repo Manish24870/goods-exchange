@@ -1,7 +1,13 @@
 import axiosInstance from "../utils/axios/axiosInstance";
-import { setErrors } from "./errorActions";
+import { clearErrors, setErrors } from "./errorActions";
 import createToast from "../utils/toast/createToast";
-import { CREATE_NEW_PRODUCT, GET_PRODUCTS, GET_PRODUCT, CREATE_NEW_QUESTION } from "./types";
+import {
+    CREATE_NEW_PRODUCT,
+    GET_PRODUCTS,
+    GET_PRODUCT,
+    CREATE_NEW_QUESTION,
+    CREATE_NEW_ANSWER,
+} from "./types";
 
 // Function to create a new product
 export const createNewProduct = (productData, navigate) => async (dispatch) => {
@@ -48,10 +54,30 @@ export const getProduct = (id) => async (dispatch) => {
 export const createNewQuestion = (id, questionData) => async (dispatch) => {
     try {
         const response = await axiosInstance.post(`/api/products/${id}/question`, questionData);
+        dispatch(clearErrors());
         dispatch({
             type: CREATE_NEW_QUESTION,
             payload: response.data.data.product.questions,
         });
+    } catch (err) {
+        dispatch(setErrors(err.response.data));
+    }
+};
+
+// Function to post a question
+export const createNewAnswer = (id, questionId, answerData, handleClose) => async (dispatch) => {
+    try {
+        const response = await axiosInstance.post(
+            `/api/products/${id}/${questionId}/answer`,
+            answerData
+        );
+        dispatch(clearErrors());
+        dispatch({
+            type: CREATE_NEW_ANSWER,
+            payload: response.data.data.product.questions,
+        });
+        // Function to close the dialog box
+        handleClose();
     } catch (err) {
         dispatch(setErrors(err.response.data));
     }

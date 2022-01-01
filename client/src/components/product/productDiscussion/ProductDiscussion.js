@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
 import ProductQuestion from "./ProductQuestion";
 import ProductDiscussionForm from "./ProductDiscussionForm";
+import ProductAnswerForm from "./ProductAnswerForm";
 
 const ProductDiscussion = (props) => {
+    const [open, setOpen] = useState(false);
+    const [questionId, setQuestionId] = useState(null);
+
+    const handleClickOpen = (e, id) => {
+        e.preventDefault();
+        setQuestionId(id);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     let renderQuestions;
     if (props.questions.length === 0) {
         renderQuestions = <h5>No questions to show</h5>;
     } else {
         renderQuestions = props.questions.map((question) => (
-            <ProductQuestion key={question._id} question={question} />
+            <ProductQuestion
+                key={question._id}
+                question={question}
+                handleClickOpen={handleClickOpen}
+            />
         ));
     }
 
@@ -30,6 +48,7 @@ const ProductDiscussion = (props) => {
                         {renderQuestions}
                     </Box>
                 </CardContent>
+                <ProductAnswerForm open={open} handleClose={handleClose} questionId={questionId} />
             </Card>
         </Box>
     );

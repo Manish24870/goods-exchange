@@ -4,6 +4,7 @@ import {
     GET_PRODUCTS,
     GET_PRODUCT,
     CREATE_NEW_QUESTION,
+    CREATE_NEW_ANSWER,
 } from "../actions/types";
 
 const initialState = {
@@ -29,6 +30,11 @@ const productReducer = (state = initialState, action) => {
                 product: action.payload,
             };
         case CREATE_NEW_QUESTION:
+            return {
+                ...state,
+                product: { ...state.product, questions: action.payload },
+            };
+        case CREATE_NEW_ANSWER:
             return {
                 ...state,
                 product: { ...state.product, questions: action.payload },

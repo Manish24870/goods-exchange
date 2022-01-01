@@ -115,7 +115,7 @@ exports.getProduct = async (req, res, next) => {
     }
 };
 
-// Route = /api/products/question
+// Route = /api/products/:id/question
 // Function to ask a new question
 // Authentication = true
 exports.createNewQuestion = async (req, res, next) => {
@@ -138,7 +138,7 @@ exports.createNewQuestion = async (req, res, next) => {
         }
 
         const newQuestion = {
-            ques: req.body.text,
+            ques: req.body.question,
             askedBy: req.user._id,
         };
         product.questions.push(newQuestion);
@@ -147,6 +147,44 @@ exports.createNewQuestion = async (req, res, next) => {
             status: "success",
             data: {
                 message: "Question asked successfully",
+                product,
+            },
+        });
+    } catch (err) {}
+};
+
+// Route = /api/products/:id/:questionId/answer
+// Function to ask a new question
+// Authentication = true
+exports.createNewAnswer = async (req, res, next) => {
+    const { errors, isValid } = inputValidator(req.body, "create-new-answer");
+    if (!isValid) {
+        return res.status(400).json({
+            status: "fail",
+            errorType: "invalid-input",
+            data: {
+                errors,
+            },
+        });
+    }
+
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return next(new ApiError("This product doesn't exist.", "not-found-error", 404));
+        }
+
+        const questionIndex = product.questions.findIndex((el) =>
+            el._id.equals(req.params.questionId)
+        );
+        product.questions[questionIndex].ans = req.body.answer;
+        await product.save();
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                message: "Answer added successfully",
                 product,
             },
         });
