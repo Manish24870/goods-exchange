@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import isEmpty from "../../utils/isEmpty";
 import ProductList from "./ProductList";
+import Loading from "../loading/Loading";
 import { getProducts } from "../../actions/productActions";
 
 const Products = (props) => {
@@ -17,7 +18,7 @@ const Products = (props) => {
         productContent = (
             <Box mt={11} mb={8}>
                 <Container maxWidth="lg">
-                    <h2>LOADING....</h2>
+                    <Loading />
                 </Container>
             </Box>
         );

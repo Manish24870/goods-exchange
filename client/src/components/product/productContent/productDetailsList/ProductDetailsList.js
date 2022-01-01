@@ -27,7 +27,7 @@ const ProductDetailsList = (props) => {
         listItem = props.value.map((el) => (
             <Button
                 key={el}
-                color="secondary"
+                color="info"
                 variant="outlined"
                 size="small"
                 sx={{
@@ -42,7 +42,7 @@ const ProductDetailsList = (props) => {
     } else {
         listItem = (
             <Button
-                color="secondary"
+                color="info"
                 variant="text"
                 size="small"
                 sx={{

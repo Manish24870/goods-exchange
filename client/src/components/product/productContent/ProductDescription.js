@@ -14,7 +14,7 @@ const ProductDescription = (props) => {
                 <Avatar
                     alt={props.product.owner.username}
                     src={"product.posterDetails.photo"}
-                    sx={{ marginRight: 2, height: "35px", width: "35px", bgcolor: "#2196f3" }}
+                    sx={{ marginRight: 2, height: "35px", width: "35px", bgcolor: "#6325A9" }}
                 ></Avatar>
                 <Typography variant="h6" sx={{ fontWeight: 400 }}>
                     {props.product.owner.username}

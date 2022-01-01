@@ -8,11 +8,11 @@ const theme = createTheme({
         //     contrastText: "#fff",
         // },
         // primary: {
-        //     main: "#4FB7D7",
+        // main: "#4FB7D7",
         //     contrastText: "#fff",
         // },
         // primary: {
-        //     main: "#4E8EFA",
+        //     main: "#6325A9",
         //     contrastText: "#fff",
         // },
         // primary: {
@@ -40,6 +40,9 @@ const theme = createTheme({
         },
         success: {
             main: "#E3A6F6",
+        },
+        info: {
+            main: "#6325A9",
         },
     },
     typography: {

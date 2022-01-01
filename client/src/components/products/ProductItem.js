@@ -23,7 +23,7 @@ const ProductItem = (props) => {
                         <Avatar
                             alt={props.product.owner.name}
                             src={"product.posterDetails.photo"}
-                            sx={{ bgcolor: "#2196f3" }}
+                            sx={{ bgcolor: "#6325A9" }}
                         />
                         <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
                             <Typography variant="p">{props.product.owner.username}</Typography>

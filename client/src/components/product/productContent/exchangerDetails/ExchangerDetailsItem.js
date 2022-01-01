@@ -15,7 +15,7 @@ const ExchangerDetailsItem = (props) => {
                     }}
                 >
                     <Box>
-                        <Avatar sx={{ height: "30px", width: "30px", bgcolor: "#2196f3" }}>
+                        <Avatar sx={{ height: "30px", width: "30px", bgcolor: "#6325A9" }}>
                             <Icon fontSize="small" />
                         </Avatar>
                     </Box>

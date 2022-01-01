@@ -6,6 +6,7 @@ import { Container, Box } from "@mui/material";
 import isEmpty from "../../utils/isEmpty";
 import ProductImages from "./productImages/ProductImages";
 import ProductContent from "./productContent/ProductContent";
+import Loading from "../loading/Loading";
 import { getProduct } from "../../actions/productActions";
 
 const Product = (props) => {
@@ -17,7 +18,7 @@ const Product = (props) => {
 
     let productContent;
     if (isEmpty(props.product)) {
-        productContent = <h2>LOADING...</h2>;
+        productContent = <Loading />;
     } else {
         productContent = (
             <React.Fragment>
