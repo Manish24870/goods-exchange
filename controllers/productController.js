@@ -6,7 +6,6 @@ const ApiError = require("../utils/apiError");
 // Function to create a new product
 // Authentication = true
 exports.createNewProduct = async (req, res, next) => {
-    console.log(req.body);
     const { errors, isValid } = inputValidator(req.body, "create-new-product");
 
     if (!isValid) {
@@ -114,4 +113,42 @@ exports.getProduct = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+};
+
+// Route = /api/products/question
+// Function to ask a new question
+// Authentication = true
+exports.createNewQuestion = async (req, res, next) => {
+    const { errors, isValid } = inputValidator(req.body, "create-new-question");
+    if (!isValid) {
+        return res.status(400).json({
+            status: "fail",
+            errorType: "invalid-input",
+            data: {
+                errors,
+            },
+        });
+    }
+
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return next(new ApiError("This product doesn't exist.", "not-found-error", 404));
+        }
+
+        const newQuestion = {
+            ques: req.body.text,
+            askedBy: req.user._id,
+        };
+        product.questions.push(newQuestion);
+        await product.save();
+        res.status(200).json({
+            status: "success",
+            data: {
+                message: "Question asked successfully",
+                product,
+            },
+        });
+    } catch (err) {}
 };

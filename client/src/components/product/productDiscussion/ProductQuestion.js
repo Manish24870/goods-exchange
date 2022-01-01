@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Card, CardContent, Typography, TextField, Grid, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
+// import { QuestionAnswer, QuestionMark } from "@mui/icons-material";
 
 const ProductQuestion = (props) => {
     return (
-        <Box key={"el.question"} mb={3} sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="p" color="secondary" sx={{ fontSize: "1.2em", marginBottom: 1 }}>
-                Q. {"el.question"}
+        <Box mb={3} sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="p" sx={{ fontSize: "1.07em", marginBottom: 1 }}>
+                {"Q: " + props.question.ques}
                 <Button
                     size="small"
                     variant="outlined"
@@ -15,8 +16,8 @@ const ProductQuestion = (props) => {
                     Answer
                 </Button>
             </Typography>
-            <Typography variant="p" color="primary">
-                A. {"el.answer"}
+            <Typography variant="p">
+                {props.question.ans ? `A: ${props.question.ans}` : null}
             </Typography>
         </Box>
     );

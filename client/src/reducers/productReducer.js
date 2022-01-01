@@ -1,5 +1,10 @@
 import _ from "lodash";
-import { CREATE_NEW_PRODUCT, GET_PRODUCTS, GET_PRODUCT } from "../actions/types";
+import {
+    CREATE_NEW_PRODUCT,
+    GET_PRODUCTS,
+    GET_PRODUCT,
+    CREATE_NEW_QUESTION,
+} from "../actions/types";
 
 const initialState = {
     products: {},
@@ -22,6 +27,11 @@ const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 product: action.payload,
+            };
+        case CREATE_NEW_QUESTION:
+            return {
+                ...state,
+                product: { ...state.product, questions: action.payload },
             };
         default:
             return state;

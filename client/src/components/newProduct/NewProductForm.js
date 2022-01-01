@@ -31,7 +31,6 @@ const NewProductForm = (props) => {
         exchangeWith: "",
         description: "",
     });
-    console.log(formData.additionals);
 
     const [errorMessages, setErrorMessages] = useState({});
 

@@ -1,7 +1,7 @@
 import axiosInstance from "../utils/axios/axiosInstance";
 import { setErrors } from "./errorActions";
 import createToast from "../utils/toast/createToast";
-import { CREATE_NEW_PRODUCT, GET_PRODUCTS, GET_PRODUCT } from "./types";
+import { CREATE_NEW_PRODUCT, GET_PRODUCTS, GET_PRODUCT, CREATE_NEW_QUESTION } from "./types";
 
 // Function to create a new product
 export const createNewProduct = (productData, navigate) => async (dispatch) => {
@@ -45,11 +45,14 @@ export const getProduct = (id) => async (dispatch) => {
 };
 
 // Function to post a question
-export const createNewQuestion = (questionData) => async (dispatch) => {
+export const createNewQuestion = (id, questionData) => async (dispatch) => {
     try {
-        const response = await axiosInstance.post("/api/products/question", questionData);
-        console.log(repsonse);
+        const response = await axiosInstance.post(`/api/products/${id}/question`, questionData);
+        dispatch({
+            type: CREATE_NEW_QUESTION,
+            payload: response.data.data.product.questions,
+        });
     } catch (err) {
-        console.log(err.response);
+        dispatch(setErrors(err.response.data));
     }
 };

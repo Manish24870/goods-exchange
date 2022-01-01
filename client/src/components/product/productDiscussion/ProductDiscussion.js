@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, CardContent, Typography, TextField, Grid, Button } from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 
 import ProductQuestion from "./ProductQuestion";
 import ProductDiscussionForm from "./ProductDiscussionForm";
@@ -9,7 +9,9 @@ const ProductDiscussion = (props) => {
     if (props.questions.length === 0) {
         renderQuestions = <h5>No questions to show</h5>;
     } else {
-        renderQuestions.map((question) => <ProductQuestion question={question} />);
+        renderQuestions = props.questions.map((question) => (
+            <ProductQuestion key={question._id} question={question} />
+        ));
     }
 
     return (
