@@ -43,3 +43,13 @@ export const getProduct = (id) => async (dispatch) => {
         console.log(err.response);
     }
 };
+
+// Function to post a question
+export const createNewQuestion = (questionData) => async (dispatch) => {
+    try {
+        const response = await axiosInstance.post("/api/products/question", questionData);
+        console.log(repsonse);
+    } catch (err) {
+        console.log(err.response);
+    }
+};

@@ -6,6 +6,7 @@ import { Container, Box } from "@mui/material";
 import isEmpty from "../../utils/isEmpty";
 import ProductImages from "./productImages/ProductImages";
 import ProductContent from "./productContent/ProductContent";
+import ProductDiscussion from "./productDiscussion/ProductDiscussion";
 import Loading from "../loading/Loading";
 import { getProduct } from "../../actions/productActions";
 
@@ -24,6 +25,7 @@ const Product = (props) => {
             <React.Fragment>
                 <ProductImages images={props.product.images} />
                 <ProductContent product={props.product} />
+                <ProductDiscussion questions={props.product.questions} />
             </React.Fragment>
         );
     }
