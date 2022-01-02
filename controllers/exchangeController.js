@@ -11,11 +11,9 @@ exports.createNewExchange = async (req, res, next) => {
 
         // If the exchange already exists
         if (exchange) {
-            // console.log("C", exchange.initiator);
             initiatorIndex = exchange.initiator.findIndex((el) =>
                 el.initiatorId.equals(req.user._id)
             );
-            console.log(initiatorIndex);
             // If this person has already initiated the exchange
             if (initiatorIndex >= 0) {
                 exchange.initiator.splice(initiatorIndex, 1);
@@ -54,7 +52,7 @@ exports.createNewExchange = async (req, res, next) => {
     }
 };
 
-// Route = /api/products/
+// Route = /api/exchange/my-products
 // Function to get my products
 // Authentication = true
 exports.getMyProducts = async (req, res, next) => {
@@ -66,6 +64,23 @@ exports.getMyProducts = async (req, res, next) => {
             data: {
                 message: "Your products have been fetched successfully",
                 myProducts,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Route = /api/exchange/my-initiates
+// Function to get my initiates
+// Authentication = true
+exports.getMyInitiates = async (req, res, next) => {
+    try {
+        const myInitiates = await Exchange.find({ "initiator.initiatorId": req.user._id });
+        res.status(200).json({
+            status: "success",
+            data: {
+                myInitiates,
             },
         });
     } catch (err) {

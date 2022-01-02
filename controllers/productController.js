@@ -204,6 +204,7 @@ exports.favoriteProduct = async (req, res, next) => {
             el.productId.equals(req.params.id)
         );
 
+        // If the item is already favorited
         if (favoritedIndex >= 0) {
             req.user.favorites.splice(favoritedIndex, 1);
             await req.user.save();

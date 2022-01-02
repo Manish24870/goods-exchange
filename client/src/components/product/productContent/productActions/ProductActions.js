@@ -5,19 +5,31 @@ import { CompareArrowsOutlined, FavoriteBorderOutlined, Favorite } from "@mui/ic
 
 import ProductExchange from "./productExchange/ProductExchange";
 import { favoriteProduct } from "../../../../actions/productActions";
-import { getMyProducts } from "../../../../actions/exchangeActions";
+import { getMyProducts, createNewExchange } from "../../../../actions/exchangeActions";
 import createToast from "../../../../utils/toast/createToast";
 
 const ProductActions = (props) => {
     const [open, setOpen] = useState(false);
 
-    const handleClickOpen = (e) => {
+    const handleClickOpenUnexchanged = (e) => {
         e.preventDefault();
         if (!props.isAuthenticated) {
             createToast("You are not logged in", "error");
         } else {
             setOpen(true);
             props.getMyProducts();
+        }
+    };
+
+    const handleClickOpenExchanged = (e) => {
+        e.preventDefault();
+        if (!props.isAuthenticated) {
+            createToast("You are not logged in", "error");
+        } else {
+            const exchangeData = {
+                productWanted: props.productId,
+            };
+            props.createNewExchange(exchangeData);
         }
     };
 
@@ -29,6 +41,7 @@ const ProductActions = (props) => {
         props.favoriteProduct(props.productId);
     };
 
+    // Check if the product is already favorited
     const checkFavorites = () => {
         if (
             props.userFavorites &&
@@ -50,20 +63,51 @@ const ProductActions = (props) => {
         }
     };
 
+    // Check if the exchange is already initiated with this product
+    const checkExchanges = () => {
+        if (
+            props.myInitiates &&
+            props.myInitiates.some((el) => {
+                return el.initiator.some((el2) => el2.initiatorId === props.userId);
+            })
+        ) {
+            return (
+                <Button
+                    onClick={handleClickOpenExchanged}
+                    variant="contained"
+                    size="large"
+                    sx={{
+                        textTransform: "none",
+                        marginRight: 2,
+                    }}
+                >
+                    <CompareArrowsOutlined sx={{ marginRight: 1 }} />
+                    Cancel
+                </Button>
+            );
+        } else {
+            return (
+                <Button
+                    onClick={handleClickOpenUnexchanged}
+                    variant="contained"
+                    size="large"
+                    sx={{
+                        textTransform: "none",
+                        marginRight: 2,
+                    }}
+                >
+                    <React.Fragment>
+                        <CompareArrowsOutlined sx={{ marginRight: 1 }} />
+                        Exchange
+                    </React.Fragment>
+                </Button>
+            );
+        }
+    };
+
     return (
         <Box mb={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-                onClick={handleClickOpen}
-                variant="contained"
-                size="large"
-                sx={{
-                    textTransform: "none",
-                    marginRight: 2,
-                }}
-            >
-                <CompareArrowsOutlined sx={{ marginRight: 1 }} />
-                Exchange
-            </Button>
+            {checkExchanges()}
             <Button
                 variant="contained"
                 size="large"
@@ -86,7 +130,10 @@ const mapStateToProps = (state) => {
         userId: state.auth.user.id,
         userFavorites: state.auth.userInfo.favorites,
         isAuthenticated: state.auth.isAuthenticated,
+        myInitiates: state.exchange.myInitiates,
     };
 };
 
-export default connect(mapStateToProps, { favoriteProduct, getMyProducts })(ProductActions);
+export default connect(mapStateToProps, { favoriteProduct, getMyProducts, createNewExchange })(
+    ProductActions
+);

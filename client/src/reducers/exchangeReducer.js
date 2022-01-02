@@ -1,9 +1,10 @@
 import _ from "lodash";
 
-import { GET_MY_PRODUCTS, SET_MY_PRODUCTS_LOADING } from "../actions/types";
+import { GET_MY_PRODUCTS, SET_MY_PRODUCTS_LOADING, GET_MY_INITIATES } from "../actions/types";
 
 const initialState = {
     myProducts: {},
+    myInitiates: [],
     loadingMyProducts: false,
 };
 
@@ -14,6 +15,11 @@ const exchangeReducer = (state = initialState, action) => {
                 ...state,
                 myProducts: { ..._.mapKeys(action.payload, "_id") },
                 loadingMyProducts: false,
+            };
+        case GET_MY_INITIATES:
+            return {
+                ...state,
+                myInitiates: action.payload,
             };
         case SET_MY_PRODUCTS_LOADING:
             return {

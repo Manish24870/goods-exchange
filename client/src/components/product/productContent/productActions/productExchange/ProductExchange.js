@@ -14,7 +14,7 @@ const ProductExchange = (props) => {
             productWanted: props.productId,
             productOwner: props.productOwner,
         };
-        props.createNewExchange(exchangeData);
+        props.createNewExchange(exchangeData, props.handleClose);
     };
     let renderMyProducts;
 

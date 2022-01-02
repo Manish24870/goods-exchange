@@ -9,11 +9,13 @@ import ProductContent from "./productContent/ProductContent";
 import ProductDiscussion from "./productDiscussion/ProductDiscussion";
 import Loading from "../loading/Loading";
 import { getProduct } from "../../actions/productActions";
+import { getMyInitiates } from "../../actions/exchangeActions";
 
 const Product = (props) => {
     const { productId } = useParams();
 
     useEffect(() => {
+        props.getMyInitiates();
         props.getProduct(productId);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -43,4 +45,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { getProduct })(Product);
+export default connect(mapStateToProps, { getProduct, getMyInitiates })(Product);

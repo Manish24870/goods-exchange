@@ -78,6 +78,6 @@ export const populateUserInfo = (userId) => async (dispatch) => {
             payload: response.data.data.user,
         });
     } catch (err) {
-        console.log(err.response);
+        console.log(err);
     }
 };

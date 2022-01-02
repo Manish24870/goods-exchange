@@ -1,15 +1,25 @@
 import axiosInstance from "../utils/axios/axiosInstance";
-import { GET_MY_PRODUCTS, SET_MY_PRODUCTS_LOADING } from "./types";
-// import createToast from "../utils/toast/createToast";
+import { GET_MY_PRODUCTS, SET_MY_PRODUCTS_LOADING, GET_MY_INITIATES } from "./types";
+import { setErrors } from "./errorActions";
+import createToast from "../utils/toast/createToast";
 
-export const createNewExchange = (exchangeData) => async (dispatch) => {
-    try {
-        const response = await axiosInstance.post("/api/exchange/create", exchangeData);
-        console.log(response);
-    } catch (err) {
-        console.log(err);
-    }
-};
+// Function to initiate or cancel an exchange
+export const createNewExchange =
+    (exchangeData, handleClose = null) =>
+    async (dispatch) => {
+        try {
+            await axiosInstance.post("/api/exchange/create", exchangeData);
+            dispatch(getMyInitiates());
+            if (Object.keys(exchangeData).length === 3) {
+                createToast("Exchange Initiated", "success");
+                handleClose();
+            } else {
+                createToast("Exchange cancelled", "success");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
 // Function to get my products
 export const getMyProducts = () => async (dispatch) => {
@@ -22,6 +32,19 @@ export const getMyProducts = () => async (dispatch) => {
         });
     } catch (err) {
         console.log(err);
+    }
+};
+
+// Function to get my exchange initiates
+export const getMyInitiates = () => async (dispatch) => {
+    try {
+        const response = await axiosInstance.get("/api/exchange/my-initiates");
+        dispatch({
+            type: GET_MY_INITIATES,
+            payload: response.data.data.myInitiates,
+        });
+    } catch (err) {
+        dispatch(setErrors(err.response.data));
     }
 };
 
