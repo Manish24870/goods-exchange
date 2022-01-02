@@ -5,7 +5,7 @@ import { GET_MY_PRODUCTS, SET_MY_PRODUCTS_LOADING, GET_MY_INITIATES } from "../a
 const initialState = {
     myProducts: {},
     myInitiates: [],
-    loadingMyProducts: false,
+    myProductsLoading: false,
 };
 
 const exchangeReducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ const exchangeReducer = (state = initialState, action) => {
             return {
                 ...state,
                 myProducts: { ..._.mapKeys(action.payload, "_id") },
-                loadingMyProducts: false,
+                myProductsLoading: false,
             };
         case GET_MY_INITIATES:
             return {
@@ -24,7 +24,7 @@ const exchangeReducer = (state = initialState, action) => {
         case SET_MY_PRODUCTS_LOADING:
             return {
                 ...state,
-                loadingMyProducts: true,
+                myProductsLoading: true,
             };
         default:
             return state;

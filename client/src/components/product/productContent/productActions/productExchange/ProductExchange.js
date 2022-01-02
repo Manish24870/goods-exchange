@@ -18,7 +18,7 @@ const ProductExchange = (props) => {
     };
     let renderMyProducts;
 
-    if (props.loadingMyProducts) {
+    if (props.myProductsLoading) {
         renderMyProducts = <Loading />;
     } else if (isEmpty(props.myProducts)) {
         renderMyProducts = <DialogContent>You do not have any items</DialogContent>;
@@ -46,7 +46,7 @@ const ProductExchange = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        loadingMyProducts: state.exchange.loadingMyProducts,
+        myProductsLoading: state.exchange.myProductsLoading,
         myProducts: Object.values(state.exchange.myProducts),
         productId: state.product.product._id,
         productOwner: state.product.product.owner._id,

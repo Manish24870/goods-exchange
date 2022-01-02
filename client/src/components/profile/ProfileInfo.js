@@ -4,7 +4,6 @@ import { Box, Avatar, Typography, Grid } from "@mui/material";
 import { Email, Phone, LocationOn, BarChart } from "@mui/icons-material";
 
 const ProfileInfo = (props) => {
-    console.log(props.userInfo);
     const calculateReputation = (rep) => {
         if (rep >= 0 && rep <= 30) {
             return <p style={{ color: "#FF5F5F" }}>{`Bad [${rep}]`}</p>;
