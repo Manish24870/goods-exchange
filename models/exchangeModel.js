@@ -13,6 +13,22 @@ const exchangeSchema = new mongoose.Schema({
         required: true,
     },
 
+    productWanted: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+    },
+
+    productGiven: [
+        {
+            productGivenId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Product",
+                require: true,
+            },
+        },
+    ],
+
     completed: {
         type: Boolean,
         required: true,

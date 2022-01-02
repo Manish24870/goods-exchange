@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Box, Button } from "@mui/material";
 import { CompareArrowsOutlined, FavoriteBorderOutlined, Favorite } from "@mui/icons-material";
 
+import ProductExchange from "./productExchange/ProductExchange";
 import { favoriteProduct } from "../../../../actions/productActions";
-import { createNewExchange } from "../../../../actions/exchangeActions";
+import { getMyProducts } from "../../../../actions/exchangeActions";
 
 const ProductActions = (props) => {
-    const onFavoriteClick = () => {
-        props.favoriteProduct(props.productId);
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = (e) => {
+        e.preventDefault();
+        setOpen(true);
+        props.getMyProducts();
     };
 
-    const onExchangeClick = () => {
-        props.createNewExchange();
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const onFavoriteClick = () => {
+        props.favoriteProduct(props.productId);
     };
 
     const checkFavorites = () => {
@@ -36,7 +45,7 @@ const ProductActions = (props) => {
     return (
         <Box mb={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
             <Button
-                onClick={onExchangeClick}
+                onClick={handleClickOpen}
                 variant="contained"
                 size="large"
                 sx={{
@@ -58,6 +67,7 @@ const ProductActions = (props) => {
             >
                 {checkFavorites()}
             </Button>
+            <ProductExchange open={open} handleClose={handleClose} />
         </Box>
     );
 };
@@ -70,4 +80,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { favoriteProduct, createNewExchange })(ProductActions);
+export default connect(mapStateToProps, { favoriteProduct, getMyProducts })(ProductActions);
