@@ -5,7 +5,53 @@ const Product = require("../models/productModel");
 // Function to create a new exchange
 // Authentication = true
 exports.createNewExchange = async (req, res, next) => {
-    console.log(req.body);
+    try {
+        let exchange;
+        exchange = await Exchange.findOne({ productWanted: req.body.productWanted });
+
+        // If the exchange already exists
+        if (exchange) {
+            // console.log("C", exchange.initiator);
+            initiatorIndex = exchange.initiator.findIndex((el) =>
+                el.initiatorId.equals(req.user._id)
+            );
+            console.log(initiatorIndex);
+            // If this person has already initiated the exchange
+            if (initiatorIndex >= 0) {
+                exchange.initiator.splice(initiatorIndex, 1);
+            } else {
+                const initiatorData = {
+                    initiatorId: req.user._id,
+                    initiatorProduct: req.body.productGiven,
+                };
+                exchange.initiator.push(initiatorData);
+            }
+        } else {
+            // If the exchange doesn't already exist, create a new exchange
+            const initiatorData = [
+                {
+                    initiatorId: req.user._id,
+                    initiatorProduct: req.body.productGiven,
+                },
+            ];
+            exchange = new Exchange({
+                initiator: initiatorData,
+                owner: req.body.productOwner,
+                productWanted: req.body.productWanted,
+            });
+        }
+
+        await exchange.save();
+        res.status(201).json({
+            status: "success",
+            data: {
+                message: "Exchange initiated successfully",
+                exchange,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
 };
 
 // Route = /api/products/

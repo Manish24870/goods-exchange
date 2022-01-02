@@ -1,11 +1,20 @@
 const mongoose = require("mongoose");
 
 const exchangeSchema = new mongoose.Schema({
-    initiator: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
+    initiator: [
+        {
+            initiatorId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: true,
+            },
+            initiatorProduct: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Product",
+                required: true,
+            },
+        },
+    ],
 
     owner: {
         type: mongoose.Schema.Types.ObjectId,
@@ -19,15 +28,15 @@ const exchangeSchema = new mongoose.Schema({
         required: true,
     },
 
-    productGiven: [
-        {
-            productGivenId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Product",
-                require: true,
-            },
-        },
-    ],
+    // productGiven: [
+    //     {
+    //         productGivenId: {
+    //             type: mongoose.Schema.Types.ObjectId,
+    //             ref: "Product",
+    //             require: true,
+    //         },
+    //     },
+    // ],
 
     completed: {
         type: Boolean,

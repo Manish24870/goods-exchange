@@ -94,6 +94,6 @@ export const favoriteProduct = (id) => async (dispatch) => {
             payload: response.data.data.user.favorites,
         });
     } catch (err) {
-        console.log(err);
+        dispatch(setErrors(err.response.data));
     }
 };

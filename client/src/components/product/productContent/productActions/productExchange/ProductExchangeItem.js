@@ -17,11 +17,14 @@ const ProductExchangeItem = (props) => {
             variant="outlined"
             onClick={props.onExchangeItemSelect}
             sx={{
-                width: "80%",
+                width: "90%",
                 textAlign: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
                 marginBottom: 2,
+            }}
+            style={{
+                border: "2px solid",
             }}
         >
             <DialogContent>
@@ -32,15 +35,15 @@ const ProductExchangeItem = (props) => {
                                 <CardMedia
                                     component="img"
                                     // height="100"
-                                    image={"product1.productImages[0].url"}
-                                    alt="Product1"
+                                    image={"https://picsum.photos/500/300"}
+                                    alt={props.product.name}
                                 />
                             </Grid>
                             <Grid item xs={7}>
                                 <CardContent>
                                     <Box>
-                                        <Typography variant="p" sx={{ fontSize: "1.2em" }}>
-                                            {"product1.name"}
+                                        <Typography variant="p" sx={{ fontSize: "1.1em" }}>
+                                            {props.product.name}
                                         </Typography>
                                     </Box>
                                 </CardContent>

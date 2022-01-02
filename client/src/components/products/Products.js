@@ -15,13 +15,7 @@ const Products = (props) => {
     let productContent;
 
     if (isEmpty(props.products)) {
-        productContent = (
-            <Box mt={11} mb={8}>
-                <Container maxWidth="lg">
-                    <Loading />
-                </Container>
-            </Box>
-        );
+        productContent = <Loading />;
     } else {
         productContent = <ProductList products={props.products} />;
     }

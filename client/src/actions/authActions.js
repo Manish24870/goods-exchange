@@ -45,6 +45,10 @@ export const logoutUser = () => (dispatch) => {
 const authenticateUser = (response, dispatch, navigate) => {
     // Save token in localstorage
     const token = response.data.data.token;
+    dispatch({
+        type: SET_CURRENT_USER_INFO,
+        payload: response.data.data.user,
+    });
     localStorage.setItem("jwt", token);
 
     // Set the token in axios header
@@ -74,6 +78,6 @@ export const populateUserInfo = (userId) => async (dispatch) => {
             payload: response.data.data.user,
         });
     } catch (err) {
-        console.log(err);
+        console.log(err.response);
     }
 };

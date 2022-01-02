@@ -6,14 +6,19 @@ import { CompareArrowsOutlined, FavoriteBorderOutlined, Favorite } from "@mui/ic
 import ProductExchange from "./productExchange/ProductExchange";
 import { favoriteProduct } from "../../../../actions/productActions";
 import { getMyProducts } from "../../../../actions/exchangeActions";
+import createToast from "../../../../utils/toast/createToast";
 
 const ProductActions = (props) => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = (e) => {
         e.preventDefault();
-        setOpen(true);
-        props.getMyProducts();
+        if (!props.isAuthenticated) {
+            createToast("You are not logged in", "error");
+        } else {
+            setOpen(true);
+            props.getMyProducts();
+        }
     };
 
     const handleClose = () => {
@@ -25,7 +30,10 @@ const ProductActions = (props) => {
     };
 
     const checkFavorites = () => {
-        if (props.userFavorites.some((el) => el.productId === props.productId)) {
+        if (
+            props.userFavorites &&
+            props.userFavorites.some((el) => el.productId === props.productId)
+        ) {
             return (
                 <React.Fragment>
                     <Favorite sx={{ marginRight: 1 }} />
@@ -77,6 +85,7 @@ const mapStateToProps = (state) => {
         productId: state.product.product._id,
         userId: state.auth.user.id,
         userFavorites: state.auth.userInfo.favorites,
+        isAuthenticated: state.auth.isAuthenticated,
     };
 };
 
