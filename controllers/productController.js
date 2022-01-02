@@ -150,7 +150,9 @@ exports.createNewQuestion = async (req, res, next) => {
                 product,
             },
         });
-    } catch (err) {}
+    } catch (err) {
+        next(err);
+    }
 };
 
 // Route = /api/products/:id/:questionId/answer
@@ -188,5 +190,7 @@ exports.createNewAnswer = async (req, res, next) => {
                 product,
             },
         });
-    } catch (err) {}
+    } catch (err) {
+        next(err);
+    }
 };

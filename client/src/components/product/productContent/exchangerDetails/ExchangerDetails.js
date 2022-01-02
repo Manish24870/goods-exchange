@@ -15,6 +15,16 @@ const ExchangerDetails = (props) => {
         window.location = `mailto:${props.owner.email}`;
     };
 
+    const calculateReputation = (rep) => {
+        if (rep >= 0 && rep <= 30) {
+            return <p style={{ color: "#FF5F5F" }}>{`Bad [${rep}]`}</p>;
+        } else if (rep >= 31 && rep <= 60) {
+            return <p style={{ color: "#70beb4" }}>{`Average [${rep}]`}</p>;
+        } else {
+            return <p style={{ color: "#109382" }}>{`Good [${rep}]`}</p>;
+        }
+    };
+
     return (
         <Box>
             <Typography mt={2} variant="h6" sx={{ fontWeight: 500 }}>
@@ -40,7 +50,7 @@ const ExchangerDetails = (props) => {
                 />
                 <ExchangerDetailsItem
                     title="Reputation"
-                    value={props.owner.reputation}
+                    value={calculateReputation(props.owner.reputation)}
                     icon={BarChart}
                 />
             </Grid>

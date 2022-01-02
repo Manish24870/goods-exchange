@@ -39,6 +39,20 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: "user",
     },
+    favorites: [
+        {
+            productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Product",
+                required: true,
+            },
+            favoritedAt: {
+                type: Date,
+                required: true,
+                default: Date.now,
+            },
+        },
+    ],
     createdAt: {
         type: Date,
         required: true,
