@@ -4,7 +4,7 @@ import axiosInstance from "../utils/axios/axiosInstance";
 import setAuthToken from "../utils/auth/setAuthToken";
 import createToast from "../utils/toast/createToast";
 import { setErrors } from "./errorActions";
-import { SET_CURRENT_USER } from "./types";
+import { SET_CURRENT_USER, SET_CURRENT_USER_INFO } from "./types";
 
 // Action for registering a user
 export const registerUser = (userData, navigate) => async (dispatch) => {
@@ -34,6 +34,10 @@ export const logoutUser = () => (dispatch) => {
     localStorage.removeItem("jwt");
     setAuthToken(false);
     dispatch(setCurrentUser({}));
+    dispatch({
+        type: SET_CURRENT_USER_INFO,
+        payload: {},
+    });
     createToast("Logged out successfully", "success");
 };
 
@@ -50,7 +54,7 @@ const authenticateUser = (response, dispatch, navigate) => {
     const decoded = jwt_decode(token);
     dispatch(setCurrentUser(decoded));
     createToast("Login Successful", "success");
-    navigate("/", { replace: true });
+    navigate("/products", { replace: true });
 };
 
 // Disaptch function to set user data in store
@@ -59,4 +63,17 @@ export const setCurrentUser = (decoded) => {
         type: SET_CURRENT_USER,
         payload: decoded,
     };
+};
+
+// Function to populate user info on app load
+export const populateUserInfo = (userId) => async (dispatch) => {
+    try {
+        const response = await axiosInstance.get(`/api/auth/get-user/${userId}`);
+        dispatch({
+            type: SET_CURRENT_USER_INFO,
+            payload: response.data.data.user,
+        });
+    } catch (err) {
+        console.log(err);
+    }
 };

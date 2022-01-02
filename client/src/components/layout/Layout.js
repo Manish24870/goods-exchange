@@ -10,7 +10,7 @@ import NewProduct from "../newProduct/NewProduct";
 import Products from "../products/Products";
 import Product from "../product/Product";
 import setAuthToken from "../../utils/auth/setAuthToken";
-import { setCurrentUser } from "../../actions/authActions";
+import { setCurrentUser, populateUserInfo } from "../../actions/authActions";
 import store from "../../store";
 
 // Check login state of the user
@@ -19,6 +19,7 @@ if (localStorage.jwt) {
     setAuthToken(token);
     const decoded = jwt_decode(token);
     store.dispatch(setCurrentUser(decoded));
+    store.dispatch(populateUserInfo(decoded.id));
 }
 
 const Layout = () => {

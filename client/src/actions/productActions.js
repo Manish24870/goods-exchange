@@ -7,6 +7,7 @@ import {
     GET_PRODUCT,
     CREATE_NEW_QUESTION,
     CREATE_NEW_ANSWER,
+    FAVORITE_PRODUCT,
 } from "./types";
 
 // Function to create a new product
@@ -80,5 +81,19 @@ export const createNewAnswer = (id, questionId, answerData, handleClose) => asyn
         handleClose();
     } catch (err) {
         dispatch(setErrors(err.response.data));
+    }
+};
+
+// Function to favorite a product
+export const favoriteProduct = (id) => async (dispatch) => {
+    try {
+        const response = await axiosInstance.get(`/api/products/${id}/favorite`);
+        createToast(response.data.data.message, "success");
+        dispatch({
+            type: FAVORITE_PRODUCT,
+            payload: response.data.data.user.favorites,
+        });
+    } catch (err) {
+        console.log(err);
     }
 };

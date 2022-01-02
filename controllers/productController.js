@@ -194,3 +194,40 @@ exports.createNewAnswer = async (req, res, next) => {
         next(err);
     }
 };
+
+// Route = /api/products/:id/favorite
+// Function to favorite a product
+// Authentication = true
+exports.favoriteProduct = async (req, res, next) => {
+    try {
+        const favoritedIndex = req.user.favorites.findIndex((el) =>
+            el.productId.equals(req.params.id)
+        );
+
+        if (favoritedIndex >= 0) {
+            req.user.favorites.splice(favoritedIndex, 1);
+            await req.user.save();
+            res.status(200).json({
+                status: "success",
+                data: {
+                    message: "Product unfavorited successfully",
+                    user: req.user,
+                },
+            });
+        } else {
+            req.user.favorites.push({
+                productId: req.params.id,
+            });
+            await req.user.save();
+            res.status(200).json({
+                status: "success",
+                data: {
+                    message: "Product favorited successfully",
+                    user: req.user,
+                },
+            });
+        }
+    } catch (err) {
+        next(err);
+    }
+};

@@ -90,6 +90,25 @@ exports.loginUser = async (req, res, next) => {
     }
 };
 
+// Route = /api/auth/get-user
+// Function to login a user
+// Authentication = true
+exports.getUser = async (req, res, next) => {
+    const user = await User.findById(req.params.userId);
+
+    if (!user) {
+        return next(new ApiError("You are not logged in", "unauthorized-error", 401));
+    }
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            message: "User fetched successfully",
+            user,
+        },
+    });
+};
+
 //Function to protect routes
 exports.protect = async (req, res, next) => {
     let token;
