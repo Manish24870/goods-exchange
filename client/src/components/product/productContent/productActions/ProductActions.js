@@ -4,10 +4,15 @@ import { Box, Button } from "@mui/material";
 import { CompareArrowsOutlined, FavoriteBorderOutlined, Favorite } from "@mui/icons-material";
 
 import { favoriteProduct } from "../../../../actions/productActions";
+import { createNewExchange } from "../../../../actions/exchangeActions";
 
 const ProductActions = (props) => {
     const onFavoriteClick = () => {
         props.favoriteProduct(props.productId);
+    };
+
+    const onExchangeClick = () => {
+        props.createNewExchange();
     };
 
     const checkFavorites = () => {
@@ -31,7 +36,7 @@ const ProductActions = (props) => {
     return (
         <Box mb={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
             <Button
-                // onClick={handleClickOpen}
+                onClick={onExchangeClick}
                 variant="contained"
                 size="large"
                 sx={{
@@ -65,4 +70,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { favoriteProduct })(ProductActions);
+export default connect(mapStateToProps, { favoriteProduct, createNewExchange })(ProductActions);
