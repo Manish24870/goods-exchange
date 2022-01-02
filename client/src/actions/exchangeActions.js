@@ -10,6 +10,7 @@ export const createNewExchange =
         try {
             await axiosInstance.post("/api/exchange/create", exchangeData);
             dispatch(getMyInitiates());
+            // When the exchange is initiated
             if (Object.keys(exchangeData).length === 3) {
                 createToast("Exchange Initiated", "success");
                 handleClose();

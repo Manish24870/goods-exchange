@@ -9,6 +9,7 @@ import Navbar from "../navigation/Navbar";
 import NewProduct from "../newProduct/NewProduct";
 import Products from "../products/Products";
 import Product from "../product/Product";
+import Profile from "../profile/Profile";
 import setAuthToken from "../../utils/auth/setAuthToken";
 import { setCurrentUser, populateUserInfo } from "../../actions/authActions";
 import store from "../../store";
@@ -33,6 +34,7 @@ const Layout = () => {
                 <Route path="/products/new" element={<NewProduct />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:productId" element={<Product />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </div>
     );

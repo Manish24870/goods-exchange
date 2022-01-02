@@ -4,10 +4,16 @@ import axiosInstance from "../utils/axios/axiosInstance";
 import setAuthToken from "../utils/auth/setAuthToken";
 import createToast from "../utils/toast/createToast";
 import { setErrors } from "./errorActions";
-import { SET_CURRENT_USER, SET_CURRENT_USER_INFO } from "./types";
+import {
+    SET_CURRENT_USER,
+    SET_CURRENT_USER_INFO,
+    SET_CURRENT_USER_LOADING,
+    SET_CURRENT_USER_INFO_LOADING,
+} from "./types";
 
 // Action for registering a user
 export const registerUser = (userData, navigate) => async (dispatch) => {
+    dispatch(setCurrentUserLoading());
     try {
         const response = await axiosInstance.post("/api/auth/register", userData);
         authenticateUser(response, dispatch, navigate);
@@ -69,8 +75,21 @@ export const setCurrentUser = (decoded) => {
     };
 };
 
+const setCurrentUserLoading = () => {
+    return {
+        type: SET_CURRENT_USER_LOADING,
+    };
+};
+
+const setCurrentUserInfoLoading = () => {
+    return {
+        type: SET_CURRENT_USER_INFO_LOADING,
+    };
+};
+
 // Function to populate user info on app load
 export const populateUserInfo = (userId) => async (dispatch) => {
+    dispatch(setCurrentUserInfoLoading());
     try {
         const response = await axiosInstance.get(`/api/auth/get-user/${userId}`);
         dispatch({
