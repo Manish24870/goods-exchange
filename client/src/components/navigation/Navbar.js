@@ -50,23 +50,39 @@ const Navbar = (props) => {
                                 to="/products"
                                 sx={{
                                     textTransform: "none",
-                                    marginRight: "2rem",
-                                    marginLeft: 6,
+                                    marginRight: "1.5em",
+                                    marginLeft: 2,
                                 }}
                                 color="inherit"
                             >
                                 Products
                             </Button>
-                            <Button
-                                component={Link}
-                                to="/products/new"
-                                sx={{
-                                    textTransform: "none",
-                                }}
-                                color="inherit"
-                            >
-                                Add Product
-                            </Button>
+                            {props.auth.isAuthenticated ? (
+                                <React.Fragment>
+                                    <Button
+                                        component={Link}
+                                        to="/products/new"
+                                        sx={{
+                                            textTransform: "none",
+                                            marginRight: "1.5em",
+                                        }}
+                                        color="inherit"
+                                    >
+                                        Add Product
+                                    </Button>
+                                    <Button
+                                        component={Link}
+                                        to="/initiates"
+                                        sx={{
+                                            textTransform: "none",
+                                            marginRight: "1.5em",
+                                        }}
+                                        color="inherit"
+                                    >
+                                        Initiates
+                                    </Button>
+                                </React.Fragment>
+                            ) : null}
                         </React.Fragment>
                     </Box>
 

@@ -6,6 +6,7 @@ import {
     GET_MY_INITIATES,
     GET_MY_FAVORITES,
     SET_MY_FAVORITES_LOADING,
+    SET_MY_INITIATES_LOADING,
 } from "../actions/types";
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
     myInitiates: [],
     myProductsLoading: false,
     myFavoritesLoading: false,
+    myInitiatesLoading: false,
 };
 
 const exchangeReducer = (state = initialState, action) => {
@@ -24,15 +26,21 @@ const exchangeReducer = (state = initialState, action) => {
                 myProducts: { ..._.mapKeys(action.payload, "_id") },
                 myProductsLoading: false,
             };
-        case GET_MY_INITIATES:
-            return {
-                ...state,
-                myInitiates: action.payload,
-            };
         case SET_MY_PRODUCTS_LOADING:
             return {
                 ...state,
                 myProductsLoading: true,
+            };
+        case GET_MY_INITIATES:
+            return {
+                ...state,
+                myInitiates: action.payload,
+                myInitiatesLoading: false,
+            };
+        case SET_MY_INITIATES_LOADING:
+            return {
+                ...state,
+                myInitiatesLoading: true,
             };
         case GET_MY_FAVORITES:
             return {

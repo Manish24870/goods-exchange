@@ -98,7 +98,10 @@ exports.getMyFavorites = async (req, res, next) => {
 // Authentication = true
 exports.getMyInitiates = async (req, res, next) => {
     try {
-        const myInitiates = await Exchange.find({ "initiator.initiatorId": req.user._id });
+        const myInitiates = await Exchange.find({ "initiator.initiatorId": req.user._id })
+            .populate("initiator.initiatorProduct")
+            .populate("owner")
+            .populate("productWanted");
         res.status(200).json({
             status: "success",
             data: {

@@ -5,6 +5,7 @@ import {
     GET_MY_INITIATES,
     GET_MY_FAVORITES,
     SET_MY_FAVORITES_LOADING,
+    SET_MY_INITIATES_LOADING,
 } from "./types";
 import { setErrors } from "./errorActions";
 import createToast from "../utils/toast/createToast";
@@ -59,6 +60,7 @@ export const getMyFavorites = () => async (dispatch) => {
 
 // Function to get my exchange initiates
 export const getMyInitiates = () => async (dispatch) => {
+    dispatch(setMyInitiatesLoading());
     try {
         const response = await axiosInstance.get("/api/exchange/my-initiates");
         dispatch({
@@ -76,9 +78,17 @@ const setMyProductsLoading = () => {
         type: SET_MY_PRODUCTS_LOADING,
     };
 };
+
 // Function to dispatch action for loading state of favorites
 const setMyFavoritesLoading = () => {
     return {
         type: SET_MY_FAVORITES_LOADING,
+    };
+};
+
+// Function to dispatch action for loading state of initiates
+const setMyInitiatesLoading = () => {
+    return {
+        type: SET_MY_INITIATES_LOADING,
     };
 };

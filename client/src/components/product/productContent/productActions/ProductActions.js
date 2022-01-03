@@ -11,6 +11,7 @@ import createToast from "../../../../utils/toast/createToast";
 const ProductActions = (props) => {
     const [open, setOpen] = useState(false);
 
+    // Open dialog when initiating exchange
     const handleClickOpenUnexchanged = (e) => {
         e.preventDefault();
         if (!props.isAuthenticated) {
@@ -21,6 +22,7 @@ const ProductActions = (props) => {
         }
     };
 
+    // Dont open dialog when cancelling exchange
     const handleClickOpenExchanged = (e) => {
         e.preventDefault();
         if (!props.isAuthenticated) {
@@ -74,7 +76,8 @@ const ProductActions = (props) => {
             props.myInitiates.some((el1) => {
                 return el1.initiator.some(
                     (el2) =>
-                        el2.initiatorId === props.userId && el1.productWanted === props.productId
+                        el2.initiatorId === props.userId &&
+                        el1.productWanted._id === props.productId
                 );
             })
         ) {

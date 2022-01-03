@@ -13,6 +13,11 @@ const exchangeSchema = new mongoose.Schema({
                 ref: "Product",
                 required: true,
             },
+            initiatedAt: {
+                type: Date,
+                required: true,
+                default: Date.now,
+            },
         },
     ],
 
@@ -28,16 +33,6 @@ const exchangeSchema = new mongoose.Schema({
         required: true,
     },
 
-    // productGiven: [
-    //     {
-    //         productGivenId: {
-    //             type: mongoose.Schema.Types.ObjectId,
-    //             ref: "Product",
-    //             require: true,
-    //         },
-    //     },
-    // ],
-
     completed: {
         type: Boolean,
         required: true,
@@ -48,7 +43,7 @@ const exchangeSchema = new mongoose.Schema({
         type: Date,
     },
 
-    initiatedAt: {
+    createdAt: {
         type: Date,
         required: true,
         default: Date.now,

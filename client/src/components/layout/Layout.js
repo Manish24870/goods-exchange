@@ -11,6 +11,7 @@ import Products from "../products/Products";
 import Product from "../product/Product";
 import Profile from "../profile/Profile";
 import Favorites from "../favorites/Favorites";
+import Initiates from "../initiates/Initiates";
 import setAuthToken from "../../utils/auth/setAuthToken";
 import { setCurrentUser, populateUserInfo } from "../../actions/authActions";
 import store from "../../store";
@@ -37,6 +38,7 @@ const Layout = () => {
                 <Route path="/products/:productId" element={<Product />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/favorites" element={<Favorites />} />
+                <Route path="/initiates" element={<Initiates />} />
             </Routes>
         </div>
     );
