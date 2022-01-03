@@ -54,7 +54,7 @@ export const getProduct = (id) => async (dispatch) => {
 };
 
 // Function to post a question
-export const createNewQuestion = (id, questionData) => async (dispatch) => {
+export const createNewQuestion = (id, questionData, setFormData) => async (dispatch) => {
     try {
         const response = await axiosInstance.post(`/api/products/${id}/question`, questionData);
         dispatch(clearErrors());
@@ -62,6 +62,8 @@ export const createNewQuestion = (id, questionData) => async (dispatch) => {
             type: CREATE_NEW_QUESTION,
             payload: response.data.data.product.questions,
         });
+        createToast("Question added", "success");
+        setFormData({ question: "" });
     } catch (err) {
         dispatch(setErrors(err.response.data));
     }

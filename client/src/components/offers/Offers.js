@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Box, Typography, Container } from "@mui/material";
 
 import Loading from "../loading/Loading";
+import OfferList from "./OfferList";
 import { getMyOffers } from "../../actions/exchangeActions";
 
 const Offers = (props) => {
@@ -20,6 +21,8 @@ const Offers = (props) => {
                 Your do not have any offers
             </Typography>
         );
+    } else {
+        return <OfferList myOffers={props.myOffers} />;
     }
 
     return (

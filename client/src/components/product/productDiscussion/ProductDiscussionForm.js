@@ -34,7 +34,8 @@ const ProductDiscussionForm = (props) => {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-        props.createNewQuestion(props.productId, formData);
+        props.createNewQuestion(props.productId, formData, setFormData);
+        setFormData({ question: "" });
     };
 
     return (

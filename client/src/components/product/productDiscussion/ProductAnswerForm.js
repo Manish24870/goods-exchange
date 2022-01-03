@@ -43,7 +43,6 @@ const ProductAnswerForm = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
         props.createNewAnswer(props.productId, props.questionId, formData, props.handleClose);
-        setFormData({ ...formData, answer: "" });
     };
 
     return (
