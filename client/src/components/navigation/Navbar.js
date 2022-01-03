@@ -81,6 +81,17 @@ const Navbar = (props) => {
                                     >
                                         Initiates
                                     </Button>
+                                    <Button
+                                        component={Link}
+                                        to="/offers"
+                                        sx={{
+                                            textTransform: "none",
+                                            marginRight: "1.5em",
+                                        }}
+                                        color="inherit"
+                                    >
+                                        Offers
+                                    </Button>
                                 </React.Fragment>
                             ) : null}
                         </React.Fragment>

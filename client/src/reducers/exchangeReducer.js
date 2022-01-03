@@ -2,20 +2,24 @@ import _ from "lodash";
 
 import {
     GET_MY_PRODUCTS,
-    SET_MY_PRODUCTS_LOADING,
-    GET_MY_INITIATES,
     GET_MY_FAVORITES,
+    GET_MY_INITIATES,
+    GET_MY_OFFERS,
+    SET_MY_PRODUCTS_LOADING,
     SET_MY_FAVORITES_LOADING,
     SET_MY_INITIATES_LOADING,
+    SET_MY_OFFERS_LOADING,
 } from "../actions/types";
 
 const initialState = {
     myProducts: {},
     myFavorites: [],
     myInitiates: [],
+    myOffers: [],
     myProductsLoading: false,
     myFavoritesLoading: false,
     myInitiatesLoading: false,
+    myOffersLoading: false,
 };
 
 const exchangeReducer = (state = initialState, action) => {
@@ -53,6 +57,17 @@ const exchangeReducer = (state = initialState, action) => {
             return {
                 ...state,
                 myFavoritesLoading: true,
+            };
+        case GET_MY_OFFERS:
+            return {
+                ...state,
+                myOffers: action.payload,
+                myOffersLoading: false,
+            };
+        case SET_MY_OFFERS_LOADING:
+            return {
+                ...state,
+                myOffersLoading: true,
             };
         default:
             return state;

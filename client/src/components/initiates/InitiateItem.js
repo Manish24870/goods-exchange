@@ -119,7 +119,7 @@ const InitiateItem = (props) => {
                                 textTransform: "none",
                                 display: "flex",
                                 flexDirection: "column",
-                                marginBottom: 7,
+                                marginBottom: 9,
                             }}
                         >
                             <Typography variant="p" sx={{ opacity: "94%" }}>
@@ -143,7 +143,7 @@ const InitiateItem = (props) => {
                             color="secondary"
                             size="small"
                             sx={{
-                                marginTop: 7,
+                                marginTop: 9,
                                 textTransform: "none",
                                 color: "#6325A9",
                             }}

@@ -112,3 +112,25 @@ exports.getMyInitiates = async (req, res, next) => {
         next(err);
     }
 };
+
+// Route = /api/exchange/my-offers
+// Function to get my offers
+// Authentication = true
+exports.getMyOffers = async (req, res, next) => {
+    try {
+        const myOffers = await Exchange.find({ owner: req.user._id })
+            .populate("initiator.initiatorId")
+            .populate("initiator.initiatorProduct")
+            .populate("owner")
+            .populate("productWanted");
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                myOffers,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
+};

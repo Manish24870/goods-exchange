@@ -1,11 +1,13 @@
 import axiosInstance from "../utils/axios/axiosInstance";
 import {
     GET_MY_PRODUCTS,
-    SET_MY_PRODUCTS_LOADING,
-    GET_MY_INITIATES,
     GET_MY_FAVORITES,
+    GET_MY_INITIATES,
+    GET_MY_OFFERS,
+    SET_MY_PRODUCTS_LOADING,
     SET_MY_FAVORITES_LOADING,
     SET_MY_INITIATES_LOADING,
+    SET_MY_OFFERS_LOADING,
 } from "./types";
 import { setErrors } from "./errorActions";
 import createToast from "../utils/toast/createToast";
@@ -72,6 +74,20 @@ export const getMyInitiates = () => async (dispatch) => {
     }
 };
 
+// Function to get my exchange offers
+export const getMyOffers = () => async (dispatch) => {
+    dispatch(setMyOffersLoading());
+    try {
+        const response = await axiosInstance.get("/api/exchange/my-offers");
+        dispatch({
+            type: GET_MY_OFFERS,
+            payload: response.data.data.myOffers,
+        });
+    } catch (err) {
+        dispatch(setErrors(err.response.data));
+    }
+};
+
 // Function to dispatch action for loading state of my products
 const setMyProductsLoading = () => {
     return {
@@ -90,5 +106,12 @@ const setMyFavoritesLoading = () => {
 const setMyInitiatesLoading = () => {
     return {
         type: SET_MY_INITIATES_LOADING,
+    };
+};
+
+// Function to dispatch action for loading state of offers
+const setMyOffersLoading = () => {
+    return {
+        type: SET_MY_OFFERS_LOADING,
     };
 };

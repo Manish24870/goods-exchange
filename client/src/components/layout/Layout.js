@@ -2,6 +2,7 @@ import React from "react";
 import jwt_decode from "jwt-decode";
 import { Routes, Route } from "react-router-dom";
 
+import PrivateRoute from "../auth/PrivateRoute";
 import HomePage from "../homepage/Home";
 import Register from "../auth/Register";
 import Login from "../auth/Login";
@@ -12,6 +13,7 @@ import Product from "../product/Product";
 import Profile from "../profile/Profile";
 import Favorites from "../favorites/Favorites";
 import Initiates from "../initiates/Initiates";
+import Offers from "../offers/Offers";
 import setAuthToken from "../../utils/auth/setAuthToken";
 import { setCurrentUser, populateUserInfo } from "../../actions/authActions";
 import store from "../../store";
@@ -33,12 +35,48 @@ const Layout = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/auth/register" element={<Register />} />
                 <Route path="/auth/login" element={<Login />} />
-                <Route path="/products/new" element={<NewProduct />} />
+                <Route
+                    path="/products/new"
+                    element={
+                        <PrivateRoute>
+                            <NewProduct />
+                        </PrivateRoute>
+                    }
+                />
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:productId" element={<Product />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/initiates" element={<Initiates />} />
+                <Route
+                    path="/profile"
+                    element={
+                        <PrivateRoute>
+                            <Profile />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/favorites"
+                    element={
+                        <PrivateRoute>
+                            <Favorites />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/initiates"
+                    element={
+                        <PrivateRoute>
+                            <Initiates />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/offers"
+                    element={
+                        <PrivateRoute>
+                            <Offers />
+                        </PrivateRoute>
+                    }
+                />
             </Routes>
         </div>
     );
