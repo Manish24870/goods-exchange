@@ -15,23 +15,21 @@ import {
 } from "@mui/material";
 import { ArrowForwardIos, CompareArrowsOutlined } from "@mui/icons-material";
 
-import { createNewExchange } from "../../actions/exchangeActions";
+import { createNewExchange, rejectOffer } from "../../actions/exchangeActions";
 
 const OfferItem = (props) => {
-    console.log(props.wantedProduct);
-    console.log(props.givenProduct);
-    console.log(props.initiatorInfo);
-    // const initiatorData = props.product.initiator.filter(
-    //     (el) => el.initiatorId === props.loggedInUserId
-    // )[0];
+    const onOfferAccept = () => {
+        console.log("OFFER ACCEPTED");
+    };
 
-    // When user cancels exchange on their initiates page
-    // const onExchangeCancel = () => {
-    //     const exchangeData = {
-    //         productWanted: props.product.productWanted._id,
-    //     };
-    //     props.createNewExchange(exchangeData);
-    // };
+    const onOfferReject = () => {
+        const exchangeData = {
+            exchangeId: props.exchangeId,
+            initiatorItemId: props.initiatorData._id,
+        };
+        console.log(exchangeData);
+        props.rejectOffer(exchangeData);
+    };
 
     return (
         <Paper sx={{ marginBottom: 5 }} variant="outlined">
@@ -60,13 +58,13 @@ const OfferItem = (props) => {
                                 </Box>
                                 <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
                                     <Avatar
-                                        alt={props.initiatorInfo.username}
+                                        alt={props.initiatorData.initiatorId.username}
                                         src={"product.posterDetails.photo"}
                                         sx={{ bgcolor: "#2196f3" }}
                                     />
                                     <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
                                         <Typography variant="p" sx={{ fontSize: "0.95em" }}>
-                                            {props.initiatorInfo.username}
+                                            {props.initiatorData.initiatorId.username}
                                         </Typography>
                                         <Typography
                                             variant="p"
@@ -126,7 +124,9 @@ const OfferItem = (props) => {
                                 Initiated At:
                             </Typography>
                             <Typography variant="p">
-                                {/* {"moment("initiatorData.initiatedAt).format("MMM Do YYYY, h:mm a")"} */}
+                                {moment(props.initiatorData.initiatorId.initiatedAt).format(
+                                    "MMM Do YYYY, h:mm a"
+                                )}
                             </Typography>
                         </Button>
                         <CompareArrowsOutlined color="primary" sx={{ fontSize: "40px" }} />
@@ -138,25 +138,13 @@ const OfferItem = (props) => {
                             Accept
                         </Button>
                         <Button
+                            onClick={onOfferReject}
                             variant="outlined"
                             color="secondary"
                             sx={{ width: 150, height: 50, fontSize: "1.05em", marginTop: 2 }}
                         >
                             Reject
                         </Button>
-                        {/* <Button
-                            // onClick={onExchangeCancel}
-                            variant="default"
-                            color="secondary"
-                            size="small"
-                            sx={{
-                                marginTop: 9,
-                                textTransform: "none",
-                                color: "#6325A9",
-                            }}
-                        >
-                            Cancel
-                        </Button> */}
                     </Grid>
                     <Grid item xs={4}>
                         <Typography variant="h6" sx={{ fontSize: "1.12em", textAlign: "center" }}>
@@ -178,13 +166,13 @@ const OfferItem = (props) => {
                                 </Box>
                                 <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
                                     <Avatar
-                                        alt={props.initiatorInfo.username}
+                                        alt={props.ownerData.username}
                                         src={"product.posterDetails.photo"}
                                         sx={{ bgcolor: "#2196f3" }}
                                     />
                                     <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
                                         <Typography variant="p" sx={{ fontSize: "0.95em" }}>
-                                            {props.initiatorInfo.username}
+                                            {props.ownerData.username}
                                         </Typography>
                                         <Typography
                                             variant="p"
@@ -223,4 +211,4 @@ const OfferItem = (props) => {
     );
 };
 
-export default connect(null, { createNewExchange })(OfferItem);
+export default connect(null, { createNewExchange, rejectOffer })(OfferItem);

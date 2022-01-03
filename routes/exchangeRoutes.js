@@ -10,5 +10,6 @@ router.get("/my-products", authController.protect, exchangeController.getMyProdu
 router.get("/my-favorites", authController.protect, exchangeController.getMyFavorites);
 router.get("/my-initiates", authController.protect, exchangeController.getMyInitiates);
 router.get("/my-offers", authController.protect, exchangeController.getMyOffers);
+router.post("/reject", authController.protect, exchangeController.rejectOffer);
 
 module.exports = router;

@@ -88,6 +88,17 @@ export const getMyOffers = () => async (dispatch) => {
     }
 };
 
+// Function to reject an offer
+export const rejectOffer = (exchangeData) => async (dispatch) => {
+    try {
+        const response = await axiosInstance.post("/api/exchange/reject", exchangeData);
+        dispatch(getMyOffers());
+        console.log(response.data.data.exchange);
+    } catch (err) {
+        console.log(err.response);
+    }
+};
+
 // Function to dispatch action for loading state of my products
 const setMyProductsLoading = () => {
     return {

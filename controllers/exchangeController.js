@@ -134,3 +134,32 @@ exports.getMyOffers = async (req, res, next) => {
         next(err);
     }
 };
+
+// Route = /api/exchange/reject
+// Function to reject an offer
+// Authentication = true
+exports.rejectOffer = async (req, res, next) => {
+    try {
+        const exchange = await Exchange.findById(req.body.exchangeId);
+        const initiatorIndex = exchange.initiator.findIndex((el) =>
+            el._id.equals(req.body.initiatorItemId)
+        );
+
+        exchange.initiator.splice(initiatorIndex, 1);
+        await exchange.save();
+        // const myOffers = await Exchange.find({ owner: req.user._id })
+        //     .populate("initiator.initiatorId")
+        //     .populate("initiator.initiatorProduct")
+        //     .populate("owner")
+        //     .populate("productWanted");
+        res.status(200).json({
+            status: "success",
+            data: {
+                message: "Offer rejected",
+                exchange,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
+};

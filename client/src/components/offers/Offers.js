@@ -22,7 +22,8 @@ const Offers = (props) => {
             </Typography>
         );
     } else {
-        return <OfferList myOffers={props.myOffers} />;
+        console.log(props.myOffers);
+        return <OfferList ownerInfo={props.ownerInfo} myOffers={props.myOffers} />;
     }
 
     return (
@@ -41,6 +42,7 @@ const mapStateToProps = (state) => {
     return {
         myOffers: state.exchange.myOffers,
         myOffersLoading: state.exchange.myOffersLoading,
+        ownerInfo: state.auth.userInfo,
     };
 };
 

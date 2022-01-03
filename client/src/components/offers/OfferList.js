@@ -7,11 +7,13 @@ const OfferList = (props) => {
         return offer.initiator.map((initiatorData) => {
             return (
                 <OfferItem
+                    exchangeId={offer._id}
                     key={initiatorData._id}
                     initiatorData={initiatorData}
+                    ownerData={props.ownerInfo}
                     wantedProduct={offer.productWanted}
                     givenProduct={initiatorData.initiatorProduct}
-                    initiatorInfo={initiatorData.initiatorId}
+                    initiateInitiatedAt={initiatorData.initiatedAt}
                 />
             );
         });
