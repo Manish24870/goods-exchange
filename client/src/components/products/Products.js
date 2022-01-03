@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Box, Container, Stack, Pagination } from "@mui/material";
 import { connect } from "react-redux";
 
-import isEmpty from "../../utils/isEmpty";
 import ProductList from "./ProductList";
 import Loading from "../loading/Loading";
 import { getProducts } from "../../actions/productActions";
@@ -14,8 +13,10 @@ const Products = (props) => {
 
     let productContent;
 
-    if (isEmpty(props.products)) {
+    if (props.productsLoading) {
         productContent = <Loading />;
+    } else if (props.products.length === 0) {
+        productContent = <p>No products found</p>;
     } else {
         productContent = <ProductList products={props.products} />;
     }
@@ -35,6 +36,7 @@ const Products = (props) => {
 const mapStateToProps = (state) => {
     return {
         products: Object.values(state.product.products),
+        productsLoading: state.product.productsLoading,
     };
 };
 

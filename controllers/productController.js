@@ -199,9 +199,10 @@ exports.createNewAnswer = async (req, res, next) => {
 // Function to favorite a product
 // Authentication = true
 exports.favoriteProduct = async (req, res, next) => {
+    console.log(req.body);
     try {
         const favoritedIndex = req.user.favorites.findIndex((el) =>
-            el.productId.equals(req.params.id)
+            el.product.equals(req.body.productId)
         );
 
         // If the item is already favorited
@@ -211,19 +212,20 @@ exports.favoriteProduct = async (req, res, next) => {
             res.status(200).json({
                 status: "success",
                 data: {
-                    message: "Product unfavorited successfully",
+                    message: "Product unfavorited",
                     user: req.user,
                 },
             });
         } else {
             req.user.favorites.push({
-                productId: req.params.id,
+                product: req.body.productId,
+                owner: req.body.productOwnerId,
             });
             await req.user.save();
             res.status(200).json({
                 status: "success",
                 data: {
-                    message: "Product favorited successfully",
+                    message: "Product favorited",
                     user: req.user,
                 },
             });

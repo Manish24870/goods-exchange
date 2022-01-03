@@ -38,14 +38,18 @@ const ProductActions = (props) => {
     };
 
     const onFavoriteClick = () => {
-        props.favoriteProduct(props.productId);
+        const favoriteDetails = {
+            productId: props.productId,
+            productOwnerId: props.productOwnerId,
+        };
+        props.favoriteProduct(favoriteDetails);
     };
 
     // Check if the product is already favorited
     const checkFavorites = () => {
         if (
             props.userFavorites &&
-            props.userFavorites.some((el) => el.productId === props.productId)
+            props.userFavorites.some((el) => el.product === props.productId)
         ) {
             return (
                 <React.Fragment>
@@ -67,8 +71,11 @@ const ProductActions = (props) => {
     const checkExchanges = () => {
         if (
             props.myInitiates &&
-            props.myInitiates.some((el) => {
-                return el.initiator.some((el2) => el2.initiatorId === props.userId);
+            props.myInitiates.some((el1) => {
+                return el1.initiator.some(
+                    (el2) =>
+                        el2.initiatorId === props.userId && el1.productWanted === props.productId
+                );
             })
         ) {
             return (
@@ -127,6 +134,7 @@ const ProductActions = (props) => {
 const mapStateToProps = (state) => {
     return {
         productId: state.product.product._id,
+        productOwnerId: state.product.product.owner._id,
         userId: state.auth.user.id,
         userFavorites: state.auth.userInfo.favorites,
         isAuthenticated: state.auth.isAuthenticated,

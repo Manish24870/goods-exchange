@@ -41,9 +41,14 @@ const userSchema = new mongoose.Schema({
     },
     favorites: [
         {
-            productId: {
+            product: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Product",
+                required: true,
+            },
+            owner: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
                 required: true,
             },
             favoritedAt: {

@@ -1,5 +1,6 @@
 const Exchange = require("../models/exchangeModel");
 const Product = require("../models/productModel");
+const User = require("../models/userModel");
 
 // Route = /api/exchange/create
 // Function to create a new exchange
@@ -64,6 +65,27 @@ exports.getMyProducts = async (req, res, next) => {
             data: {
                 message: "Your products have been fetched successfully",
                 myProducts,
+            },
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Route = /api/exchange/my-favorites
+// Function to get my favorites
+// Authentication = true
+exports.getMyFavorites = async (req, res, next) => {
+    try {
+        const populatedUser = await User.findById(req.user._id)
+            .populate("favorites.product")
+            .populate("favorites.owner");
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                message: "Favorites fetched successfully",
+                myFavorites: populatedUser.favorites,
             },
         });
     } catch (err) {

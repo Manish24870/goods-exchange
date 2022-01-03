@@ -5,11 +5,13 @@ import {
     GET_PRODUCT,
     CREATE_NEW_QUESTION,
     CREATE_NEW_ANSWER,
+    SET_PRODUCTS_LOADING,
 } from "../actions/types";
 
 const initialState = {
     products: {},
     product: {},
+    productsLoading: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -23,7 +25,14 @@ const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 products: { ..._.mapKeys(action.payload, "_id") },
+                productsLoading: false,
             };
+        case SET_PRODUCTS_LOADING: {
+            return {
+                ...state,
+                productsLoading: true,
+            };
+        }
         case GET_PRODUCT:
             return {
                 ...state,

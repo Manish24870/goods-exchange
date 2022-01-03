@@ -8,6 +8,7 @@ import {
     CREATE_NEW_QUESTION,
     CREATE_NEW_ANSWER,
     FAVORITE_PRODUCT,
+    SET_PRODUCTS_LOADING,
 } from "./types";
 
 // Function to create a new product
@@ -27,6 +28,7 @@ export const createNewProduct = (productData, navigate) => async (dispatch) => {
 
 // Function to get all products from DB
 export const getProducts = () => async (dispatch) => {
+    dispatch(setProductsLoading());
     try {
         const response = await axiosInstance.get("/api/products");
         dispatch({
@@ -85,9 +87,9 @@ export const createNewAnswer = (id, questionId, answerData, handleClose) => asyn
 };
 
 // Function to favorite a product
-export const favoriteProduct = (id) => async (dispatch) => {
+export const favoriteProduct = (favoriteDetails) => async (dispatch) => {
     try {
-        const response = await axiosInstance.get(`/api/products/${id}/favorite`);
+        const response = await axiosInstance.post("/api/products/favorite", favoriteDetails);
         createToast(response.data.data.message, "success");
         dispatch({
             type: FAVORITE_PRODUCT,
@@ -96,4 +98,11 @@ export const favoriteProduct = (id) => async (dispatch) => {
     } catch (err) {
         dispatch(setErrors(err.response.data));
     }
+};
+
+// Function to set loading while fetching products
+const setProductsLoading = () => {
+    return {
+        type: SET_PRODUCTS_LOADING,
+    };
 };

@@ -1,15 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Card, CardMedia, CardContent, Typography, Button } from "@mui/material";
+import moment from "moment";
+import { Box, Card, Button, CardMedia, CardContent, Avatar, Typography } from "@mui/material";
 import { ArrowForwardIos } from "@mui/icons-material";
 
-const MyProductItem = (props) => {
+const FavoriteItem = (props) => {
+    console.log(props.favorite);
     return (
         <Box>
             <Card>
                 <CardMedia
                     component="img"
-                    height="180"
+                    height="170"
                     image={"https://picsum.photos/400/400"}
                     alt={props.product.name}
                 />
@@ -17,6 +19,19 @@ const MyProductItem = (props) => {
                 <CardContent>
                     <Box>
                         <Typography variant="h6">{props.product.name}</Typography>
+                    </Box>
+                    <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
+                        <Avatar
+                            alt={props.product.name}
+                            src={"product.posterDetails.photo"}
+                            sx={{ bgcolor: "#2196f3" }}
+                        />
+                        <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
+                            <Typography variant="p">{props.owner.username}</Typography>
+                            <Typography variant="p" sx={{ opacity: "90%", fontSize: "0.81em" }}>
+                                {moment(props.product.postedAt).format("MMM Do YYYY, h:mm a")}
+                            </Typography>
+                        </Box>
                     </Box>
                     <Box mt={3} sx={{ minHeight: "60px" }}>
                         <Typography variant="p" sx={{ fontSize: "0.9em" }}>
@@ -42,4 +57,4 @@ const MyProductItem = (props) => {
     );
 };
 
-export default MyProductItem;
+export default FavoriteItem;

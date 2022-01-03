@@ -10,7 +10,6 @@ import { getMyProducts } from "../../actions/exchangeActions";
 const Profile = (props) => {
     useEffect(() => {
         props.getMyProducts();
-        // props.getProduct(productId);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     let profileRender;

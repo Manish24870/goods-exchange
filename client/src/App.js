@@ -19,6 +19,7 @@ const App = () => {
                     closeOnClick={true}
                     limit={1}
                     style={{ marginTop: 75 }}
+                    pauseOnFocusLoss={false}
                 />
                 <ThemeProvider theme={theme}>
                     <Layout />

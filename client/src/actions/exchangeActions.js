@@ -1,5 +1,11 @@
 import axiosInstance from "../utils/axios/axiosInstance";
-import { GET_MY_PRODUCTS, SET_MY_PRODUCTS_LOADING, GET_MY_INITIATES } from "./types";
+import {
+    GET_MY_PRODUCTS,
+    SET_MY_PRODUCTS_LOADING,
+    GET_MY_INITIATES,
+    GET_MY_FAVORITES,
+    SET_MY_FAVORITES_LOADING,
+} from "./types";
 import { setErrors } from "./errorActions";
 import createToast from "../utils/toast/createToast";
 
@@ -36,6 +42,21 @@ export const getMyProducts = () => async (dispatch) => {
     }
 };
 
+// Function to get my favorites
+export const getMyFavorites = () => async (dispatch) => {
+    dispatch(setMyFavoritesLoading());
+    try {
+        const response = await axiosInstance.get("/api/exchange/my-favorites");
+        console.log(response.data);
+        dispatch({
+            type: GET_MY_FAVORITES,
+            payload: response.data.data.myFavorites,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 // Function to get my exchange initiates
 export const getMyInitiates = () => async (dispatch) => {
     try {
@@ -49,9 +70,15 @@ export const getMyInitiates = () => async (dispatch) => {
     }
 };
 
-// Function to dispatch action for loading state
+// Function to dispatch action for loading state of my products
 const setMyProductsLoading = () => {
     return {
         type: SET_MY_PRODUCTS_LOADING,
+    };
+};
+// Function to dispatch action for loading state of favorites
+const setMyFavoritesLoading = () => {
+    return {
+        type: SET_MY_FAVORITES_LOADING,
     };
 };

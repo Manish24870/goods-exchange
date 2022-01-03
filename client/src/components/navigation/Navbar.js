@@ -14,7 +14,12 @@ import {
     IconButton,
     Avatar,
 } from "@mui/material";
-import { AccountCircleOutlined, SettingsOutlined, ExitToAppOutlined } from "@mui/icons-material";
+import {
+    AccountCircleOutlined,
+    SettingsOutlined,
+    ExitToAppOutlined,
+    FavoriteBorder,
+} from "@mui/icons-material";
 
 import { ReactComponent as LogoIcon } from "../../utils/icon/icon.svg";
 import { logoutUser } from "../../actions/authActions";
@@ -115,6 +120,10 @@ const Navbar = (props) => {
                             <MenuItem component={Link} to="/profile">
                                 <AccountCircleOutlined fontSize="small" sx={{ mr: 1 }} />
                                 My Profile
+                            </MenuItem>
+                            <MenuItem component={Link} to="/favorites">
+                                <FavoriteBorder fontSize="small" sx={{ mr: 1 }} />
+                                My Favorites
                             </MenuItem>
                             <MenuItem>
                                 <SettingsOutlined fontSize="small" sx={{ mr: 1 }} />

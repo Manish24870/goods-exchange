@@ -1,10 +1,32 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { Box, Card, Button, CardMedia, CardContent, Avatar, Typography } from "@mui/material";
 import { ArrowForwardIos } from "@mui/icons-material";
 
+import { favoriteProduct } from "../../actions/productActions";
+
 const ProductItem = (props) => {
+    const onFavoriteClick = () => {
+        const favoriteData = {
+            productId: props.product._id,
+            productOwnerId: props.product.owner._id,
+        };
+        props.favoriteProduct(favoriteData);
+    };
+
+    const checkFavorites = () => {
+        if (
+            props.userFavorites &&
+            props.userFavorites.some((el) => el.product === props.product._id)
+        ) {
+            return "Unfavorite";
+        } else {
+            return "Favorite";
+        }
+    };
+
     return (
         <Box>
             <Card>
@@ -45,9 +67,9 @@ const ProductItem = (props) => {
                             variant="outlined"
                             color="secondary"
                             sx={{ textTransform: "none", marginRight: 2 }}
-                            // onClick={"onFavoriteAdd"}
+                            onClick={onFavoriteClick}
                         >
-                            Favorite
+                            {checkFavorites()}
                         </Button>
                         <Button
                             component={Link}
@@ -66,4 +88,10 @@ const ProductItem = (props) => {
     );
 };
 
-export default ProductItem;
+const mapStateToProps = (state) => {
+    return {
+        userFavorites: state.auth.userInfo.favorites,
+    };
+};
+
+export default connect(mapStateToProps, { favoriteProduct })(ProductItem);
