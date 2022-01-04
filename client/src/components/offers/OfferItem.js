@@ -169,19 +169,41 @@ const OfferItem = (props) => {
                 textTransform: "none",
                 display: "flex",
                 flexDirection: "column",
-                marginBottom: 9,
-                fontSize: "0.95em",
+                marginBottom: 0,
               }}
             >
               <Typography variant="p" sx={{ opacity: "94%" }}>
                 Initiated At:
               </Typography>
               <Typography variant="p">
-                {moment(props.initiatorData.initiatorId.initiatedAt).format(
+                {moment(props.initiatorData.initiatedAt).format(
                   "MMM Do YYYY, h:mm a"
                 )}
               </Typography>
             </Button>
+
+            {props.initiatorData.acceptedAt ? (
+              <Button
+                variant="default"
+                color="secondary"
+                sx={{
+                  marginTop: 2,
+                  textTransform: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: 6,
+                }}
+              >
+                <Typography variant="p" sx={{ opacity: "94%" }}>
+                  Exchanged At:
+                </Typography>
+                <Typography variant="p">
+                  {moment(props.initiatorData.acceptedAt).format(
+                    "MMM Do YYYY, h:mm a"
+                  )}
+                </Typography>
+              </Button>
+            ) : null}
             {checkOfferStatus()}
           </Grid>
           <Grid item xs={4}>

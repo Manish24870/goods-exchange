@@ -185,6 +185,7 @@ exports.acceptOffer = async (req, res, next) => {
 
     exchange.isExchanged = true;
     exchange.initiator[initiatorIndex].offerStatus = "accepted";
+    exchange.initiator[initiatorIndex].acceptedAt = Date.now();
 
     exchange.initiator.forEach((el, index) => {
       if (index !== initiatorIndex) {

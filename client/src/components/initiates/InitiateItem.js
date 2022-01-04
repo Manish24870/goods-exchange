@@ -170,7 +170,7 @@ const InitiateItem = (props) => {
                 textTransform: "none",
                 display: "flex",
                 flexDirection: "column",
-                marginBottom: 9,
+                marginBottom: 0,
               }}
             >
               <Typography variant="p" sx={{ opacity: "94%" }}>
@@ -182,28 +182,45 @@ const InitiateItem = (props) => {
                 )}
               </Typography>
             </Button>
-            {/* <CompareArrowsOutlined color="secondary" sx={{ fontSize: "40px" }} />
-                        <Button
-                            variant="outlined"
-                            color="secondary"
-                            sx={{ width: 150, height: 50, fontSize: "1.05em", marginTop: 2 }}
-                        >
-                            Pending
-                        </Button> */}
+            {initiatorData.acceptedAt ? (
+              <Button
+                variant="default"
+                color="secondary"
+                size="small"
+                sx={{
+                  marginTop: 2,
+                  textTransform: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: 4,
+                }}
+              >
+                <Typography variant="p" sx={{ opacity: "94%" }}>
+                  Exchanged At:
+                </Typography>
+                <Typography variant="p">
+                  {moment(initiatorData.acceptedAt).format(
+                    "MMM Do YYYY, h:mm a"
+                  )}
+                </Typography>
+              </Button>
+            ) : null}
             {checkOfferStatus()}
-            <Button
-              onClick={onExchangeCancel}
-              variant="default"
-              color="secondary"
-              size="small"
-              sx={{
-                marginTop: 9,
-                textTransform: "none",
-                color: "#6325A9",
-              }}
-            >
-              Cancel
-            </Button>
+            {!initiatorData.acceptedAt ? (
+              <Button
+                onClick={onExchangeCancel}
+                variant="default"
+                color="secondary"
+                size="small"
+                sx={{
+                  marginTop: 3,
+                  textTransform: "none",
+                  color: "#6325A9",
+                }}
+              >
+                Cancel
+              </Button>
+            ) : null}
           </Grid>
           <Grid item xs={4}>
             <Typography
