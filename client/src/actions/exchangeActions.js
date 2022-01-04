@@ -91,12 +91,8 @@ export const getMyOffers = () => async (dispatch) => {
 // Function to reject an offer
 export const rejectOffer = (exchangeData) => async (dispatch) => {
   try {
-    const response = await axiosInstance.post(
-      "/api/exchange/reject",
-      exchangeData
-    );
+    await axiosInstance.post("/api/exchange/reject", exchangeData);
     dispatch(getMyOffers());
-    console.log(response.data.data.exchange);
   } catch (err) {
     console.log(err.response);
   }
@@ -105,14 +101,19 @@ export const rejectOffer = (exchangeData) => async (dispatch) => {
 // Function to accept an offer
 export const acceptOffer = (exchangeData) => async (dispatch) => {
   try {
-    const response = await axiosInstance.post(
-      "/api/exchange/accept",
-      exchangeData
-    );
+    await axiosInstance.post("/api/exchange/accept", exchangeData);
     dispatch(getMyOffers());
-    console.log(response.data.data.exchange);
   } catch (err) {
     dispatch(setErrors(err.response.data));
+  }
+};
+
+// Function to create a new review
+export const createAReview = (reviewData) => async (dispatch) => {
+  try {
+    console.log("REVIEW CREATED");
+  } catch (err) {
+    console.log(err.response);
   }
 };
 

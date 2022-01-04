@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { ArrowForwardIos, CompareArrowsOutlined } from "@mui/icons-material";
 
+import WriteReview from "../writeReview/WriteReview";
 import {
   createNewExchange,
   rejectOffer,
@@ -22,6 +23,19 @@ import {
 } from "../../actions/exchangeActions";
 
 const OfferItem = (props) => {
+  // For review Dialog
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = (e, id) => {
+    e.preventDefault();
+    // setQuestionId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const onOfferAccept = () => {
     const exchangeData = {
       exchangeId: props.exchangeId,
@@ -269,6 +283,21 @@ const OfferItem = (props) => {
             </Card>
           </Grid>
         </Grid>
+        <Button
+          onClick={handleClickOpen}
+          variant="contained"
+          color="info"
+          sx={{ marginTop: 2, textTransform: "none" }}
+        >
+          Review
+        </Button>
+        <WriteReview
+          open={open}
+          handleClose={handleClose}
+          initiatorData={props.initiatorData}
+          ownerData={props.ownerData}
+          exchangeId={props.exchangeId}
+        />
       </Box>
     </Paper>
   );

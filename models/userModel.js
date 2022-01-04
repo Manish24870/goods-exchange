@@ -2,81 +2,106 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 4,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    lowwercase: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+    default: "",
+  },
+  location: {
+    type: String,
+    default: "",
+  },
+  reputation: {
+    type: Number,
+    default: 50,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 5,
+    select: false,
+  },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    required: true,
+    default: "user",
+  },
+  favorites: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
         required: true,
-        trim: true,
-        minlength: 4,
-        unique: true,
-    },
-    email: {
-        type: String,
+      },
+      owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
-        lowwercase: true,
-        unique: true,
-    },
-    phone: {
-        type: String,
-        default: "",
-    },
-    location: {
-        type: String,
-        default: "",
-    },
-    reputation: {
-        type: Number,
-        default: 50,
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 5,
-        select: false,
-    },
-    role: {
-        type: String,
-        enum: ["admin", "user"],
-        required: true,
-        default: "user",
-    },
-    favorites: [
-        {
-            product: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Product",
-                required: true,
-            },
-            owner: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-                required: true,
-            },
-            favoritedAt: {
-                type: Date,
-                required: true,
-                default: Date.now,
-            },
-        },
-    ],
-    createdAt: {
+      },
+      favoritedAt: {
         type: Date,
         required: true,
         default: Date.now,
+      },
     },
+  ],
+  reviews: [
+    {
+      reviewedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      reviewExchange: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Exchange",
+        required: true,
+      },
+      reviewNumber: {
+        type: Number,
+        required: true,
+      },
+      reviewText: {
+        type: String,
+        trim: true,
+      },
+    },
+  ],
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
 });
 
 // Hash the password before saving
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) {
-        next();
-    }
-    this.password = await bcrypt.hash(this.password, 12);
+  if (!this.isModified("password")) {
     next();
+  }
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
 });
 
 // Compare input password with database password
-userSchema.methods.comparePassword = async function (inputPassword, dbPassword) {
-    return await bcrypt.compare(inputPassword, dbPassword);
+userSchema.methods.comparePassword = async function (
+  inputPassword,
+  dbPassword
+) {
+  return await bcrypt.compare(inputPassword, dbPassword);
 };
 
 const User = mongoose.model("User", userSchema);

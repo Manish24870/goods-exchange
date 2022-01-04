@@ -40,7 +40,7 @@ const Initiates = (props) => {
         <Typography mt={3} mb={3} variant="h5" sx={{ fontWeight: 500 }}>
           My Initiates
         </Typography>
-        <Container>{renderInitiates}</Container>
+        {renderInitiates}
       </Container>
     </Box>
   );
