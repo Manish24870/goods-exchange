@@ -211,6 +211,7 @@ exports.acceptOffer = async (req, res, next) => {
 // Function to write a review
 // Authentication = true
 exports.createAReview = async (req, res, next) => {
+  console.log(req.body);
   try {
     const reviewedUser = await User.findById(req.body.reviewedFor);
 

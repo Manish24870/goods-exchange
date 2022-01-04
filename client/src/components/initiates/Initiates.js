@@ -29,6 +29,7 @@ const Initiates = (props) => {
           product={initiate}
           loggedInUserId={props.loggedInUserId}
           loggedInUserData={props.loggedInUserData}
+          initiateId={initiate._id}
         />
       );
     });

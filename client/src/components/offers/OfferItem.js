@@ -28,7 +28,6 @@ const OfferItem = (props) => {
 
   const handleClickOpen = (e, id) => {
     e.preventDefault();
-    // setQuestionId(id);
     setOpen(true);
   };
 
@@ -36,6 +35,7 @@ const OfferItem = (props) => {
     setOpen(false);
   };
 
+  // For component
   const onOfferAccept = () => {
     const exchangeData = {
       exchangeId: props.exchangeId,
@@ -283,20 +283,24 @@ const OfferItem = (props) => {
             </Card>
           </Grid>
         </Grid>
-        <Button
-          onClick={handleClickOpen}
-          variant="contained"
-          color="info"
-          sx={{ marginTop: 2, textTransform: "none" }}
-        >
-          Review
-        </Button>
-        <WriteReview
-          open={open}
-          handleClose={handleClose}
-          initiatorId={props.initiatorData.initiatorId._id}
-          exchangeId={props.exchangeId}
-        />
+        {props.initiatorData.acceptedAt ? (
+          <React.Fragment>
+            <Button
+              onClick={handleClickOpen}
+              variant="contained"
+              color="info"
+              sx={{ marginTop: 2, textTransform: "none" }}
+            >
+              Review
+            </Button>
+            <WriteReview
+              open={open}
+              handleClose={handleClose}
+              initiatorId={props.initiatorData.initiatorId._id}
+              exchangeId={props.exchangeId}
+            />
+          </React.Fragment>
+        ) : null}
       </Box>
     </Paper>
   );

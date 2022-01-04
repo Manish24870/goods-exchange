@@ -26,14 +26,11 @@ const WriteReview = (props) => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    // console.log(props.initiatorData.initiatorId._id);
-    // console.log(props.ownerData);
-    // console.log(props.exchangeId);
     const reviewData = {
       exchangeId: props.exchangeId,
       reviewNumber: formData.reviewNumber,
       reviewText: formData.reviewText,
-      reviewedFor: props.initiatorId,
+      reviewedFor: props.initiatorId ? props.initiatorId : props.ownerId,
     };
     props.createAReview(reviewData);
     setFormData({ ...formData, reviewText: "", reviewNumber: 4 });

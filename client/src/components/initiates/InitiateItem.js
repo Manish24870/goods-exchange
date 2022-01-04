@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -15,9 +15,22 @@ import {
 } from "@mui/material";
 import { ArrowForwardIos, CompareArrowsOutlined } from "@mui/icons-material";
 
+import WriteReview from "../writeReview/WriteReview";
 import { createNewExchange } from "../../actions/exchangeActions";
 
 const InitiateItem = (props) => {
+  // For review Dialog
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = (e, id) => {
+    e.preventDefault();
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const initiatorData = props.product.initiator.filter(
     (el) => el.initiatorId === props.loggedInUserId
   )[0];
@@ -286,6 +299,24 @@ const InitiateItem = (props) => {
             </Card>
           </Grid>
         </Grid>
+        {initiatorData.acceptedAt ? (
+          <React.Fragment>
+            <Button
+              onClick={handleClickOpen}
+              variant="contained"
+              color="info"
+              sx={{ marginTop: 2, textTransform: "none" }}
+            >
+              Review
+            </Button>
+            <WriteReview
+              open={open}
+              handleClose={handleClose}
+              ownerId={props.product.owner._id}
+              exchangeId={props.initiateId}
+            />
+          </React.Fragment>
+        ) : null}
       </Box>
     </Paper>
   );
