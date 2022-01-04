@@ -294,8 +294,7 @@ const OfferItem = (props) => {
         <WriteReview
           open={open}
           handleClose={handleClose}
-          initiatorData={props.initiatorData}
-          ownerData={props.ownerData}
+          initiatorId={props.initiatorData.initiatorId._id}
           exchangeId={props.exchangeId}
         />
       </Box>

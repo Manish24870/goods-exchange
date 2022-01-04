@@ -33,9 +33,10 @@ const WriteReview = (props) => {
       exchangeId: props.exchangeId,
       reviewNumber: formData.reviewNumber,
       reviewText: formData.reviewText,
-      reviewedFor: props.initiatorData.initiatorId._id,
+      reviewedFor: props.initiatorId,
     };
     props.createAReview(reviewData);
+    setFormData({ ...formData, reviewText: "", reviewNumber: 4 });
     props.handleClose();
   };
 

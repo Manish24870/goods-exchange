@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema({
         ref: "User",
         required: true,
       },
-      reviewExchange: {
+      exchangeId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Exchange",
         required: true,

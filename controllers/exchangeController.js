@@ -2,6 +2,7 @@ const Exchange = require("../models/exchangeModel");
 const Product = require("../models/productModel");
 const User = require("../models/userModel");
 const ApiError = require("../utils/apiError");
+const isEmpty = require("../utils/isEmpty");
 
 // Route = /api/exchange/create
 // Function to create a new exchange
@@ -199,6 +200,43 @@ exports.acceptOffer = async (req, res, next) => {
       data: {
         message: "Offer accepted",
         exchange,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Route = /api/exchange/review
+// Function to write a review
+// Authentication = true
+exports.createAReview = async (req, res, next) => {
+  try {
+    const reviewedUser = await User.findById(req.body.reviewedFor);
+
+    const reviewIndex = reviewedUser.reviews.findIndex((review) =>
+      review.reviewedBy.equals(req.user._id)
+    );
+
+    if (reviewIndex >= 0) {
+      return next(
+        new ApiError("Exchange already reviewed", "already-reviewed-error", 400)
+      );
+    }
+
+    const newReview = {
+      reviewedBy: req.user._id,
+      exchangeId: req.body.exchangeId,
+      reviewNumber: req.body.reviewNumber,
+      reviewText: isEmpty(req.body.reviewText) ? "" : req.body.reviewText,
+    };
+    reviewedUser.reviews.push(newReview);
+    await reviewedUser.save();
+    res.status(201).json({
+      status: "success",
+      data: {
+        message: "User reviewed successfully",
+        reviewedUser,
       },
     });
   } catch (err) {

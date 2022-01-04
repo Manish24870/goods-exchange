@@ -32,5 +32,10 @@ router.get(
 );
 router.post("/reject", authController.protect, exchangeController.rejectOffer);
 router.post("/accept", authController.protect, exchangeController.acceptOffer);
+router.post(
+  "/review",
+  authController.protect,
+  exchangeController.createAReview
+);
 
 module.exports = router;

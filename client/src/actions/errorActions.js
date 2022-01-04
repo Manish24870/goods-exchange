@@ -7,7 +7,8 @@ export const setErrors = (payload) => (dispatch) => {
   // Check if the user is not logged in
   if (
     payload.errorType === "unauthorized-error" ||
-    payload.errorType === "already-exchanged-error"
+    payload.errorType === "already-exchanged-error" ||
+    payload.errorType === "already-reviewed-error"
   ) {
     createToast(payload.data.errors.message, "error");
   }

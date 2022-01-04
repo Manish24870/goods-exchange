@@ -111,9 +111,10 @@ export const acceptOffer = (exchangeData) => async (dispatch) => {
 // Function to create a new review
 export const createAReview = (reviewData) => async (dispatch) => {
   try {
-    console.log("REVIEW CREATED");
+    await axiosInstance.post("/api/exchange/review", reviewData);
+    createToast("Review added successfully", "success");
   } catch (err) {
-    console.log(err.response);
+    dispatch(setErrors(err.response.data));
   }
 };
 
