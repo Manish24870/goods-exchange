@@ -174,6 +174,7 @@ exports.acceptOffer = async (req, res, next) => {
       el._id.equals(req.body.initiatorItemId)
     );
 
+    // If the item has aready been exchanged
     if (exchange.isExchanged) {
       return next(
         new ApiError(
@@ -211,7 +212,8 @@ exports.acceptOffer = async (req, res, next) => {
 // Function to write a review
 // Authentication = true
 exports.createAReview = async (req, res, next) => {
-  console.log(req.body);
+  const reputationValues = [-15, -12, -9, -6, 1, 3, 6, 10, 13, 15];
+
   try {
     const reviewedUser = await User.findById(req.body.reviewedFor);
 
@@ -225,6 +227,7 @@ exports.createAReview = async (req, res, next) => {
       );
     }
 
+    // Create and add a new review
     const newReview = {
       reviewedBy: req.user._id,
       exchangeId: req.body.exchangeId,
@@ -232,6 +235,23 @@ exports.createAReview = async (req, res, next) => {
       reviewText: isEmpty(req.body.reviewText) ? "" : req.body.reviewText,
     };
     reviewedUser.reviews.push(newReview);
+    reviewedUser.reputation =
+      reviewedUser.reputation +
+      reputationValues[Number(req.body.reviewNumber) - 1];
+    console.log(
+      reviewedUser.reputation,
+      reputationValues[Number(req.body.reviewNumber) - 1]
+    );
+
+    if (reviewedUser.reputation > 100) {
+      reviewedUser.reputation = 100;
+    }
+    if (reviewedUser.reputation < 0) {
+      reviewedUser.reputation = 0;
+    }
+
+    // Modify the reputation
+
     await reviewedUser.save();
     res.status(201).json({
       status: "success",

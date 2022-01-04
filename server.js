@@ -14,19 +14,20 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 //Connect to MongoDB database
 mongoose
-    .connect(process.env.MONGODB_URL, {
-        useNewUrlParser: true,
-    })
-    .then(() => {
-        console.log(chalk.inverse.blue("Database connected..."));
-    })
-    .catch((err) => {
-        console.log("ERROR CONNECTING DATABASE");
-        console.log(err);
-    });
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    console.log(chalk.inverse.blue("Database connected..."));
+  })
+  .catch((err) => {
+    console.log("ERROR CONNECTING DATABASE");
+    console.log(err);
+  });
 
 // Mount Routes
 app.use("/api/auth", authRouter);
@@ -38,5 +39,5 @@ app.use(globalErrorHandler);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-    console.log(chalk.inverse.blue(`Server started at port ${port}...`));
+  console.log(chalk.inverse.blue(`Server started at port ${port}...`));
 });
