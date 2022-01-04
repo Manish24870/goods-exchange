@@ -18,6 +18,11 @@ const exchangeSchema = new mongoose.Schema({
                 required: true,
                 default: Date.now,
             },
+            offerStatus: {
+                type: String,
+                enum: ["accepted", "rejected", "pending"],
+                default: "pending",
+            },
         },
     ],
 
@@ -47,6 +52,11 @@ const exchangeSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now,
+    },
+    isExchanged: {
+        type: Boolean,
+        required: true,
+        default: false,
     },
 });
 

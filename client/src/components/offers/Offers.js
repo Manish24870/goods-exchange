@@ -7,43 +7,44 @@ import OfferList from "./OfferList";
 import { getMyOffers } from "../../actions/exchangeActions";
 
 const Offers = (props) => {
-    useEffect(() => {
-        props.getMyOffers();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    props.getMyOffers();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    let renderOffers;
+  let renderOffers;
 
-    if (props.myOffersLoading) {
-        renderOffers = <Loading />;
-    } else if (props.myOffers.length === 0) {
-        renderOffers = (
-            <Typography mt={4} mb={3} variant="p" sx={{ fontWeight: 400 }}>
-                Your do not have any offers
-            </Typography>
-        );
-    } else {
-        console.log(props.myOffers);
-        return <OfferList ownerInfo={props.ownerInfo} myOffers={props.myOffers} />;
-    }
-
-    return (
-        <Box mt={11}>
-            <Container maxWidth="lg">
-                <Typography mt={3} mb={3} variant="h5" sx={{ fontWeight: 500 }}>
-                    My Offers
-                </Typography>
-                {renderOffers}
-            </Container>
-        </Box>
+  if (props.myOffersLoading) {
+    renderOffers = <Loading />;
+  } else if (props.myOffers.length === 0) {
+    renderOffers = (
+      <Typography mt={4} mb={3} variant="p" sx={{ fontWeight: 400 }}>
+        Your do not have any offers
+      </Typography>
     );
+  } else {
+    renderOffers = (
+      <OfferList ownerInfo={props.ownerInfo} myOffers={props.myOffers} />
+    );
+  }
+
+  return (
+    <Box mt={11}>
+      <Container maxWidth="lg">
+        <Typography mt={3} mb={3} variant="h5" sx={{ fontWeight: 500 }}>
+          My Offers
+        </Typography>
+        {renderOffers}
+      </Container>
+    </Box>
+  );
 };
 
 const mapStateToProps = (state) => {
-    return {
-        myOffers: state.exchange.myOffers,
-        myOffersLoading: state.exchange.myOffersLoading,
-        ownerInfo: state.auth.userInfo,
-    };
+  return {
+    myOffers: state.exchange.myOffers,
+    myOffersLoading: state.exchange.myOffersLoading,
+    ownerInfo: state.auth.userInfo,
+  };
 };
 
 export default connect(mapStateToProps, { getMyOffers })(Offers);
