@@ -1,6 +1,7 @@
 const Exchange = require("../models/exchangeModel");
 const Product = require("../models/productModel");
 const User = require("../models/userModel");
+const ApiError = require("../utils/apiError");
 
 // Route = /api/exchange/create
 // Function to create a new exchange
@@ -154,6 +155,48 @@ exports.rejectOffer = async (req, res, next) => {
       status: "success",
       data: {
         message: "Offer rejected",
+        exchange,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Route = /api/exchange/accept
+// Function to accept an offer
+// Authentication = true
+exports.acceptOffer = async (req, res, next) => {
+  try {
+    const exchange = await Exchange.findById(req.body.exchangeId);
+    const initiatorIndex = exchange.initiator.findIndex((el) =>
+      el._id.equals(req.body.initiatorItemId)
+    );
+
+    if (exchange.isExchanged) {
+      return next(
+        new ApiError(
+          "You have already accepted another offer",
+          "already-exchanged-error",
+          400
+        )
+      );
+    }
+
+    exchange.isExchanged = true;
+    exchange.initiator[initiatorIndex].offerStatus = "accepted";
+
+    exchange.initiator.forEach((el, index) => {
+      if (index !== initiatorIndex) {
+        el.offerStatus = "rejected";
+      }
+    });
+
+    await exchange.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        message: "Offer accepted",
         exchange,
       },
     });

@@ -32,7 +32,6 @@ const InitiateItem = (props) => {
 
   // Check offer status as pending, accepted or rejected
   const checkOfferStatus = () => {
-    console.log(initiatorData);
     if (initiatorData.offerStatus === "pending") {
       return (
         <React.Fragment>
@@ -68,7 +67,7 @@ const InitiateItem = (props) => {
             color="primary"
             sx={{ width: 150, height: 50, fontSize: "1.05em", marginTop: 2 }}
           >
-            Rejected
+            Accepted
           </Button>
         </React.Fragment>
       );
