@@ -47,8 +47,9 @@ exports.createNewProduct = async (req, res, next) => {
   });
 
   const productImages = req.files.map((file) => {
+    const filePath = file.path.replace(/\\/g, "/");
     return {
-      url: file.path,
+      url: filePath,
     };
   });
 

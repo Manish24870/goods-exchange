@@ -2,6 +2,17 @@ import React from "react";
 import { Box, ImageList, ImageListItem } from "@mui/material";
 
 const ProductImages = (props) => {
+  const renderImages = props.images.slice(0, 3).map((image) => {
+    console.log(process.env.REACT_APP_BASE_IMAGE_URL + image.url);
+    return (
+      <ImageListItem key={image._id} rows={1}>
+        <img
+          alt={image._id}
+          src={process.env.REACT_APP_BASE_IMAGE_URL + image.url}
+        />
+      </ImageListItem>
+    );
+  });
   return (
     <Box mt={3}>
       <ImageList
@@ -13,27 +24,7 @@ const ProductImages = (props) => {
           overflow: "hidden",
         }}
       >
-        <ImageListItem rows={1}>
-          <img
-            alt={"images[0].name"}
-            src={"https://picsum.photos/1200/768?w=220&h=220&auto=format"}
-            loading="lazy"
-          />
-        </ImageListItem>
-        <ImageListItem rows={1}>
-          <img
-            alt={"images[1].name"}
-            src={"https://picsum.photos/1200/768?w=220&h=220&auto=format"}
-            loading="lazy"
-          />
-        </ImageListItem>
-        <ImageListItem rows={1}>
-          <img
-            alt={"images[2].name"}
-            src={"https://picsum.photos/1000/700?w=220&h=220&auto=format"}
-            loading="lazy"
-          />
-        </ImageListItem>
+        {renderImages}
       </ImageList>
     </Box>
   );

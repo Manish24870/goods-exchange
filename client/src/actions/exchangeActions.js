@@ -70,7 +70,8 @@ export const getMyInitiates = () => async (dispatch) => {
       payload: response.data.data.myInitiates,
     });
   } catch (err) {
-    dispatch(setErrors(err.response.data));
+    console.log(err.response);
+    // dispatch(setErrors(err.response.data));
   }
 };
 
