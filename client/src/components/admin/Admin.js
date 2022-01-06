@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Box, Typography, Container, Grid } from "@mui/material";
 
 import UserList from "./UserList";
 import Sidebar from "./Sidebar";
+import { getAllUsers } from "../../actions/adminActions";
 
 const Admin = (props) => {
   // For Sidebar
@@ -12,6 +13,10 @@ const Admin = (props) => {
   const handleListItemClick = (e, index) => {
     setSelectedIndex(index);
   };
+
+  useEffect(() => {
+    props.getAllUsers();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   let renderList;
 
@@ -41,4 +46,4 @@ const Admin = (props) => {
   );
 };
 
-export default Admin;
+export default connect(null, { getAllUsers })(Admin);

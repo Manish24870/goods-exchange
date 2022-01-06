@@ -6,7 +6,7 @@ const authController = require("../controllers/authController");
 const router = express.Router();
 
 router.get(
-  "/users",
+  "/get-users",
   authController.protect,
   authController.restrict("admin"),
   adminController.getAllUsers

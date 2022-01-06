@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 // Function to get all the users
 // Authentication = true [admin]
 exports.getAllUsers = async (req, res, next) => {
+  console.log("A");
   try {
     const users = await User.find().sort({
       createdAt: -1,
