@@ -1,8 +1,7 @@
 const express = require("express");
 
 const upload = require("../utils/multer");
-// const multer = require("multer");
-// const upload = multer({ dest: "uploads/" });
+
 const productController = require("../controllers/productController");
 const authController = require("../controllers/authController");
 

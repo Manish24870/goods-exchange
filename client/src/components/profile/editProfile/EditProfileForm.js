@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Container,
-  TextField,
-  Grid,
-  Button,
-  Typography,
-} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Box, TextField, Grid, Button, Avatar } from "@mui/material";
 
 import isEmpty from "../../../utils/isEmpty";
 
 const EditProfileForm = (props) => {
-  console.log(props.clearErrors);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    newUsername: "",
-    newEmail: "",
-    newPassword: "",
-    newPasswordConfirm: "",
+    username: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    location: "",
+    phone: "",
+    profileImage: "",
+    userImage: [],
   });
   const [errorMessages, setErrorMessages] = useState({});
 
@@ -29,19 +28,40 @@ const EditProfileForm = (props) => {
   }, [props.error]);
 
   // Hook for removing errors when component unmounts
+  // also for loading initial form data
   useEffect(() => {
+    const newFormData = {};
+    Object.keys(formData).forEach((el) => {
+      if (!isEmpty(props.userInfo[el])) {
+        newFormData[el] = props.userInfo[el];
+      }
+    });
+    setFormData({ ...formData, ...newFormData });
+
     return () => {
       props.clearErrors();
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.userInfo]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onFormValueChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "userImage") {
+      setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    // props.registerUser(formData, navigate);
+    let newFormData = new FormData();
+    Object.keys(formData).forEach((value) => {
+      if (value === "userImage") {
+        newFormData.append("userImage", formData.userImage);
+      } else {
+        newFormData.append([value], formData[value]);
+      }
+    });
+    props.updateUserProfile(newFormData, navigate);
   };
 
   return (
@@ -49,14 +69,48 @@ const EditProfileForm = (props) => {
       component="form"
       autoComplete="off"
       noValidate
-      mt={4}
+      mt={2}
       onSubmit={onFormSubmit}
+      encType="multipart/form-data"
     >
+      <Avatar
+        alt={props.userInfo.username}
+        src={process.env.REACT_APP_BASE_IMAGE_URL + formData.profileImage}
+        sx={{
+          width: 140,
+          height: 140,
+          marginBottom: 1,
+          marginRight: "auto",
+          marginLeft: "auto",
+        }}
+      ></Avatar>
+      <Box textAlign="center">
+        <input
+          accept="image/*"
+          style={{ display: "none" }}
+          id="profile-upload-button"
+          type="file"
+          name="userImage"
+          onChange={onFormValueChange}
+        />
+        <label htmlFor="profile-upload-button">
+          <Button
+            variant="outlined"
+            component="span"
+            color="info"
+            size="small"
+            sx={{ textTransform: "none" }}
+          >
+            Upload New Avatar
+          </Button>
+        </label>
+      </Box>
       <Grid
         container
         sx={{
           display: "flex",
           justifyContent: "space-between",
+          marginTop: 2,
         }}
       >
         <Grid item xs={5}>
@@ -137,7 +191,7 @@ const EditProfileForm = (props) => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                type="number"
+                type="text"
                 name="phone"
                 label="New Phone"
                 value={formData.phone}
@@ -151,7 +205,6 @@ const EditProfileForm = (props) => {
       </Grid>
 
       <Button
-        // fullWidth
         type="submit"
         color="primary"
         variant="contained"

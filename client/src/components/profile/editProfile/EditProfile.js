@@ -5,6 +5,7 @@ import { Box, Container, Typography } from "@mui/material";
 import EditProfileForm from "./EditProfileForm";
 import Loading from "../../loading/Loading";
 import { clearErrors } from "../../../actions/errorActions";
+import { updateUserProfile } from "../../../actions/authActions";
 
 const EditProfile = (props) => {
   let editProfileRender;
@@ -12,14 +13,19 @@ const EditProfile = (props) => {
     editProfileRender = <Loading />;
   } else {
     editProfileRender = (
-      <EditProfileForm error={props.error} clearErrors={props.clearErrors} />
+      <EditProfileForm
+        error={props.error}
+        clearErrors={props.clearErrors}
+        userInfo={props.userInfo}
+        updateUserProfile={props.updateUserProfile}
+      />
     );
   }
 
   return (
     <Box mt={11}>
       <Container maxWidth="lg">
-        <Typography mt={3} mb={3} variant="h5" sx={{ fontWeight: 500 }}>
+        <Typography mt={3} mb={1} variant="h5" sx={{ fontWeight: 500 }}>
           Edit Your Profile
         </Typography>
         {editProfileRender}
@@ -37,4 +43,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { clearErrors })(EditProfile);
+export default connect(mapStateToProps, { clearErrors, updateUserProfile })(
+  EditProfile
+);
