@@ -3,7 +3,6 @@ import { Box, ImageList, ImageListItem } from "@mui/material";
 
 const ProductImages = (props) => {
   const renderImages = props.images.slice(0, 3).map((image) => {
-    console.log(process.env.REACT_APP_BASE_IMAGE_URL + image.url);
     return (
       <ImageListItem key={image._id} rows={1}>
         <img

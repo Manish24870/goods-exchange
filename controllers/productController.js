@@ -53,8 +53,6 @@ exports.createNewProduct = async (req, res, next) => {
     };
   });
 
-  console.log(productImages);
-
   const newProduct = new Product({
     name: req.body.productName,
     description: req.body.description,

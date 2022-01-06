@@ -20,7 +20,9 @@ const ProfileInfo = (props) => {
         <Avatar
           variant="rounded"
           alt={props.userInfo.username}
-          src={"https://picsum.photos/400/400"}
+          src={
+            process.env.REACT_APP_BASE_IMAGE_URL + props.userInfo.profileImage
+          }
           sx={{
             width: 170,
             height: 170,

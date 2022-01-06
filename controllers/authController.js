@@ -156,9 +156,7 @@ exports.updateUserProfile = async (req, res, next) => {
   }
 
   // Update necessary fields
-  console.log(req.file);
   if (req.file) {
-    console.log(req.file);
     req.user.profileImage = req.file.path.replace(/\\/g, "/");
   }
   if (newUserData.password) {
@@ -170,7 +168,6 @@ exports.updateUserProfile = async (req, res, next) => {
   req.user.phone = newUserData.phone;
 
   try {
-    console.log(req.user);
     await req.user.save({ validateBeforeSave: false });
     req.user.password = undefined;
 
@@ -186,7 +183,7 @@ exports.updateUserProfile = async (req, res, next) => {
   }
 };
 
-//Function to protect routes
+// Function to protect routes
 exports.protect = async (req, res, next) => {
   let token;
   if (
@@ -218,4 +215,21 @@ exports.protect = async (req, res, next) => {
 
   req.user = currentUser;
   next();
+};
+
+// Function to restrict  routes to specific users
+exports.restrict = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new ApiError(
+          "You are not allowed to perform this action",
+          "unauthorized-error",
+          403
+        )
+      );
+    }
+
+    next();
+  };
 };

@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import PrivateRoute from "../auth/PrivateRoute";
+import AdminRoute from "../auth/AdminRoute";
 // import HomePage from "../homepage/Home";
 import Register from "../auth/Register";
 import Login from "../auth/Login";
@@ -15,6 +16,7 @@ import EditProfile from "../profile/editProfile/EditProfile";
 import Favorites from "../favorites/Favorites";
 import Initiates from "../initiates/Initiates";
 import Offers from "../offers/Offers";
+import Admin from "../admin/Admin";
 import setAuthToken from "../../utils/auth/setAuthToken";
 import { setCurrentUser, populateUserInfo } from "../../actions/authActions";
 import store from "../../store";
@@ -83,6 +85,14 @@ const Layout = () => {
           element={
             <PrivateRoute>
               <Offers />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <Admin />
             </PrivateRoute>
           }
         />

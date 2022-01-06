@@ -75,7 +75,7 @@ export const setCurrentUser = (decoded) => {
   };
 };
 
-const setCurrentUserLoading = () => {
+export const setCurrentUserLoading = () => {
   return {
     type: SET_CURRENT_USER_LOADING,
   };

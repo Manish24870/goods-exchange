@@ -54,7 +54,10 @@ const ProductItem = (props) => {
           <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
             <Avatar
               alt={props.product.owner.name}
-              src={"product.posterDetails.photo"}
+              src={
+                process.env.REACT_APP_BASE_IMAGE_URL +
+                props.product.owner.profileImage
+              }
               sx={{ bgcolor: "#6325A9" }}
             />
             <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>

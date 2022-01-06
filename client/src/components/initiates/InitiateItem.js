@@ -109,7 +109,10 @@ const InitiateItem = (props) => {
               <CardMedia
                 component="img"
                 height="120"
-                image={"https://picsum.photos/400/400"}
+                image={
+                  process.env.REACT_APP_BASE_IMAGE_URL +
+                  initiatorData.initiatorProduct.images[0].url
+                }
                 alt={initiatorData.initiatorProduct.name}
               />
 
@@ -122,7 +125,10 @@ const InitiateItem = (props) => {
                 <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
                   <Avatar
                     alt={props.loggedInUserData.username}
-                    src={"product.posterDetails.photo"}
+                    src={
+                      process.env.REACT_APP_BASE_IMAGE_URL +
+                      props.loggedInUserData.profileImage
+                    }
                     sx={{ bgcolor: "#2196f3" }}
                   />
                   <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
@@ -246,7 +252,10 @@ const InitiateItem = (props) => {
               <CardMedia
                 component="img"
                 height="120"
-                image={"https://picsum.photos/400/400"}
+                image={
+                  process.env.REACT_APP_BASE_IMAGE_URL +
+                  props.product.productWanted.images[0].url
+                }
                 alt={props.product.productWanted.name}
               />
 
@@ -259,7 +268,10 @@ const InitiateItem = (props) => {
                 <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
                   <Avatar
                     alt={props.product.owner.username}
-                    src={"product.posterDetails.photo"}
+                    src={
+                      process.env.REACT_APP_BASE_IMAGE_URL +
+                      props.product.owner.profileImage
+                    }
                     sx={{ bgcolor: "#2196f3" }}
                   />
                   <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>

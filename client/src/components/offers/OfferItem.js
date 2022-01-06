@@ -113,7 +113,10 @@ const OfferItem = (props) => {
               <CardMedia
                 component="img"
                 height="120"
-                image={"https://picsum.photos/400/400"}
+                image={
+                  process.env.REACT_APP_BASE_IMAGE_URL +
+                  props.givenProduct.images[0].url
+                }
                 alt={props.givenProduct.name}
               />
 
@@ -126,7 +129,10 @@ const OfferItem = (props) => {
                 <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
                   <Avatar
                     alt={props.initiatorData.initiatorId.username}
-                    src={"product.posterDetails.photo"}
+                    src={
+                      process.env.REACT_APP_BASE_IMAGE_URL +
+                      props.initiatorData.initiatorId.profileImage
+                    }
                     sx={{ bgcolor: "#2196f3" }}
                   />
                   <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
@@ -231,7 +237,10 @@ const OfferItem = (props) => {
               <CardMedia
                 component="img"
                 height="120"
-                image={"https://picsum.photos/400/400"}
+                image={
+                  process.env.REACT_APP_BASE_IMAGE_URL +
+                  props.wantedProduct.images[0].url
+                }
                 alt={props.wantedProduct.name}
               />
 
@@ -244,7 +253,10 @@ const OfferItem = (props) => {
                 <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
                   <Avatar
                     alt={props.ownerData.username}
-                    src={"product.posterDetails.photo"}
+                    src={
+                      process.env.REACT_APP_BASE_IMAGE_URL +
+                      props.ownerData.profileImage
+                    }
                     sx={{ bgcolor: "#2196f3" }}
                   />
                   <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>

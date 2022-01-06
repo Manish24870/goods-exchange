@@ -7,7 +7,9 @@ require("dotenv").config();
 const authRouter = require("./routes/authRoutes");
 const productRouter = require("./routes/productRoutes");
 const exchangeRouter = require("./routes/exchangeRoutes");
+const adminRouter = require("./routes/adminRoutes");
 const globalErrorHandler = require("./controllers/errorController");
+const ApiError = require("./utils/apiError");
 
 const app = express();
 
@@ -33,6 +35,7 @@ mongoose
 app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
 app.use("/api/exchange", exchangeRouter);
+app.use("/api/admin", adminRouter);
 
 // Global error handler
 app.use(globalErrorHandler);
