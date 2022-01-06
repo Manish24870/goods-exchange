@@ -3,7 +3,7 @@ import _ from "lodash";
 import { ADMIN_GET_USERS, ADMIN_GET_USERS_LOADING } from "../actions/types";
 
 const initialState = {
-  users: {},
+  adminUsers: {},
   adminUsersLoading: false,
 };
 
@@ -12,7 +12,7 @@ const adminReducer = (state = initialState, action) => {
     case ADMIN_GET_USERS:
       return {
         ...state,
-        users: { ..._.mapKeys(action.payload, "_id") },
+        adminUsers: { ..._.mapKeys(action.payload, "_id") },
         adminUsersLoading: false,
       };
     case ADMIN_GET_USERS_LOADING:

@@ -12,7 +12,7 @@ import { ManageAccounts, InboxSharp } from "@mui/icons-material";
 
 const Sidebar = (props) => {
   return (
-    <Box sx={{ width: "100%", maxWidth: 220, bgcolor: "background.paper" }}>
+    <Box sx={{ width: "100%", maxWidth: 200, bgcolor: "background.paper" }}>
       <List component="nav" aria-label="main mailbox folders">
         <ListItemButton
           selected={props.selectedIndex === 0}

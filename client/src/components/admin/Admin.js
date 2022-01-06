@@ -4,11 +4,12 @@ import { Box, Typography, Container, Grid } from "@mui/material";
 
 import UserList from "./UserList";
 import Sidebar from "./Sidebar";
+import Loading from "../loading/Loading";
 import { getAllUsers } from "../../actions/adminActions";
 
 const Admin = (props) => {
   // For Sidebar
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleListItemClick = (e, index) => {
     setSelectedIndex(index);
@@ -20,8 +21,10 @@ const Admin = (props) => {
 
   let renderList;
 
-  if (selectedIndex === 1) {
-    renderList = <UserList />;
+  if (props.adminUsersLoading) {
+    renderList = <Loading />;
+  } else if (selectedIndex === 0) {
+    renderList = <UserList adminUsers={props.adminUsers} />;
   }
 
   return (
@@ -46,4 +49,11 @@ const Admin = (props) => {
   );
 };
 
-export default connect(null, { getAllUsers })(Admin);
+const mapStateToProps = (state) => {
+  return {
+    adminUsers: Object.values(state.admin.adminUsers),
+    adminUsersLoading: state.admin.adminUsersLoading,
+  };
+};
+
+export default connect(mapStateToProps, { getAllUsers })(Admin);
