@@ -1,6 +1,10 @@
 import _ from "lodash";
 
-import { ADMIN_GET_USERS, ADMIN_GET_USERS_LOADING } from "../actions/types";
+import {
+  ADMIN_GET_USERS,
+  ADMIN_GET_USERS_LOADING,
+  ADMIN_DELETE_USER,
+} from "../actions/types";
 
 const initialState = {
   adminUsers: {},
@@ -19,6 +23,11 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         adminUsersLoading: true,
+      };
+    case ADMIN_DELETE_USER:
+      return {
+        ...state,
+        adminUsers: _.omit(state.adminUsers, action.payload),
       };
     default:
       return state;

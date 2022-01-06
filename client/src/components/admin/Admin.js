@@ -5,7 +5,7 @@ import { Box, Typography, Container, Grid } from "@mui/material";
 import UserList from "./UserList";
 import Sidebar from "./Sidebar";
 import Loading from "../loading/Loading";
-import { getAllUsers } from "../../actions/adminActions";
+import { adminGetAllUsers, adminDeleteUser } from "../../actions/adminActions";
 
 const Admin = (props) => {
   // For Sidebar
@@ -16,7 +16,7 @@ const Admin = (props) => {
   };
 
   useEffect(() => {
-    props.getAllUsers();
+    props.adminGetAllUsers();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   let renderList;
@@ -24,7 +24,12 @@ const Admin = (props) => {
   if (props.adminUsersLoading) {
     renderList = <Loading />;
   } else if (selectedIndex === 0) {
-    renderList = <UserList adminUsers={props.adminUsers} />;
+    renderList = (
+      <UserList
+        adminUsers={props.adminUsers}
+        adminDeleteUser={props.adminDeleteUser}
+      />
+    );
   }
 
   return (
@@ -56,4 +61,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getAllUsers })(Admin);
+export default connect(mapStateToProps, { adminGetAllUsers, adminDeleteUser })(
+  Admin
+);

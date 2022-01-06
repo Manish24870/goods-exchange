@@ -20,6 +20,7 @@ const UserList = (props) => {
         <GridActionsCellItem
           icon={<Delete color="secondary" />}
           label="Delete"
+          onClick={() => props.adminDeleteUser(params.id)}
         />,
         <GridActionsCellItem
           icon={
@@ -34,7 +35,6 @@ const UserList = (props) => {
       ],
     },
   ];
-  console.log(props.adminUsers);
 
   const dataRows = [];
   props.adminUsers.forEach((user) => {
