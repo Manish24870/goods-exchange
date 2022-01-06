@@ -5,7 +5,12 @@ import { Box, Typography, Container, Grid } from "@mui/material";
 import UserList from "./UserList";
 import Sidebar from "./Sidebar";
 import Loading from "../loading/Loading";
-import { adminGetAllUsers, adminDeleteUser } from "../../actions/adminActions";
+import {
+  adminGetAllUsers,
+  adminDeleteUser,
+  adminPromoteUser,
+  adminDemoteUser,
+} from "../../actions/adminActions";
 
 const Admin = (props) => {
   // For Sidebar
@@ -28,6 +33,8 @@ const Admin = (props) => {
       <UserList
         adminUsers={props.adminUsers}
         adminDeleteUser={props.adminDeleteUser}
+        adminPromoteUser={props.adminPromoteUser}
+        adminDemoteUser={props.adminDemoteUser}
       />
     );
   }
@@ -61,6 +68,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { adminGetAllUsers, adminDeleteUser })(
-  Admin
-);
+export default connect(mapStateToProps, {
+  adminGetAllUsers,
+  adminDeleteUser,
+  adminPromoteUser,
+  adminDemoteUser,
+})(Admin);

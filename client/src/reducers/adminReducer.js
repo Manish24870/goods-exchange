@@ -4,6 +4,8 @@ import {
   ADMIN_GET_USERS,
   ADMIN_GET_USERS_LOADING,
   ADMIN_DELETE_USER,
+  ADMIN_PROMOTE_USER,
+  ADMIN_DEMOTE_USER,
 } from "../actions/types";
 
 const initialState = {
@@ -28,6 +30,22 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         adminUsers: _.omit(state.adminUsers, action.payload),
+      };
+    case ADMIN_PROMOTE_USER:
+      return {
+        ...state,
+        adminUsers: {
+          ...state.adminUsers,
+          [action.payload._id]: action.payload,
+        },
+      };
+    case ADMIN_DEMOTE_USER:
+      return {
+        ...state,
+        adminUsers: {
+          ...state.adminUsers,
+          [action.payload._id]: action.payload,
+        },
       };
     default:
       return state;

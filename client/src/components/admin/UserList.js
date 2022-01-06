@@ -30,7 +30,12 @@ const UserList = (props) => {
               <ArrowUpward color="info" />
             )
           }
-          label="Change Role"
+          onClick={
+            params.getValue(params.id, "admin")
+              ? () => props.adminDemoteUser(params.id)
+              : () => props.adminPromoteUser(params.id)
+          }
+          label="Update Role"
         />,
       ],
     },
