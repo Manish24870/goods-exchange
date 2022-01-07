@@ -12,4 +12,32 @@ router.get(
   adminController.getAllUsers
 );
 
+router.delete(
+  "/delete-user/:userId",
+  authController.protect,
+  authController.restrict("admin"),
+  adminController.deleteAUser
+);
+
+router.patch(
+  "/promote-user",
+  authController.protect,
+  authController.restrict("admin"),
+  adminController.promoteAUser
+);
+
+router.patch(
+  "/demote-user",
+  authController.protect,
+  authController.restrict("admin"),
+  adminController.demoteAUser
+);
+
+router.get(
+  "/get-products",
+  authController.protect,
+  authController.restrict("admin"),
+  adminController.getAllProducts
+);
+
 module.exports = router;
