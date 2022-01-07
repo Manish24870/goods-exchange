@@ -6,6 +6,7 @@ import {
   ADMIN_GET_PRODUCTS,
   ADMIN_GET_PRODUCTS_LOADING,
   ADMIN_DELETE_USER,
+  ADMIN_DELETE_PRODUCT,
   ADMIN_PROMOTE_USER,
   ADMIN_DEMOTE_USER,
 } from "../actions/types";
@@ -45,6 +46,11 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         adminUsers: _.omit(state.adminUsers, action.payload),
+      };
+    case ADMIN_DELETE_PRODUCT:
+      return {
+        ...state,
+        adminProducts: _.omit(state.adminProducts, action.payload),
       };
     case ADMIN_PROMOTE_USER:
       return {

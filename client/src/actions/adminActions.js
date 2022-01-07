@@ -7,6 +7,7 @@ import {
   ADMIN_GET_PRODUCTS,
   ADMIN_GET_PRODUCTS_LOADING,
   ADMIN_DELETE_USER,
+  ADMIN_DELETE_PRODUCT,
   ADMIN_PROMOTE_USER,
   ADMIN_DEMOTE_USER,
 } from "./types";
@@ -96,4 +97,18 @@ const setAdminProductsLoading = () => {
   return {
     type: ADMIN_GET_PRODUCTS_LOADING,
   };
+};
+
+// Action for deleting a product
+export const adminDeleteProduct = (productId) => async (dispatch) => {
+  try {
+    await axiosInstance.delete(`/api/admin/delete-product/${productId}`);
+    createToast("Product deleted", "success");
+    dispatch({
+      type: ADMIN_DELETE_PRODUCT,
+      payload: productId,
+    });
+  } catch (err) {
+    dispatch(setErrors(err.response.data));
+  }
 };

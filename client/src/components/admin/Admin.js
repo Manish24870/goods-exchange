@@ -12,6 +12,7 @@ import {
   adminPromoteUser,
   adminDemoteUser,
   adminGetAllProducts,
+  adminDeleteProduct,
 } from "../../actions/adminActions";
 
 const Admin = (props) => {
@@ -41,7 +42,12 @@ const Admin = (props) => {
       />
     );
   } else if (selectedIndex === 1) {
-    renderList = <ProductList adminProducts={props.adminProducts} />;
+    renderList = (
+      <ProductList
+        adminProducts={props.adminProducts}
+        adminDeleteProduct={props.adminDeleteProduct}
+      />
+    );
   }
 
   return (
@@ -81,4 +87,5 @@ export default connect(mapStateToProps, {
   adminPromoteUser,
   adminDemoteUser,
   adminGetAllProducts,
+  adminDeleteProduct,
 })(Admin);

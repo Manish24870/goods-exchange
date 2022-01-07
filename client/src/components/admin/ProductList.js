@@ -8,9 +8,22 @@ const ProductList = (props) => {
   // Define the columns
   const dataColumns = [
     { field: "id", headerName: "Id", width: 120 },
-    { field: "product", headerName: "Product", width: 150 },
+    { field: "product", headerName: "Product Name", width: 170 },
     { field: "owner", headerName: "Owner", width: 120 },
     { field: "postedAt", headerName: "Posted At", type: "date", width: 120 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      type: "actions",
+      width: 120,
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<Delete color="secondary" />}
+          label="Delete"
+          onClick={() => props.adminDeleteProduct(params.id)}
+        />,
+      ],
+    },
   ];
 
   // Define the value for each rows
