@@ -80,15 +80,18 @@ const ProductItem = (props) => {
             </Typography>
           </Box>
           <Box mt={3} sx={{ display: "flex", justifyContent: "end" }}>
-            <Button
-              size="large"
-              variant="outlined"
-              color="secondary"
-              sx={{ textTransform: "none", marginRight: 2 }}
-              onClick={onFavoriteClick}
-            >
-              {checkFavorites()}
-            </Button>
+            {props.product.owner._id !== props.currentUserInfo._id ? (
+              <Button
+                size="large"
+                variant="outlined"
+                color="secondary"
+                sx={{ textTransform: "none", marginRight: 2 }}
+                onClick={onFavoriteClick}
+              >
+                {checkFavorites()}
+              </Button>
+            ) : null}
+
             <Button
               component={Link}
               to={`/products/${props.product._id}`}

@@ -69,6 +69,7 @@ const UserList = (props) => {
         autoHeight={true}
         density="comfortable"
         pageSize={10}
+        rowsPerPageOptions={[10]}
       />
       {/* </div> */}
     </Box>

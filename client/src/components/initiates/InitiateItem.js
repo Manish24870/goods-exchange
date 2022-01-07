@@ -87,121 +87,105 @@ const InitiateItem = (props) => {
     }
   };
 
-  return (
-    <Paper sx={{ marginBottom: 5 }} variant="outlined">
-      <Box mt={2} ml={2} mb={2} mr={2}>
-        <Grid
-          container
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Grid item xs={4}>
-            <Typography
-              variant="h6"
-              sx={{ fontSize: "1.12em", textAlign: "center" }}
-            >
-              Given
-            </Typography>
-            <Card>
-              <CardMedia
-                component="img"
-                height="120"
-                image={
-                  process.env.REACT_APP_BASE_IMAGE_URL +
-                  initiatorData.initiatorProduct.images[0].url
-                }
-                alt={initiatorData.initiatorProduct.name}
-              />
-
-              <CardContent>
-                <Box>
-                  <Typography variant="h6" sx={{ fontSize: "1.12em" }}>
-                    {initiatorData.initiatorProduct.name}
-                  </Typography>
-                </Box>
-                <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
-                  <Avatar
-                    alt={props.loggedInUserData.username}
-                    src={
-                      process.env.REACT_APP_BASE_IMAGE_URL +
-                      props.loggedInUserData.profileImage
-                    }
-                    sx={{ bgcolor: "#2196f3" }}
-                  />
-                  <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
-                    <Typography variant="p" sx={{ fontSize: "0.95em" }}>
-                      {props.loggedInUserData.username}
-                    </Typography>
-                    <Typography
-                      variant="p"
-                      sx={{ opacity: "90%", fontSize: "0.81em" }}
-                    >
-                      {moment(initiatorData.initiatorProduct.postedAt).format(
-                        "MMM Do YYYY, h:mm a"
-                      )}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Box mt={3} sx={{ minHeight: "40px" }}>
-                  <Typography variant="p" sx={{ fontSize: "0.9em" }}>
-                    {initiatorData.initiatorProduct.description.length > 55
-                      ? initiatorData.initiatorProduct.description.slice(
-                          0,
-                          56
-                        ) + " ..."
-                      : initiatorData.initiatorProduct.description}
-                  </Typography>
-                </Box>
-                <Box mt={3} sx={{ display: "flex", justifyContent: "end" }}>
-                  <Button
-                    component={Link}
-                    to={`/products/${initiatorData.initiatorProduct._id}`}
-                    variant="outlined"
-                    sx={{ textTransform: "none" }}
-                  >
-                    Details
-                    <ArrowForwardIos sx={{ fontSize: "1em", marginLeft: 1 }} />
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+  if (initiatorData) {
+    return (
+      <Paper sx={{ marginBottom: 5 }} variant="outlined">
+        <Box mt={2} ml={2} mb={2} mr={2}>
           <Grid
-            item
-            xs={4}
+            container
             sx={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
               justifyContent: "space-between",
-              height: "100%",
+              alignItems: "center",
             }}
           >
-            <Button
-              variant="default"
-              color="secondary"
-              size="small"
+            <Grid item xs={4}>
+              <Typography
+                variant="h6"
+                sx={{ fontSize: "1.12em", textAlign: "center" }}
+              >
+                Given
+              </Typography>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height="120"
+                  image={
+                    process.env.REACT_APP_BASE_IMAGE_URL +
+                    initiatorData.initiatorProduct.images[0].url
+                  }
+                  alt={initiatorData.initiatorProduct.name}
+                />
+
+                <CardContent>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontSize: "1.12em" }}>
+                      {initiatorData.initiatorProduct.name}
+                    </Typography>
+                  </Box>
+                  <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
+                    <Avatar
+                      alt={props.loggedInUserData.username}
+                      src={
+                        process.env.REACT_APP_BASE_IMAGE_URL +
+                        props.loggedInUserData.profileImage
+                      }
+                      sx={{ bgcolor: "#2196f3" }}
+                    />
+                    <Box
+                      ml={2}
+                      sx={{ display: "flex", flexDirection: "column" }}
+                    >
+                      <Typography variant="p" sx={{ fontSize: "0.95em" }}>
+                        {props.loggedInUserData.username}
+                      </Typography>
+                      <Typography
+                        variant="p"
+                        sx={{ opacity: "90%", fontSize: "0.81em" }}
+                      >
+                        {moment(initiatorData.initiatorProduct.postedAt).format(
+                          "MMM Do YYYY, h:mm a"
+                        )}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box mt={3} sx={{ minHeight: "40px" }}>
+                    <Typography variant="p" sx={{ fontSize: "0.9em" }}>
+                      {initiatorData.initiatorProduct.description.length > 55
+                        ? initiatorData.initiatorProduct.description.slice(
+                            0,
+                            56
+                          ) + " ..."
+                        : initiatorData.initiatorProduct.description}
+                    </Typography>
+                  </Box>
+                  <Box mt={3} sx={{ display: "flex", justifyContent: "end" }}>
+                    <Button
+                      component={Link}
+                      to={`/products/${initiatorData.initiatorProduct._id}`}
+                      variant="outlined"
+                      sx={{ textTransform: "none" }}
+                    >
+                      Details
+                      <ArrowForwardIos
+                        sx={{ fontSize: "1em", marginLeft: 1 }}
+                      />
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={4}
               sx={{
-                marginTop: 2,
-                textTransform: "none",
                 display: "flex",
                 flexDirection: "column",
-                marginBottom: 0,
+                alignItems: "center",
+                justifyContent: "space-between",
+                height: "100%",
               }}
             >
-              <Typography variant="p" sx={{ opacity: "94%" }}>
-                Initiated At:
-              </Typography>
-              <Typography variant="p">
-                {moment(initiatorData.initiatedAt).format(
-                  "MMM Do YYYY, h:mm a"
-                )}
-              </Typography>
-            </Button>
-            {initiatorData.acceptedAt ? (
               <Button
                 variant="default"
                 color="secondary"
@@ -211,127 +195,157 @@ const InitiateItem = (props) => {
                   textTransform: "none",
                   display: "flex",
                   flexDirection: "column",
-                  marginBottom: 4,
+                  marginBottom: 0,
                 }}
               >
                 <Typography variant="p" sx={{ opacity: "94%" }}>
-                  Exchanged At:
+                  Initiated At:
                 </Typography>
                 <Typography variant="p">
-                  {moment(initiatorData.acceptedAt).format(
+                  {moment(initiatorData.initiatedAt).format(
                     "MMM Do YYYY, h:mm a"
                   )}
                 </Typography>
               </Button>
-            ) : null}
-            {checkOfferStatus()}
-            {!initiatorData.acceptedAt ? (
-              <Button
-                onClick={onExchangeCancel}
-                variant="default"
-                color="secondary"
-                size="small"
-                sx={{
-                  marginTop: 3,
-                  textTransform: "none",
-                  color: "#6325A9",
-                }}
-              >
-                Cancel
-              </Button>
-            ) : null}
-          </Grid>
-          <Grid item xs={4}>
-            <Typography
-              variant="h6"
-              sx={{ fontSize: "1.12em", textAlign: "center" }}
-            >
-              Wanted
-            </Typography>
-            <Card>
-              <CardMedia
-                component="img"
-                height="120"
-                image={
-                  process.env.REACT_APP_BASE_IMAGE_URL +
-                  props.product.productWanted.images[0].url
-                }
-                alt={props.product.productWanted.name}
-              />
-
-              <CardContent>
-                <Box>
-                  <Typography variant="h6" sx={{ fontSize: "1.12em" }}>
-                    {props.product.productWanted.name}
+              {initiatorData.acceptedAt ? (
+                <Button
+                  variant="default"
+                  color="secondary"
+                  size="small"
+                  sx={{
+                    marginTop: 2,
+                    textTransform: "none",
+                    display: "flex",
+                    flexDirection: "column",
+                    marginBottom: 4,
+                  }}
+                >
+                  <Typography variant="p" sx={{ opacity: "94%" }}>
+                    Exchanged At:
                   </Typography>
-                </Box>
-                <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
-                  <Avatar
-                    alt={props.product.owner.username}
-                    src={
-                      process.env.REACT_APP_BASE_IMAGE_URL +
-                      props.product.owner.profileImage
-                    }
-                    sx={{ bgcolor: "#2196f3" }}
-                  />
-                  <Box ml={2} sx={{ display: "flex", flexDirection: "column" }}>
-                    <Typography variant="p" sx={{ fontSize: "0.95em" }}>
-                      {props.product.owner.username}
-                    </Typography>
-                    <Typography
-                      variant="p"
-                      sx={{ opacity: "90%", fontSize: "0.81em" }}
-                    >
-                      {moment(props.product.productWanted.postedAt).format(
-                        "MMM Do YYYY, h:mm a"
-                      )}
+                  <Typography variant="p">
+                    {moment(initiatorData.acceptedAt).format(
+                      "MMM Do YYYY, h:mm a"
+                    )}
+                  </Typography>
+                </Button>
+              ) : null}
+              {checkOfferStatus()}
+              {!initiatorData.acceptedAt ? (
+                <Button
+                  onClick={onExchangeCancel}
+                  variant="default"
+                  color="secondary"
+                  size="small"
+                  sx={{
+                    marginTop: 3,
+                    textTransform: "none",
+                    color: "#6325A9",
+                  }}
+                >
+                  Cancel
+                </Button>
+              ) : null}
+            </Grid>
+            <Grid item xs={4}>
+              <Typography
+                variant="h6"
+                sx={{ fontSize: "1.12em", textAlign: "center" }}
+              >
+                Wanted
+              </Typography>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height="120"
+                  image={
+                    process.env.REACT_APP_BASE_IMAGE_URL +
+                    props.product.productWanted.images[0].url
+                  }
+                  alt={props.product.productWanted.name}
+                />
+
+                <CardContent>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontSize: "1.12em" }}>
+                      {props.product.productWanted.name}
                     </Typography>
                   </Box>
-                </Box>
-                <Box mt={3} sx={{ minHeight: "40px" }}>
-                  <Typography variant="p" sx={{ fontSize: "0.9em" }}>
-                    {props.product.productWanted.description.length > 55
-                      ? props.product.productWanted.description.slice(0, 56) +
-                        " ..."
-                      : props.product.productWanted.description}
-                  </Typography>
-                </Box>
-                <Box mt={3} sx={{ display: "flex", justifyContent: "end" }}>
-                  <Button
-                    component={Link}
-                    to={`/products/${props.product.productWanted._id}`}
-                    variant="outlined"
-                    sx={{ textTransform: "none" }}
-                  >
-                    Details
-                    <ArrowForwardIos sx={{ fontSize: "1em", marginLeft: 1 }} />
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
+                  <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
+                    <Avatar
+                      alt={props.product.owner.username}
+                      src={
+                        process.env.REACT_APP_BASE_IMAGE_URL +
+                        props.product.owner.profileImage
+                      }
+                      sx={{ bgcolor: "#2196f3" }}
+                    />
+                    <Box
+                      ml={2}
+                      sx={{ display: "flex", flexDirection: "column" }}
+                    >
+                      <Typography variant="p" sx={{ fontSize: "0.95em" }}>
+                        {props.product.owner.username}
+                      </Typography>
+                      <Typography
+                        variant="p"
+                        sx={{ opacity: "90%", fontSize: "0.81em" }}
+                      >
+                        {moment(props.product.productWanted.postedAt).format(
+                          "MMM Do YYYY, h:mm a"
+                        )}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box mt={3} sx={{ minHeight: "40px" }}>
+                    <Typography variant="p" sx={{ fontSize: "0.9em" }}>
+                      {props.product.productWanted.description.length > 55
+                        ? props.product.productWanted.description.slice(0, 56) +
+                          " ..."
+                        : props.product.productWanted.description}
+                    </Typography>
+                  </Box>
+                  <Box mt={3} sx={{ display: "flex", justifyContent: "end" }}>
+                    <Button
+                      component={Link}
+                      to={`/products/${props.product.productWanted._id}`}
+                      variant="outlined"
+                      sx={{ textTransform: "none" }}
+                    >
+                      Details
+                      <ArrowForwardIos
+                        sx={{ fontSize: "1em", marginLeft: 1 }}
+                      />
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-        {initiatorData.acceptedAt ? (
-          <React.Fragment>
-            <Button
-              onClick={handleClickOpen}
-              variant="contained"
-              color="info"
-              sx={{ marginTop: 2, textTransform: "none" }}
-            >
-              Review
-            </Button>
-            <WriteReview
-              open={open}
-              handleClose={handleClose}
-              ownerId={props.product.owner._id}
-              exchangeId={props.initiateId}
-            />
-          </React.Fragment>
-        ) : null}
-      </Box>
-    </Paper>
-  );
+          {initiatorData.acceptedAt ? (
+            <React.Fragment>
+              <Button
+                onClick={handleClickOpen}
+                variant="contained"
+                color="info"
+                sx={{ marginTop: 2, textTransform: "none" }}
+              >
+                Review
+              </Button>
+              <WriteReview
+                open={open}
+                handleClose={handleClose}
+                ownerId={props.product.owner._id}
+                exchangeId={props.initiateId}
+              />
+            </React.Fragment>
+          ) : null}
+        </Box>
+      </Paper>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default connect(null, { createNewExchange })(InitiateItem);

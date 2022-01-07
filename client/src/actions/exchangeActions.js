@@ -50,7 +50,6 @@ export const getMyFavorites = () => async (dispatch) => {
   dispatch(setMyFavoritesLoading());
   try {
     const response = await axiosInstance.get("/api/exchange/my-favorites");
-    console.log(response.data);
     dispatch({
       type: GET_MY_FAVORITES,
       payload: response.data.data.myFavorites,
