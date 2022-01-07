@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Box, Typography, Container, Grid } from "@mui/material";
 
 import UserList from "./UserList";
+import ProductList from "./ProductList";
 import Sidebar from "./Sidebar";
 import Loading from "../loading/Loading";
 import {
@@ -10,6 +11,7 @@ import {
   adminDeleteUser,
   adminPromoteUser,
   adminDemoteUser,
+  adminGetAllProducts,
 } from "../../actions/adminActions";
 
 const Admin = (props) => {
@@ -22,11 +24,12 @@ const Admin = (props) => {
 
   useEffect(() => {
     props.adminGetAllUsers();
+    props.adminGetAllProducts();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   let renderList;
 
-  if (props.adminUsersLoading) {
+  if (props.adminUsersLoading || props.adminProductsLoading) {
     renderList = <Loading />;
   } else if (selectedIndex === 0) {
     renderList = (
@@ -37,6 +40,8 @@ const Admin = (props) => {
         adminDemoteUser={props.adminDemoteUser}
       />
     );
+  } else if (selectedIndex === 1) {
+    renderList = <ProductList adminProducts={props.adminProducts} />;
   }
 
   return (
@@ -64,7 +69,9 @@ const Admin = (props) => {
 const mapStateToProps = (state) => {
   return {
     adminUsers: Object.values(state.admin.adminUsers),
+    adminProducts: Object.values(state.admin.adminProducts),
     adminUsersLoading: state.admin.adminUsersLoading,
+    adminProductsLoading: state.admin.adminProductsLoading,
   };
 };
 
@@ -73,4 +80,5 @@ export default connect(mapStateToProps, {
   adminDeleteUser,
   adminPromoteUser,
   adminDemoteUser,
+  adminGetAllProducts,
 })(Admin);

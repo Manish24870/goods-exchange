@@ -3,6 +3,8 @@ import _ from "lodash";
 import {
   ADMIN_GET_USERS,
   ADMIN_GET_USERS_LOADING,
+  ADMIN_GET_PRODUCTS,
+  ADMIN_GET_PRODUCTS_LOADING,
   ADMIN_DELETE_USER,
   ADMIN_PROMOTE_USER,
   ADMIN_DEMOTE_USER,
@@ -10,7 +12,9 @@ import {
 
 const initialState = {
   adminUsers: {},
+  adminProducts: {},
   adminUsersLoading: false,
+  adminProductsLoading: false,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -25,6 +29,17 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         adminUsersLoading: true,
+      };
+    case ADMIN_GET_PRODUCTS:
+      return {
+        ...state,
+        adminProducts: { ..._.mapKeys(action.payload, "_id") },
+        adminProductsLoading: false,
+      };
+    case ADMIN_GET_PRODUCTS_LOADING:
+      return {
+        ...state,
+        adminProductsLoading: true,
       };
     case ADMIN_DELETE_USER:
       return {

@@ -1,8 +1,11 @@
 import axiosInstance from "../utils/axios/axiosInstance";
 import createToast from "../utils/toast/createToast";
+import { setErrors } from "./errorActions";
 import {
   ADMIN_GET_USERS,
   ADMIN_GET_USERS_LOADING,
+  ADMIN_GET_PRODUCTS,
+  ADMIN_GET_PRODUCTS_LOADING,
   ADMIN_DELETE_USER,
   ADMIN_PROMOTE_USER,
   ADMIN_DEMOTE_USER,
@@ -38,7 +41,7 @@ export const adminDeleteUser = (userId) => async (dispatch) => {
       payload: userId,
     });
   } catch (err) {
-    console.log(err.response);
+    dispatch(setErrors(err.response.data));
   }
 };
 
@@ -54,7 +57,7 @@ export const adminPromoteUser = (userId) => async (dispatch) => {
       payload: response.data.data.promotedUser,
     });
   } catch (err) {
-    console.log(err.response);
+    dispatch(setErrors(err.response.data));
   }
 };
 
@@ -71,6 +74,26 @@ export const adminDemoteUser = (userId) => async (dispatch) => {
       payload: response.data.data.demotedUser,
     });
   } catch (err) {
+    dispatch(setErrors(err.response.data));
+  }
+};
+
+// Action for getting all products
+export const adminGetAllProducts = () => async (dispatch) => {
+  dispatch(setAdminProductsLoading());
+  try {
+    const response = await axiosInstance.get("/api/admin/get-products");
+    dispatch({
+      type: ADMIN_GET_PRODUCTS,
+      payload: response.data.data.products,
+    });
+  } catch (err) {
     console.log(err.response);
   }
+};
+
+const setAdminProductsLoading = () => {
+  return {
+    type: ADMIN_GET_PRODUCTS_LOADING,
+  };
 };

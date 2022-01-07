@@ -130,10 +130,13 @@ const Navbar = (props) => {
               <Tooltip title="My account">
                 <IconButton onClick={handleMyAccountClick} size="small">
                   <Avatar
+                    alt={props.userInfo.username}
+                    src={
+                      process.env.REACT_APP_BASE_IMAGE_URL +
+                      props.userInfo.profileImage
+                    }
                     sx={{ bgcolor: "#FF5F5F", height: "35px", width: "35px" }}
-                  >
-                    M
-                  </Avatar>
+                  ></Avatar>
                 </IconButton>
               </Tooltip>
             )}
@@ -178,6 +181,7 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    userInfo: state.auth.userInfo,
   };
 };
 

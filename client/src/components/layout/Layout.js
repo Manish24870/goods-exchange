@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import PrivateRoute from "../auth/PrivateRoute";
-import AdminRoute from "../auth/AdminRoute";
+// import AdminRoute from "../auth/AdminRoute";
 // import HomePage from "../homepage/Home";
 import Register from "../auth/Register";
 import Login from "../auth/Login";

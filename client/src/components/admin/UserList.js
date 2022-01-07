@@ -4,13 +4,18 @@ import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { Delete, ArrowUpward, ArrowDownward } from "@mui/icons-material";
 
 const UserList = (props) => {
+  // Define the columns
   const dataColumns = [
     { field: "id", headerName: "Id", width: 120 },
     { field: "username", headerName: "Username", width: 120 },
     { field: "email", headerName: "Email", width: 180 },
     { field: "phone", headerName: "Phone", width: 110 },
     { field: "admin", headerName: "Is Admin", type: "boolean", width: 90 },
-    { field: "reputation", headerName: "Reputation", width: 110 },
+    {
+      field: "reputation",
+      headerName: "Reputation",
+      width: 110,
+    },
     {
       field: "actions",
       headerName: "Actions",
@@ -41,6 +46,7 @@ const UserList = (props) => {
     },
   ];
 
+  // Define the value for each rows
   const dataRows = [];
   props.adminUsers.forEach((user) => {
     dataRows.push({
@@ -52,11 +58,19 @@ const UserList = (props) => {
       reputation: user.reputation,
     });
   });
+
+  // Render JSX
   return (
     <Box>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid rows={dataRows} columns={dataColumns} />
-      </div>
+      {/* <div style={{ height: 400, width: "100%" }}> */}
+      <DataGrid
+        rows={dataRows}
+        columns={dataColumns}
+        autoHeight={true}
+        density="comfortable"
+        pageSize={10}
+      />
+      {/* </div> */}
     </Box>
   );
 };
