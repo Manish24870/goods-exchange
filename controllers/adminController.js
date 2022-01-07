@@ -107,3 +107,23 @@ exports.getAllProducts = async (req, res, next) => {
     next(err);
   }
 };
+
+// Route = /api/admin/delete-product/:productId
+// Function to delete a product
+// Authentication = true [admin]
+exports.deleteAProduct = async (req, res, next) => {
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(
+      req.params.productId
+    );
+    res.status(200).json({
+      status: "success",
+      data: {
+        message: "Product deleted successfully",
+        deletedProduct,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};

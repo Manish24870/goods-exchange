@@ -40,4 +40,11 @@ router.get(
   adminController.getAllProducts
 );
 
+router.delete(
+  "/delete-product/:productId",
+  authController.protect,
+  authController.restrict("admin"),
+  adminController.deleteAProduct
+);
+
 module.exports = router;
