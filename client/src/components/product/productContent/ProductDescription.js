@@ -1,14 +1,47 @@
 import React from "react";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { Box, Typography, Avatar, Divider } from "@mui/material";
+import { Box, Typography, Avatar, Divider, Button } from "@mui/material";
 
 import ExchangerDetails from "./exchangerDetails/ExchangerDetails";
+import { deleteProduct } from "../../../actions/productActions";
 
 const ProductDescription = (props) => {
+  const navigate = useNavigate();
+
+  const checkOwner = () => {
+    if (props.product.owner._id === props.currentUserInfo._id) {
+      return (
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          sx={{ textTransform: "none", marginLeft: 2 }}
+          onClick={() => props.deleteProduct(props.product._id, navigate)}
+        >
+          Delete
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          variant="contained"
+          color="info"
+          size="small"
+          sx={{ textTransform: "none", marginLeft: 2 }}
+        >
+          Report
+        </Button>
+      );
+    }
+  };
+
   return (
     <Box>
       <Typography color="primary" variant="h5" sx={{ fontWeight: 600 }}>
         {props.product.name}
+        {checkOwner()}
       </Typography>
       <Box mt={1} sx={{ display: "flex", alignItems: "center" }}>
         <Avatar
@@ -50,4 +83,4 @@ const ProductDescription = (props) => {
   );
 };
 
-export default ProductDescription;
+export default connect(null, { deleteProduct })(ProductDescription);

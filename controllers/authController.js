@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 
 const User = require("../models/userModel");
+const Product = require("../models/productModel");
 const inputValidator = require("../validation/inputValidator");
 const ApiError = require("../utils/apiError");
 const isEmpty = require("../utils/isEmpty");
@@ -232,4 +233,20 @@ exports.restrict = (...roles) => {
 
     next();
   };
+};
+
+// Function to restrict users other than owner
+exports.isProductOwner = async (req, res, next) => {
+  const product = await Product.findById(req.params.productId);
+  if (!product.owner.equals(req.user._id)) {
+    return next(
+      new ApiError(
+        "You are not the owner of this product",
+        "unauthorized-error",
+        403
+      )
+    );
+  }
+
+  next();
 };

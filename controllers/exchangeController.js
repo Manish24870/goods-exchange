@@ -238,10 +238,6 @@ exports.createAReview = async (req, res, next) => {
     reviewedUser.reputation =
       reviewedUser.reputation +
       reputationValues[Number(req.body.reviewNumber) - 1];
-    console.log(
-      reviewedUser.reputation,
-      reputationValues[Number(req.body.reviewNumber) - 1]
-    );
 
     if (reviewedUser.reputation > 100) {
       reviewedUser.reputation = 100;

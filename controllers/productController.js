@@ -1,4 +1,6 @@
 const Product = require("../models/productModel");
+const User = require("../models/userModel");
+const Exchange = require("../models/exchangeModel");
 const inputValidator = require("../validation/inputValidator");
 const ApiError = require("../utils/apiError");
 const isEmpty = require("../utils/isEmpty");
@@ -130,6 +132,54 @@ exports.getProduct = async (req, res, next) => {
   }
 };
 
+// Route = /api/products/:id
+// Function to delete a product
+// Authentication = true [owner]
+exports.deleteAProduct = async (req, res, next) => {
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(
+      req.params.productId
+    );
+
+    // Delete favorites of this product
+    const users = await User.find();
+    users.forEach((user) => {
+      user.favorites.forEach(async (favorite, index) => {
+        if (favorite.product.equals(req.params.productId)) {
+          user.favorites.splice(index, 1);
+          await user.save();
+        }
+      });
+    });
+
+    // Delete exchanges where this is the product wanted
+    await Exchange.deleteMany({
+      productWanted: req.params.productId,
+    });
+
+    // Delete exchanges where this product is given by initiator
+    const exchanges = await Exchange.find();
+    exchanges.forEach((exchange) => {
+      exchange.initiator.forEach(async (el, index) => {
+        if (el.initiatorProduct.equals(req.params.productId)) {
+          exchange.initiator.splice(index, 1);
+          await exchange.save();
+        }
+      });
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        message: "Product deleted successfully",
+        deletedProduct,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Route = /api/products/:id/question
 // Function to ask a new question
 // Authentication = true
@@ -218,7 +268,6 @@ exports.createNewAnswer = async (req, res, next) => {
 // Function to favorite a product
 // Authentication = true
 exports.favoriteProduct = async (req, res, next) => {
-  console.log(req.body);
   try {
     const favoritedIndex = req.user.favorites.findIndex((el) =>
       el.product.equals(req.body.productId)

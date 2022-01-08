@@ -20,6 +20,14 @@ router.post(
   authController.protect,
   productController.createNewQuestion
 );
+
+router.delete(
+  "/:productId",
+  authController.protect,
+  authController.isProductOwner,
+  productController.deleteAProduct
+);
+
 router.post(
   "/:id/:questionId/answer",
   authController.protect,

@@ -61,6 +61,17 @@ export const getProduct = (id) => async (dispatch) => {
   }
 };
 
+// Function to delete a product
+export const deleteProduct = (productId, navigate) => async (dispatch) => {
+  try {
+    await axiosInstance.delete(`/api/products/${productId}`);
+    createToast("Product deleted", "success");
+    navigate("/products", { replace: true });
+  } catch (err) {
+    dispatch(setErrors(err.response.data));
+  }
+};
+
 // Function to post a question
 export const createNewQuestion =
   (id, questionData, setFormData) => async (dispatch) => {
