@@ -72,6 +72,21 @@ export const deleteProduct = (productId, navigate) => async (dispatch) => {
   }
 };
 
+// Function  to report a product
+export const reportProduct = (productId) => async (dispatch) => {
+  try {
+    const response = await axiosInstance.post(
+      `/api/products/report/${productId}`
+    );
+    dispatch({
+      type: GET_PRODUCT,
+      payload: response.data.data.product,
+    });
+  } catch (err) {
+    dispatch(setErrors(err.response.data));
+  }
+};
+
 // Function to post a question
 export const createNewQuestion =
   (id, questionData, setFormData) => async (dispatch) => {

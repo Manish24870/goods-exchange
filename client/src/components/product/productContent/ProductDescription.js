@@ -5,7 +5,7 @@ import moment from "moment";
 import { Box, Typography, Avatar, Divider, Button } from "@mui/material";
 
 import ExchangerDetails from "./exchangerDetails/ExchangerDetails";
-import { deleteProduct } from "../../../actions/productActions";
+import { deleteProduct, reportProduct } from "../../../actions/productActions";
 
 const ProductDescription = (props) => {
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ const ProductDescription = (props) => {
           color="info"
           size="small"
           sx={{ textTransform: "none", marginLeft: 2 }}
+          onClick={() => props.reportProduct(props.product._id)}
         >
           Report
         </Button>
@@ -83,4 +84,6 @@ const ProductDescription = (props) => {
   );
 };
 
-export default connect(null, { deleteProduct })(ProductDescription);
+export default connect(null, { deleteProduct, reportProduct })(
+  ProductDescription
+);

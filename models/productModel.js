@@ -45,6 +45,18 @@ const productSchema = new mongoose.Schema({
       required: true,
     },
   },
+  reported: [
+    {
+      reportedBy: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  reportedCount: {
+    type: Number,
+    default: 0,
+  },
   images: [
     {
       url: {

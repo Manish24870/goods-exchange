@@ -8,9 +8,10 @@ const ProductList = (props) => {
   // Define the columns
   const dataColumns = [
     { field: "id", headerName: "Id", width: 120 },
-    { field: "product", headerName: "Product Name", width: 170 },
+    { field: "product", headerName: "Product Name", width: 200 },
     { field: "owner", headerName: "Owner", width: 120 },
     { field: "postedAt", headerName: "Posted At", type: "date", width: 120 },
+    { field: "reportedCount", headerName: "Reported", width: 120 },
     {
       field: "actions",
       headerName: "Actions",
@@ -34,6 +35,7 @@ const ProductList = (props) => {
       product: product.name,
       owner: product.owner.username,
       postedAt: moment(product.postedAt).format("MMM Do YYYY"),
+      reportedCount: product.reportedCount,
     });
   });
 

@@ -180,6 +180,42 @@ exports.deleteAProduct = async (req, res, next) => {
   }
 };
 
+// Route = /api/products/report/:productId
+// Function to report a product
+// Authentication = true
+exports.reportAProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.productId);
+
+    const reportedIndex = product.reported.findIndex((el) =>
+      req.user._id.equals(el.reportedBy)
+    );
+
+    if (reportedIndex >= 0) {
+      return next(
+        new ApiError("Product already reported", "already-reported-error", 400)
+      );
+    }
+
+    const newReport = {
+      reportedBy: req.user._id,
+    };
+    product.reported.push(newReport);
+    product.reportedCount++;
+    await product.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        message: "Product reported successfully",
+        product,
+      },
+    });
+    // const product=await
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Route = /api/products/:id/question
 // Function to ask a new question
 // Authentication = true

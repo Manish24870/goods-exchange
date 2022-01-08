@@ -8,7 +8,8 @@ export const setErrors = (payload) => (dispatch) => {
   if (
     payload.errorType === "unauthorized-error" ||
     payload.errorType === "already-exchanged-error" ||
-    payload.errorType === "already-reviewed-error"
+    payload.errorType === "already-reviewed-error" ||
+    payload.errorType === "already-reported-error"
   ) {
     createToast(payload.data.errors.message, "error");
   }

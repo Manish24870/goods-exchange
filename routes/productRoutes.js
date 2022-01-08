@@ -39,4 +39,10 @@ router.post(
   productController.favoriteProduct
 );
 
+router.post(
+  "/report/:productId",
+  authController.protect,
+  productController.reportAProduct
+);
+
 module.exports = router;
