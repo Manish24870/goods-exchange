@@ -41,6 +41,7 @@ app.use("/api/admin", adminRouter);
 // Serve the frontend
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/client/build")));
+    console.log(process.env.NODE_ENV);
     console.log(__dirname + "/client/build");
 
     app.get("*", (req, res) => {
