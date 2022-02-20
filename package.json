@@ -6,7 +6,8 @@
     "scripts": {
         "client": "npm start --prefix client",
         "server": "nodemon server.js",
-        "dev": "npm-run-all --parallel client server"
+        "dev": "npm-run-all --parallel client server",
+        "start": "node server.js"
     },
     "author": "Manish Acharya",
     "license": "ISC",
