@@ -10,8 +10,6 @@ import Layout from "./components/layout/Layout";
 import store from "./store";
 import "./App.css";
 
-console.log(process.env.NODE_ENV);
-
 const App = () => {
     return (
         <Provider store={store}>
