@@ -38,9 +38,6 @@ app.use("/api/products", productRouter);
 app.use("/api/exchange", exchangeRouter);
 app.use("/api/admin", adminRouter);
 
-// Global error handler
-app.use(globalErrorHandler);
-
 // Serve the frontend
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "./client/build")));
@@ -49,6 +46,9 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(__dirname, "./", "client", "build", "index.html");
     });
 }
+
+// Global error handler
+app.use(globalErrorHandler);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
