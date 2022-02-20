@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const path = require("path");
 const chalk = require("chalk");
 const cors = require("cors");
 require("dotenv").config();
@@ -37,17 +36,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
 app.use("/api/exchange", exchangeRouter);
 app.use("/api/admin", adminRouter);
-
-// Serve the frontend
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "/client/build")));
-    console.log(process.env.NODE_ENV);
-    console.log(__dirname + "/client/build");
-
-    app.get("*", (req, res) => {
-        res.sendFile(__dirname, "/", "client", "build", "index.html");
-    });
-}
 
 // Global error handler
 app.use(globalErrorHandler);
