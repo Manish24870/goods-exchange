@@ -7,13 +7,13 @@ import ProductInfo from "./ProductInfo";
 const ProductContent = (props) => {
   return (
     <Grid container mt={4} sx={{ justifyContent: "space-between" }}>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={12} md={6}>
         <ProductDescription
           product={props.product}
           currentUserInfo={props.currentUserInfo}
         />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={12} sm={12} md={5}>
         <ProductInfo
           product={props.product}
           currentUserInfo={props.currentUserInfo}

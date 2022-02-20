@@ -36,6 +36,7 @@ const OfferItem = (props) => {
   };
 
   // For component
+  // When users clicks accept for an offer
   const onOfferAccept = () => {
     const exchangeData = {
       exchangeId: props.exchangeId,
@@ -44,6 +45,7 @@ const OfferItem = (props) => {
     props.acceptOffer(exchangeData);
   };
 
+  // When user clicks reject for an offer
   const onOfferReject = () => {
     const exchangeData = {
       exchangeId: props.exchangeId,
@@ -52,6 +54,7 @@ const OfferItem = (props) => {
     props.rejectOffer(exchangeData);
   };
 
+  // Check if offer is accepted, rejected or pending
   const checkOfferStatus = () => {
     if (props.initiatorData.offerStatus === "accepted") {
       return (
@@ -100,9 +103,23 @@ const OfferItem = (props) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            flexDirection: {
+              sm: "column",
+              md: "row",
+            },
           }}
         >
-          <Grid item xs={4}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              width: {
+                sm: "400px",
+                md: "auto",
+              },
+            }}
+          >
             <Typography
               variant="h6"
               sx={{ fontSize: "1.12em", textAlign: "center" }}
@@ -112,7 +129,7 @@ const OfferItem = (props) => {
             <Card>
               <CardMedia
                 component="img"
-                height="120"
+                height={150}
                 image={
                   process.env.REACT_APP_BASE_IMAGE_URL +
                   props.givenProduct.images[0].url
@@ -172,7 +189,8 @@ const OfferItem = (props) => {
           </Grid>
           <Grid
             item
-            xs={4}
+            xs={12}
+            md={4}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -202,6 +220,7 @@ const OfferItem = (props) => {
               </Typography>
             </Button>
 
+            {/* If offer is accepted, show exchanged at date */}
             {props.initiatorData.acceptedAt ? (
               <Button
                 variant="default"
@@ -226,7 +245,17 @@ const OfferItem = (props) => {
             ) : null}
             {checkOfferStatus()}
           </Grid>
-          <Grid item xs={4}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              width: {
+                sm: "400px",
+                md: "auto",
+              },
+            }}
+          >
             <Typography
               variant="h6"
               sx={{ fontSize: "1.12em", textAlign: "center" }}
@@ -236,7 +265,7 @@ const OfferItem = (props) => {
             <Card>
               <CardMedia
                 component="img"
-                height="120"
+                height={150}
                 image={
                   process.env.REACT_APP_BASE_IMAGE_URL +
                   props.wantedProduct.images[0].url
@@ -295,6 +324,7 @@ const OfferItem = (props) => {
             </Card>
           </Grid>
         </Grid>
+        {/* If offer is accepted, show review button */}
         {props.initiatorData.acceptedAt ? (
           <React.Fragment>
             <Button

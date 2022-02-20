@@ -6,7 +6,7 @@ import ProductItem from "./ProductItem";
 const ProductList = (props) => {
   const productList = props.products.map((product) => {
     return (
-      <Grid key={product._id} item xs={4}>
+      <Grid key={product._id} item xs={12} sm={6} md={4}>
         <ProductItem
           product={product}
           currentUserInfo={props.currentUserInfo}

@@ -19,6 +19,7 @@ const Admin = (props) => {
   // For Sidebar
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
+  // Change table to products or users
   const handleListItemClick = (e, index) => {
     setSelectedIndex(index);
   };
@@ -58,6 +59,7 @@ const Admin = (props) => {
         </Typography>
         <Grid container>
           <Grid item xs={3}>
+            {/* Sidebar to select ether user or product list */}
             <Sidebar
               selectedIndex={selectedIndex}
               handleListItemClick={handleListItemClick}

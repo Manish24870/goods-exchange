@@ -54,13 +54,20 @@ const Navbar = (props) => {
                 to="/products"
                 sx={{
                   textTransform: "none",
-                  marginRight: "1.5em",
-                  marginLeft: 2,
+                  marginRight: {
+                    xs: 0,
+                    sm: "1.4em",
+                  },
+                  marginLeft: {
+                    xs: 0,
+                    sm: 2,
+                  },
                 }}
                 color="inherit"
               >
                 Products
               </Button>
+              {/* Show buttons according to users authentication status */}
               {props.auth.isAuthenticated ? (
                 <React.Fragment>
                   <Button
@@ -68,7 +75,10 @@ const Navbar = (props) => {
                     to="/products/new"
                     sx={{
                       textTransform: "none",
-                      marginRight: "1.5em",
+                      marginRight: {
+                        xs: 0,
+                        sm: "1.4em",
+                      },
                     }}
                     color="inherit"
                   >
@@ -79,7 +89,10 @@ const Navbar = (props) => {
                     to="/initiates"
                     sx={{
                       textTransform: "none",
-                      marginRight: "1.5em",
+                      marginRight: {
+                        xs: 0,
+                        sm: "1.4em",
+                      },
                     }}
                     color="inherit"
                   >
@@ -90,7 +103,10 @@ const Navbar = (props) => {
                     to="/offers"
                     sx={{
                       textTransform: "none",
-                      marginRight: "1.5em",
+                      marginRight: {
+                        xs: 0,
+                        sm: "1.4em",
+                      },
                     }}
                     color="inherit"
                   >
@@ -119,7 +135,10 @@ const Navbar = (props) => {
                   to="/auth/login"
                   sx={{
                     textTransform: "none",
-                    marginLeft: "2rem",
+                    marginLeft: {
+                      xs: 0,
+                      sm: "2em",
+                    },
                   }}
                   color="inherit"
                 >

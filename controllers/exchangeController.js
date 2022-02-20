@@ -217,10 +217,12 @@ exports.createAReview = async (req, res, next) => {
   try {
     const reviewedUser = await User.findById(req.body.reviewedFor);
 
+    // Logic flawed (Cannot review another exchange between two same users)
     const reviewIndex = reviewedUser.reviews.findIndex((review) =>
-      review.reviewedBy.equals(req.user._id)
+      req.user._id.equals(review.reviewedBy)
     );
 
+    // If the user has already reviewed the exchange
     if (reviewIndex >= 0) {
       return next(
         new ApiError("Exchange already reviewed", "already-reviewed-error", 400)
@@ -235,6 +237,7 @@ exports.createAReview = async (req, res, next) => {
       reviewText: isEmpty(req.body.reviewText) ? "" : req.body.reviewText,
     };
     reviewedUser.reviews.push(newReview);
+    // Calculate the new reputation value
     reviewedUser.reputation =
       reviewedUser.reputation +
       reputationValues[Number(req.body.reviewNumber) - 1];
@@ -245,8 +248,6 @@ exports.createAReview = async (req, res, next) => {
     if (reviewedUser.reputation < 0) {
       reviewedUser.reputation = 0;
     }
-
-    // Modify the reputation
 
     await reviewedUser.save();
     res.status(201).json({

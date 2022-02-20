@@ -31,6 +31,7 @@ const InitiateItem = (props) => {
     setOpen(false);
   };
 
+  // Extract initiator data from all initiators
   const initiatorData = props.product.initiator.filter(
     (el) => el.initiatorId === props.loggedInUserId
   )[0];
@@ -97,9 +98,23 @@ const InitiateItem = (props) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              flexDirection: {
+                sm: "column",
+                md: "row",
+              },
             }}
           >
-            <Grid item xs={4}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                width: {
+                  sm: "400px",
+                  md: "auto",
+                },
+              }}
+            >
               <Typography
                 variant="h6"
                 sx={{ fontSize: "1.12em", textAlign: "center" }}
@@ -109,7 +124,7 @@ const InitiateItem = (props) => {
               <Card>
                 <CardMedia
                   component="img"
-                  height="120"
+                  height={150}
                   image={
                     process.env.REACT_APP_BASE_IMAGE_URL +
                     initiatorData.initiatorProduct.images[0].url
@@ -177,7 +192,8 @@ const InitiateItem = (props) => {
             </Grid>
             <Grid
               item
-              xs={4}
+              xs={12}
+              md={4}
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -231,6 +247,7 @@ const InitiateItem = (props) => {
                 </Button>
               ) : null}
               {checkOfferStatus()}
+              {/* Dont show cancel button after an initiate is accepted */}
               {!initiatorData.acceptedAt ? (
                 <Button
                   onClick={onExchangeCancel}
@@ -247,7 +264,17 @@ const InitiateItem = (props) => {
                 </Button>
               ) : null}
             </Grid>
-            <Grid item xs={4}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                width: {
+                  sm: "400px",
+                  md: "auto",
+                },
+              }}
+            >
               <Typography
                 variant="h6"
                 sx={{ fontSize: "1.12em", textAlign: "center" }}
@@ -257,7 +284,7 @@ const InitiateItem = (props) => {
               <Card>
                 <CardMedia
                   component="img"
-                  height="120"
+                  height={150}
                   image={
                     process.env.REACT_APP_BASE_IMAGE_URL +
                     props.product.productWanted.images[0].url
@@ -322,6 +349,7 @@ const InitiateItem = (props) => {
               </Card>
             </Grid>
           </Grid>
+          {/* Only show review button after an initiate is accepted */}
           {initiatorData.acceptedAt ? (
             <React.Fragment>
               <Button

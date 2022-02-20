@@ -66,13 +66,11 @@ const userSchema = new mongoose.Schema({
   reviews: [
     {
       reviewedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String,
         required: true,
       },
       exchangeId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Exchange",
+        type: String,
         required: true,
       },
       reviewNumber: {
@@ -82,6 +80,11 @@ const userSchema = new mongoose.Schema({
       reviewText: {
         type: String,
         trim: true,
+      },
+      reviewedAt: {
+        type: Date,
+        required: true,
+        default: Date.now,
       },
     },
   ],

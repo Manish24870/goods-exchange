@@ -25,11 +25,14 @@ const Product = (props) => {
   } else {
     productContent = (
       <React.Fragment>
+        {/* Shows product images */}
         <ProductImages images={props.product.images} />
+        {/* Shows product description and Info */}
         <ProductContent
           product={props.product}
           currentUserInfo={props.currentUserInfo}
         />
+        {/* Shows product questions and answers */}
         <ProductDiscussion questions={props.product.questions} />
       </React.Fragment>
     );

@@ -47,7 +47,7 @@ export const logoutUser = () => (dispatch) => {
   createToast("Logged out successfully", "success");
 };
 
-//Function to set logged in users state
+// Function to set logged in users state
 const authenticateUser = (response, dispatch, navigate) => {
   // Save token in localstorage
   const token = response.data.data.token;

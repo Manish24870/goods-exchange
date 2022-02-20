@@ -16,6 +16,7 @@ import { ArrowForwardIos } from "@mui/icons-material";
 import { favoriteProduct } from "../../actions/productActions";
 
 const ProductItem = (props) => {
+  // When user clicks on favorite button
   const onFavoriteClick = () => {
     const favoriteData = {
       productId: props.product._id,
@@ -24,6 +25,7 @@ const ProductItem = (props) => {
     props.favoriteProduct(favoriteData);
   };
 
+  // Check if user already favorited an item
   const checkFavorites = () => {
     if (
       props.userFavorites &&
@@ -80,6 +82,7 @@ const ProductItem = (props) => {
             </Typography>
           </Box>
           <Box mt={3} sx={{ display: "flex", justifyContent: "end" }}>
+            {/* If current user is the product owner, dont render favorite button */}
             {props.product.owner._id !== props.currentUserInfo._id ? (
               <Button
                 size="large"

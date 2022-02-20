@@ -4,6 +4,7 @@ import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
 import { Email, Phone, LocationOn, BarChart } from "@mui/icons-material";
 
 const ProfileInfo = (props) => {
+  // Calculate reputation value and color
   const calculateReputation = (rep) => {
     if (rep >= 0 && rep <= 30) {
       return <p style={{ color: "#FF5F5F" }}>{`Bad [${rep}]`}</p>;
@@ -16,7 +17,7 @@ const ProfileInfo = (props) => {
 
   return (
     <Grid container sx={{ display: "flex" }}>
-      <Grid item xs={2} sx={{ marginRight: 3 }}>
+      <Grid item xs={12} sm={3} md={2} sx={{ marginRight: 3 }}>
         <Avatar
           variant="rounded"
           alt={props.userInfo.username}
@@ -24,12 +25,18 @@ const ProfileInfo = (props) => {
             process.env.REACT_APP_BASE_IMAGE_URL + props.userInfo.profileImage
           }
           sx={{
-            width: 170,
-            height: 170,
+            width: {
+              xs: 140,
+              sm: 160,
+            },
+            height: {
+              xs: 140,
+              sm: 160,
+            },
           }}
         ></Avatar>
       </Grid>
-      <Grid mt={2} xs={8} item>
+      <Grid mt={2} xs={12} sm={8} item>
         <Typography variant="h4" sx={{ fontWeight: "600" }}>
           {props.userInfo.username}
         </Typography>

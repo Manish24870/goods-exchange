@@ -62,7 +62,6 @@ const UserList = (props) => {
   // Render JSX
   return (
     <Box>
-      {/* <div style={{ height: 400, width: "100%" }}> */}
       <DataGrid
         rows={dataRows}
         columns={dataColumns}
@@ -71,7 +70,6 @@ const UserList = (props) => {
         pageSize={10}
         rowsPerPageOptions={[10]}
       />
-      {/* </div> */}
     </Box>
   );
 };

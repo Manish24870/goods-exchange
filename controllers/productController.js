@@ -259,7 +259,7 @@ exports.createNewQuestion = async (req, res, next) => {
 };
 
 // Route = /api/products/:id/:questionId/answer
-// Function to ask a new question
+// Function to answer a question
 // Authentication = true
 exports.createNewAnswer = async (req, res, next) => {
   const { errors, isValid } = inputValidator(req.body, "create-new-answer");

@@ -10,6 +10,8 @@ import { deleteProduct, reportProduct } from "../../../actions/productActions";
 const ProductDescription = (props) => {
   const navigate = useNavigate();
 
+  // Only show delete button if current user is owner
+  // Else, show report button
   const checkOwner = () => {
     if (props.product.owner._id === props.currentUserInfo._id) {
       return (
@@ -39,7 +41,7 @@ const ProductDescription = (props) => {
   };
 
   return (
-    <Box>
+    <Box sx={{ marginBottom: 2 }}>
       <Typography color="primary" variant="h5" sx={{ fontWeight: 600 }}>
         {props.product.name}
         {checkOwner()}
@@ -79,6 +81,7 @@ const ProductDescription = (props) => {
           {props.product.description}
         </Typography>
       </Box>
+      {/* Show details of the owner of products */}
       <ExchangerDetails owner={props.product.owner} />
     </Box>
   );

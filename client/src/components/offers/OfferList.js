@@ -5,6 +5,7 @@ import OfferItem from "./OfferItem";
 const OfferList = (props) => {
   const renderOffers = props.myOffers.map((offer) => {
     return offer.initiator.map((initiatorData) => {
+      // Dont render rejected offers
       if (initiatorData.offerStatus === "rejected") {
         return null;
       }

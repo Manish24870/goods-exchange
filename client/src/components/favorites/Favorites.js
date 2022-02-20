@@ -26,7 +26,7 @@ const Favorites = (props) => {
   } else {
     renderFavorites = props.myFavorites.map((favorite) => {
       return (
-        <Grid key={favorite._id} item xs={4}>
+        <Grid key={favorite._id} item xs={12} sm={6} md={4}>
           <FavoriteItem product={favorite.product} owner={favorite.owner} />
         </Grid>
       );

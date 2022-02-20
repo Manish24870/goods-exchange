@@ -107,7 +107,7 @@ export const createNewQuestion =
     }
   };
 
-// Function to post a question
+// Function to answer a question
 export const createNewAnswer =
   (id, questionId, answerData, handleClose) => async (dispatch) => {
     try {
