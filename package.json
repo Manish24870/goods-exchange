@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "App to exchange goods between people",
     "main": "server.js",
+    "engines": {
+        "node": "14.17.0"
+    },
     "scripts": {
         "client": "npm start --prefix client",
         "server": "nodemon server.js",
